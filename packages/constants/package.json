@@ -1,0 +1,14 @@
+{
+  "name": "constants",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {},
+  "devDependencies": {
+    "tsconfig": "workspace:*",
+    "eslint-config": "workspace:*",
+    "typescript": "^5.2.2",
+    "@types/node": "^18.11.9"
+  }
+}
