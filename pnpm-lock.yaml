@@ -26,6 +26,9 @@ importers:
       constants:
         specifier: workspace:*
         version: link:../../packages/constants
+      models:
+        specifier: workspace:*
+        version: link:../../packages/models
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -78,6 +81,21 @@ importers:
       eslint-config-turbo:
         specifier: ^1.10.12
         version: 1.10.12(eslint@8.54.0)
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
+  packages/models:
+    devDependencies:
+      '@types/node':
+        specifier: ^18.11.9
+        version: 18.18.10
+      eslint-config:
+        specifier: workspace:*
+        version: link:../eslint-config
+      tsconfig:
+        specifier: workspace:*
+        version: link:../tsconfig
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
