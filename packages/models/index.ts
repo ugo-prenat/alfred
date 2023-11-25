@@ -1,1 +1,1 @@
-export * from './src/bots/bots.models';
+export * from './src/bots.models';

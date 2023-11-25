@@ -8,25 +8,25 @@ importers:
 
   .:
     devDependencies:
+      '@stats-station/tsconfig':
+        specifier: workspace:*
+        version: link:packages/tsconfig
       eslint:
         specifier: ^8.48.0
         version: 8.48.0
       prettier:
         specifier: ^3.0.3
         version: 3.0.3
-      tsconfig:
-        specifier: workspace:*
-        version: link:packages/tsconfig
       turbo:
         specifier: latest
         version: 1.10.16
 
   apps/app-front:
     dependencies:
-      constants:
+      '@stats-station/constants':
         specifier: workspace:*
         version: link:../../packages/constants
-      models:
+      '@stats-station/models':
         specifier: workspace:*
         version: link:../../packages/models
       react:
@@ -36,6 +36,12 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
     devDependencies:
+      '@stats-station/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@stats-station/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
       '@types/react':
         specifier: ^18.2.37
         version: 18.2.37
@@ -48,9 +54,6 @@ importers:
       eslint:
         specifier: ^8.53.0
         version: 8.54.0
-      eslint-config:
-        specifier: workspace:*
-        version: link:../../packages/eslint-config
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -60,15 +63,15 @@ importers:
 
   packages/constants:
     devDependencies:
+      '@stats-station/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@stats-station/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@types/node':
         specifier: ^18.11.9
         version: 18.18.10
-      eslint-config:
-        specifier: workspace:*
-        version: link:../eslint-config
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -87,15 +90,15 @@ importers:
 
   packages/models:
     devDependencies:
+      '@stats-station/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@stats-station/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@types/node':
         specifier: ^18.11.9
         version: 18.18.10
-      eslint-config:
-        specifier: workspace:*
-        version: link:../eslint-config
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
       typescript:
         specifier: ^5.2.2
         version: 5.2.2

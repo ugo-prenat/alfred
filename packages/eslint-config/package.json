@@ -1,5 +1,5 @@
 {
-  "name": "eslint-config",
+  "name": "@stats-station/eslint-config",
   "license": "MIT",
   "version": "0.0.0",
   "private": true,
