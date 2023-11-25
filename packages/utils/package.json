@@ -1,0 +1,16 @@
+{
+  "name": "@stats-station/utils",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {},
+  "dependencies": {
+    "hono": "^3.10.1"
+  },
+  "devDependencies": {
+    "@stats-station/tsconfig": "workspace:*",
+    "typescript": "^5.2.2",
+    "@types/node": "^18.11.9"
+  }
+}

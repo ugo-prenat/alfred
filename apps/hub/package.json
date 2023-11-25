@@ -1,0 +1,26 @@
+{
+  "name": "hub",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "start": "node dist/index.mjs",
+    "dev": "tsx watch --env-file=.env src/index.ts",
+    "build": "tsup"
+  },
+  "dependencies": {
+    "hono": "^3.10.1",
+    "@hono/node-server": "^1.2.3",
+    "twitter-api-v2": "^1.15.2",
+    "@stats-station/constants": "workspace:*",
+    "@stats-station/models": "workspace:*",
+    "@stats-station/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^3.12.2",
+    "tsup": "^8.0.1",
+    "esbuild": "^0.19.7",
+    "@types/node": "^20.9.1",
+    "@stats-station/eslint-config": "workspace:*",
+    "@stats-station/tsconfig": "workspace:*"
+  }
+}
