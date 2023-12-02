@@ -1,8 +1,10 @@
+import { NodeEnv } from '@stats-station/models';
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
       PORT: number;
-      NODE_ENV: 'development' | 'production';
+      NODE_ENV: NodeEnv;
       MONGO_URI: string;
       TWITTER_API_KEY: string;
       TWITTER_API_KEY_SECRET: string;
