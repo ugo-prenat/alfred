@@ -2,15 +2,19 @@
   "name": "@stats-station/utils",
   "version": "0.0.0",
   "private": true,
-  "main": "./index.ts",
-  "types": "./index.ts",
-  "scripts": {},
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsup src/index.ts --watch --onSuccess 'node dist/index.js'",
+    "build": "tsup src/index.ts"
+  },
   "dependencies": {
     "hono": "^3.10.1"
   },
   "devDependencies": {
     "@stats-station/tsconfig": "workspace:*",
-    "typescript": "^5.2.2",
-    "@types/node": "^18.11.9"
+    "@types/node": "^18.11.9",
+    "tsup": "^8.0.1",
+    "typescript": "^5.2.2"
   }
 }

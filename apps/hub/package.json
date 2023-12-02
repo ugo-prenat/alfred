@@ -2,10 +2,11 @@
   "name": "hub",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "start": "node dist/index.mjs",
-    "dev": "tsx watch --env-file=.env src/index.ts",
-    "build": "tsup"
+    "start": "node --env-file=.env dist/index.js",
+    "dev": "tsup src/index.ts --watch --onSuccess 'node --env-file=.env dist/index.js'",
+    "build": "tsup src/index.ts"
   },
   "dependencies": {
     "@hono/node-server": "^1.2.3",
