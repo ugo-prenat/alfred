@@ -11,10 +11,11 @@ export interface IBot {
 }
 
 export interface ITwitterCredentials {
-  apiKey: string;
-  apiKeySecret: string;
-  accessToken: string;
-  accessTokenSecret: string;
+  // apiKey: string;
+  // apiKeySecret: string;
+  // accessToken: string;
+  // accessTokenSecret: string;
+  bearerToken: 'peut-être possible juste avec le bearer token';
 }
 
 export interface IAPIBot extends Omit<IBot, 'id'> {

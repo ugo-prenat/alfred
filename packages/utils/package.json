@@ -9,7 +9,8 @@
     "build": "tsup src/index.ts"
   },
   "dependencies": {
-    "hono": "^3.10.1"
+    "hono": "^3.10.1",
+    "@stats-station/models": "workspace:*"
   },
   "devDependencies": {
     "@stats-station/tsconfig": "workspace:*",

@@ -188,6 +188,9 @@ importers:
 
   packages/utils:
     dependencies:
+      '@stats-station/models':
+        specifier: workspace:*
+        version: link:../models
       hono:
         specifier: ^3.10.1
         version: 3.10.2

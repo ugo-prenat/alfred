@@ -6,6 +6,7 @@ declare global {
       PORT: number;
       NODE_ENV: NodeEnv;
       MONGO_URI: string;
+      TWITCH_CLIENT_ID: string;
     }
   }
 }
