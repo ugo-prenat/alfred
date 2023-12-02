@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 const App = () => {
   const twitchToken = document.location.hash.split('&')[0].split('=')[1];
 
@@ -17,8 +15,6 @@ const App = () => {
     const twitchAuthUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${twitchClientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scopes}`;
     window.location.href = twitchAuthUrl;
   };
-
-  useEffect(() => {}, []);
 
   return (
     <div
