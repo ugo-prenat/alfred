@@ -135,6 +135,10 @@ importers:
         version: 5.2.2
 
   packages/models:
+    dependencies:
+      '@stats-station/constants':
+        specifier: workspace:*
+        version: link:../constants
     devDependencies:
       '@stats-station/eslint-config':
         specifier: workspace:*

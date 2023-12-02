@@ -9,6 +9,9 @@
     "dev": "tsup src/index.ts --watch --onSuccess 'node dist/index.js'",
     "build": "tsup src/index.ts"
   },
+  "dependencies": {
+    "@stats-station/constants": "workspace:*"
+  },
   "devDependencies": {
     "@stats-station/eslint-config": "workspace:*",
     "@stats-station/tsconfig": "workspace:*",
