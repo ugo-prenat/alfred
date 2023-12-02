@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "extends": "@stats-station/tsconfig/base.json",
+  "exclude": ["node_modules"],
+  "include": ["./src"]
+}

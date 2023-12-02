@@ -1,5 +1,5 @@
 {
-  "name": "hub",
+  "name": "app-back",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -14,8 +14,7 @@
     "@stats-station/models": "workspace:*",
     "@stats-station/utils": "workspace:*",
     "hono": "^3.10.1",
-    "mongoose": "^8.0.1",
-    "twitter-api-v2": "^1.15.2"
+    "mongoose": "^8.0.1"
   },
   "devDependencies": {
     "@stats-station/eslint-config": "workspace:*",

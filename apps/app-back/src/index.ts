@@ -6,7 +6,7 @@ const port = process.env.PORT || 3000;
 const server = createServer();
 
 serve({ fetch: server.fetch, port }, () =>
-  console.log(`\n⚡️Hub listening on port ${port}`)
+  console.log(`\n⚡️App-back listening on port ${port}`)
 );
 
 dbConnect()
