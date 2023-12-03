@@ -6,10 +6,9 @@ const TWITCH_API_URL = 'https://api.twitch.tv/helix';
 const makeTwitchFetcher =
   (method: HTTPMethod) =>
   <T>(url: string, twitchAccessToken: string, init?: RequestInit): Promise<T> =>
-    genericFetcher[method]<T>(`${TWITCH_API_URL}/${url}`, {
+    genericFetcher[method]<T>(`${TWITCH_API_URL}${url}`, {
       headers: {
-        'Content-Type': 'application/json',
-        'Client-ID': process.env.TWITCH_CLIENT_ID,
+        'Client-Id': process.env.TWITCH_CLIENT_ID,
         Authorization: `Bearer ${twitchAccessToken}`
       },
       ...init

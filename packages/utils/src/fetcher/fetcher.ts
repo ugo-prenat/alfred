@@ -1,19 +1,22 @@
 import { HTTPMethod } from '@stats-station/models';
+import { APIError } from './fetcher.models';
 
 const makeFetcher =
   (method: HTTPMethod) =>
   <T>(url: string, init?: RequestInit): Promise<T> =>
     fetch(url, {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...init?.headers },
       method,
       ...init
     })
       .then((res) => {
         if (res.ok) return res.json();
-        throw new Error(res.statusText);
+        console.error(res);
+        throw new APIError(res.statusText, res.status);
       })
       .catch((err) => {
-        throw new Error(err.message);
+        console.error(err);
+        throw new APIError(err.message, err.status || 500);
       });
 
 export const fetcher = {
