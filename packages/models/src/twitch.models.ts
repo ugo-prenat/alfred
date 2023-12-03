@@ -30,9 +30,24 @@ export interface ITwitchEventSubSubscription {
   transport: {
     method: 'webhook'; // websocket also available -> 'webhook'|'websocket'
     callback: string;
+    secret: string;
     // session_id: string; -> only for websocket
     // connected_at: string; -> only for websocket
     // disconnected_at: string; -> only for websocket
+  };
+}
+
+export interface ITwitchEventSubSubscriptionCreation {
+  type: string;
+  version: string;
+  condition: {
+    broadcaster_user_id?: string;
+    user_id?: string;
+  };
+  transport: {
+    method: 'webhook';
+    callback: string;
+    secret: string;
   };
 }
 

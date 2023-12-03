@@ -80,6 +80,9 @@ export const TWITCH_EVENTSUB_HEADER_SUBSCRIPTION_TYPE =
   'Twitch-Eventsub-Subscription-Type';
 export const TWITCH_EVENTSUB_HEADER_SUBSCRIPTION_VERSION =
   'Twitch-Eventsub-Subscription-Version';
+export const TWITCH_HMAC_PREFIX = 'sha256=';
+
+export const TWITCH_WEBHOOK_CALLBACK_URL = HUB_PROD_URL + '/twitch/eventsub';
 
 // ROLES
 export const MEMBER_ROLE = 'member';

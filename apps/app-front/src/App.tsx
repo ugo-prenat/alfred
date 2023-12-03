@@ -6,10 +6,10 @@ const App = () => {
     const redirectUri = 'http://localhost:5173';
     const scopes = [
       'user:read:email',
-      'channel:read:goals',
-      'channel:read:polls',
-      'user:read:subscriptions',
-      'channel:read:predictions'
+      'channel:read:subscriptions'
+      // 'channel:read:polls',
+      // 'user:read:subscriptions',
+      // 'channel:read:predictions'
     ].join('+');
 
     const twitchAuthUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${twitchClientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scopes}`;

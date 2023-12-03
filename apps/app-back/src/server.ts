@@ -13,7 +13,7 @@ export const createServer = () => {
   app.route('/twitch', twitchRoute);
 
   app.notFound((c) =>
-    c.json({ error: `route '${c.req.path}' Not Found` }, 404)
+    c.json({ error: `route '${c.req.path}' not found` }, 404)
   );
 
   return app;

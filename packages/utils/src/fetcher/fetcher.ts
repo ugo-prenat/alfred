@@ -1,8 +1,9 @@
 import { APIError, HTTPMethod } from '@stats-station/models';
+import { getPayload } from './fetcher.utils';
 
 const makeFetcher =
   (method: HTTPMethod) =>
-  <T>(url: string, init?: RequestInit): Promise<T> =>
+  <T>(url: string, origin: string, init?: RequestInit): Promise<T> =>
     fetch(url, {
       headers: { 'Content-Type': 'application/json', ...init?.headers },
       method,
@@ -10,12 +11,26 @@ const makeFetcher =
     })
       .then((res) => {
         if (res.ok) return res.json();
-        console.error(res);
-        throw new APIError(res.statusText, res.status);
+
+        return res.json().then((data) => {
+          throw new APIError(res.statusText, res.status, {
+            api: origin,
+            url,
+            method,
+            ...getPayload(init),
+            response: data
+          });
+        });
       })
       .catch((err) => {
-        console.error(err);
-        throw new APIError(err.message, err.status || 500);
+        if (err instanceof APIError) throw err;
+        throw new APIError(err.message, err.status || 500, {
+          api: origin,
+          url,
+          method,
+          ...getPayload(init),
+          response: err.message
+        });
       });
 
 export const fetcher = {
