@@ -1,8 +1,6 @@
-export class APIError extends Error {
-  status: number;
+export const TWITCH_API_URL = 'https://api.twitch.tv/helix';
 
-  constructor(message: string, status: number) {
-    super(message);
-    this.status = status;
-  }
+export interface ITwitchFetcherParams {
+  twitchClientId: string;
+  twitchAccessToken: string;
 }

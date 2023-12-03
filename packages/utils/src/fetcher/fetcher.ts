@@ -1,5 +1,4 @@
-import { HTTPMethod } from '@stats-station/models';
-import { APIError } from './fetcher.models';
+import { APIError, HTTPMethod } from '@stats-station/models';
 
 const makeFetcher =
   (method: HTTPMethod) =>
