@@ -56,6 +56,31 @@ export const TWITCH_BROADCASTER_TYPES = [
   NORMAL_TWITCH_BROADCASTER
 ] as const;
 
+export const TWITCH_EVENTSUB_MESSAGE_TYPE_WEBHOOK_CALLBACK_VERIFICATION =
+  'webhook_callback_verification';
+export const TWITCH_EVENTSUB_MESSAGE_TYPE_NOTIFICATION = 'notification';
+export const TWITCH_EVENTSUB_MESSAGE_TYPE_REVOCATION = 'revocation';
+
+export const TWITCH_EVENTSUB_MESSAGE_TYPES = [
+  TWITCH_EVENTSUB_MESSAGE_TYPE_WEBHOOK_CALLBACK_VERIFICATION,
+  TWITCH_EVENTSUB_MESSAGE_TYPE_NOTIFICATION,
+  TWITCH_EVENTSUB_MESSAGE_TYPE_REVOCATION
+] as const;
+
+export const TWITCH_EVENTSUB_HEADER_MESSAGE_ID = 'Twitch-Eventsub-Message-Id';
+export const TWITCH_EVENTSUB_HEADER_MESSAGE_TYPE =
+  'Twitch-Eventsub-Message-Type';
+export const TWITCH_EVENTSUB_HEADER_MESSAGE_RETRY =
+  'Twitch-Eventsub-Message-Retry';
+export const TWITCH_EVENTSUB_HEADER_MESSAGE_TIMESTAMP =
+  'Twitch-Eventsub-Message-Timestamp';
+export const TWITCH_EVENTSUB_HEADER_MESSAGE_SIGNATURE =
+  'Twitch-Eventsub-Message-Signature';
+export const TWITCH_EVENTSUB_HEADER_SUBSCRIPTION_TYPE =
+  'Twitch-Eventsub-Subscription-Type';
+export const TWITCH_EVENTSUB_HEADER_SUBSCRIPTION_VERSION =
+  'Twitch-Eventsub-Subscription-Version';
+
 // ROLES
 export const MEMBER_ROLE = 'member';
 export const MODERATOR_ROLE = 'moderator';
