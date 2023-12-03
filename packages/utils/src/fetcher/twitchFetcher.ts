@@ -2,7 +2,7 @@ import { HTTPMethod } from '@stats-station/models';
 import { fetcher } from './fetcher';
 import { ITwitchFetcherParams, TWITCH_API_URL } from './fetcher.models';
 
-const TWITCH_FETCHER_ORIGIN = 'Twitch';
+const TWITCH_FETCHER_ORIGIN = 'twitch';
 
 const makeTwitchFetcher =
   (method: HTTPMethod) =>

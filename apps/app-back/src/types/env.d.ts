@@ -7,6 +7,8 @@ declare global {
       NODE_ENV: NodeEnv;
       MONGO_URI: string;
       TWITCH_CLIENT_ID: string;
+      TWITCH_CLIENT_SECRET: string;
+      TWITCH_APP_ACCESS_TOKEN: string;
     }
   }
 }

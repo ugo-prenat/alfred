@@ -1,61 +1,30 @@
 import { createMiddleware } from 'hono/factory';
 import {
-  TWITCH_EVENTSUB_HEADER_MESSAGE_ID,
-  TWITCH_EVENTSUB_HEADER_MESSAGE_TIMESTAMP,
-  TWITCH_EVENTSUB_HEADER_MESSAGE_SIGNATURE,
-  TWITCH_EVENTSUB_HEADER_MESSAGE_TYPE,
-  TWITCH_HMAC_PREFIX
+  TWITCH_EVENTSUB_WEBHOOK_CALLBACK_VERIFICATION_MESSAGE_TYPE,
+  TWITCH_EVENTSUB_NOTIFICATION_MESSAGE_TYPE,
+  TWITCH_EVENTSUB_REVOCATION_MESSAGE_TYPE,
+  TWITCH_EVENTSUB_HEADER_MESSAGE_TYPE
 } from '@stats-station/constants';
-import crypto from 'crypto';
+import { verifySignature } from './twitch.utils';
 
-const TWITCH_MESSAGE_ID = TWITCH_EVENTSUB_HEADER_MESSAGE_ID.toLowerCase();
-const TWITCH_MESSAGE_TIMESTAMP =
-  TWITCH_EVENTSUB_HEADER_MESSAGE_TIMESTAMP.toLowerCase();
-const TWITCH_MESSAGE_SIGNATURE =
-  TWITCH_EVENTSUB_HEADER_MESSAGE_SIGNATURE.toLowerCase();
+const TWITCH_MESSAGE_TYPE = TWITCH_EVENTSUB_HEADER_MESSAGE_TYPE.toLowerCase();
+const WEBHOOK_CALLBACK_VERIFICATION =
+  TWITCH_EVENTSUB_WEBHOOK_CALLBACK_VERIFICATION_MESSAGE_TYPE;
+const NOTIFICATION = TWITCH_EVENTSUB_NOTIFICATION_MESSAGE_TYPE;
+const REVOCATION = TWITCH_EVENTSUB_REVOCATION_MESSAGE_TYPE;
 
 export const twitchWebhookAuth = createMiddleware(async (c, next) => {
-  const { headers, body } = c.req.raw;
+  const messageType = c.req.raw.headers.get(TWITCH_MESSAGE_TYPE);
+  const body = await c.req.json();
 
-  const hmac = getHmac(headers, body);
-  const isValidSignature = verifyMessage(
-    hmac,
-    headers.get(TWITCH_MESSAGE_SIGNATURE)
-  );
-
-  if (!isValidSignature) return c.json({ error: 'Invalid signature' }, 403);
-  await next();
+  switch (messageType) {
+    case WEBHOOK_CALLBACK_VERIFICATION:
+      return c.text(body.challenge, 200);
+    case NOTIFICATION:
+      return await verifySignature(c, next);
+    case REVOCATION:
+      return c.json({ message: 'revocation' }, 200);
+    default:
+      return c.json({ error: `Invalid message type '${messageType}'` }, 400);
+  }
 });
-
-const getHmac = (headers: Headers, body: ReadableStream<Uint8Array> | null) => {
-  const webhookSecret = process.env.TWITCH_WEBHOOK_SECRET;
-  const message = getHmacMessage(headers, body);
-
-  return crypto
-    .createHmac('sha256', webhookSecret)
-    .update(message)
-    .digest('hex');
-};
-
-const getHmacMessage = (
-  headers: Headers,
-  body: ReadableStream<Uint8Array> | null
-) => {
-  const messageId = headers.get(TWITCH_MESSAGE_ID);
-  const timestamp = headers.get(TWITCH_MESSAGE_TIMESTAMP);
-
-  if (!messageId || !timestamp || !body)
-    throw new Error('Missing required headers from Twitch');
-
-  return messageId + timestamp + body;
-};
-
-const verifyMessage = (hmac: string, verifySignature: string | null) => {
-  if (!verifySignature)
-    throw new Error('Missing required signature header from Twitch');
-
-  return crypto.timingSafeEqual(
-    Buffer.from(TWITCH_HMAC_PREFIX + hmac),
-    Buffer.from(verifySignature)
-  );
-};

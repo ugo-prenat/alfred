@@ -82,6 +82,11 @@ export const TWITCH_EVENTSUB_HEADER_SUBSCRIPTION_VERSION =
   'Twitch-Eventsub-Subscription-Version';
 export const TWITCH_HMAC_PREFIX = 'sha256=';
 
+export const TWITCH_EVENTSUB_WEBHOOK_CALLBACK_VERIFICATION_MESSAGE_TYPE =
+  'webhook_callback_verification';
+export const TWITCH_EVENTSUB_NOTIFICATION_MESSAGE_TYPE = 'notification';
+export const TWITCH_EVENTSUB_REVOCATION_MESSAGE_TYPE = 'revocation';
+
 export const TWITCH_WEBHOOK_CALLBACK_URL = HUB_PROD_URL + '/twitch/eventsub';
 
 // ROLES

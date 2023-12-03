@@ -32,11 +32,12 @@ export const createEventSubSubscription = (c: Context) => {
     type: 'channel.subscribe',
     version: '1',
     condition: {
-      broadcaster_user_id: '999410587'
+      broadcaster_user_id: '131122741'
     },
     transport: {
       method: 'webhook',
-      callback: TWITCH_WEBHOOK_CALLBACK_URL,
+      callback:
+        'https://4cc4-2a01-e0a-2be-a4f0-c47d-ddd3-760e-a9d3.ngrok-free.app/twitch/eventsub',
       secret: process.env.TWITCH_WEBHOOK_SECRET
     }
   };
