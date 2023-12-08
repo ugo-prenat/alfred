@@ -1,11 +1,10 @@
-import {
-  TWITCH_EVENTSUB_HEADER_MESSAGE_TYPE,
-  TWITCH_WEBHOOK_CALLBACK_URL
-} from '@stats-station/constants';
+import { TWITCH_EVENTSUB_HEADER_SUBSCRIPTION_TYPE } from '@stats-station/constants';
 import {
   APIError,
+  ChannelSubscribe,
   IGetTwitchEventSubSubscriptionResponse,
-  ITwitchEventSubSubscriptionCreation
+  ITwitchEventSubSubscriptionCreation,
+  ITwitchEventsub
 } from '@stats-station/models';
 import {
   ITwitchFetcherParams,
@@ -15,16 +14,30 @@ import {
 import { Context } from 'hono';
 import { makeTwitchFetcherParams } from './twitch.utils';
 
-const TWITCH_MESSAGE_TYPE = TWITCH_EVENTSUB_HEADER_MESSAGE_TYPE.toLowerCase();
+const TWITCH_SUBSCRIPTION_TYPE =
+  TWITCH_EVENTSUB_HEADER_SUBSCRIPTION_TYPE.toLowerCase();
 
 export const handleTwitchWebhook = async (c: Context) => {
   const { headers } = c.req.raw;
   const body = await c.req.json();
-  const messageType = headers.get(TWITCH_MESSAGE_TYPE);
+  const subscriptionType = headers.get(TWITCH_SUBSCRIPTION_TYPE);
 
-  console.log(body);
+  switch (subscriptionType) {
+    case 'channel.subscribe': {
+      const { event } = body as ITwitchEventsub<ChannelSubscribe>;
+      return c.json({
+        message: `${event.user_name} subscribed to ${event.broadcaster_user_name}`
+      });
+    }
 
-  return c.json({ message: `twitch message type: ${messageType}` });
+    case undefined:
+      return c.json({ message: 'no subscription type' }, 400);
+    default:
+      return c.json(
+        { message: `subscription type '${subscriptionType}' not supported` },
+        400
+      );
+  }
 };
 
 export const createEventSubSubscription = (c: Context) => {

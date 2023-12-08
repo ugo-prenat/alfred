@@ -62,12 +62,18 @@ export interface IGetTwitchEventSubSubscriptionResponse {
 export type TwitchEventsubMessageType =
   (typeof TWITCH_EVENTSUB_MESSAGE_TYPES)[number];
 
-export interface ITwitchEventsubChallenge {
-  subscription: ITwitchEventSubSubscription;
-  challenge: string;
-}
-
-export interface ITwitchEventsubNotification<T> {
+export interface ITwitchEventsub<T> {
   subscription: ITwitchEventSubSubscription;
   event: T;
+}
+
+export interface ChannelSubscribe {
+  user_id: string;
+  user_login: string;
+  user_name: string;
+  broadcaster_user_id: string;
+  broadcaster_user_login: string;
+  broadcaster_user_name: string;
+  tier: string;
+  is_gift: boolean;
 }
