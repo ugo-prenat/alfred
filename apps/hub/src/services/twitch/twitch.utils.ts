@@ -25,8 +25,7 @@ export const verifySignature = async (c: Context, next: Next) => {
   const { headers } = c.req.raw;
   const body = await c.req.json();
 
-  const hmac = getHmac(headers, body);
-  console.log({ hmac, signature: headers.get(TWITCH_MESSAGE_SIGNATURE) });
+  const hmac = getHmac(headers, JSON.stringify(body));
 
   const isValidSignature = verifyMessage(
     hmac,
@@ -37,20 +36,17 @@ export const verifySignature = async (c: Context, next: Next) => {
   await next();
 };
 
-const getHmac = (headers: Headers, body: ReadableStream<Uint8Array> | null) => {
+const getHmac = (headers: Headers, body: string) => {
   const webhookSecret = process.env.TWITCH_WEBHOOK_SECRET;
   const message = getHmacMessage(headers, body);
 
-  return crypto
-    .createHmac('sha256', webhookSecret)
-    .update(message)
-    .digest('hex');
+  return (
+    TWITCH_HMAC_PREFIX +
+    crypto.createHmac('sha256', webhookSecret).update(message).digest('hex')
+  );
 };
 
-const getHmacMessage = (
-  headers: Headers,
-  body: ReadableStream<Uint8Array> | null
-) => {
+const getHmacMessage = (headers: Headers, body: string) => {
   const messageId = headers.get(TWITCH_MESSAGE_ID);
   const timestamp = headers.get(TWITCH_MESSAGE_TIMESTAMP);
 
@@ -65,7 +61,7 @@ const verifyMessage = (hmac: string, verifySignature: string | null) => {
     throw new Error('Missing required signature header from Twitch');
 
   return crypto.timingSafeEqual(
-    Buffer.from(TWITCH_HMAC_PREFIX + hmac),
+    Buffer.from(hmac),
     Buffer.from(verifySignature)
   );
 };

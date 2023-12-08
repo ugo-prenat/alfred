@@ -17,9 +17,12 @@ import { makeTwitchFetcherParams } from './twitch.utils';
 
 const TWITCH_MESSAGE_TYPE = TWITCH_EVENTSUB_HEADER_MESSAGE_TYPE.toLowerCase();
 
-export const handleTwitchWebhook = (c: Context) => {
+export const handleTwitchWebhook = async (c: Context) => {
   const { headers } = c.req.raw;
+  const body = await c.req.json();
   const messageType = headers.get(TWITCH_MESSAGE_TYPE);
+
+  console.log(body);
 
   return c.json({ message: `twitch message type: ${messageType}` });
 };
@@ -37,7 +40,7 @@ export const createEventSubSubscription = (c: Context) => {
     transport: {
       method: 'webhook',
       callback:
-        'https://4cc4-2a01-e0a-2be-a4f0-c47d-ddd3-760e-a9d3.ngrok-free.app/twitch/eventsub',
+        'https://429e-2a01-e0a-2be-a4f0-d57c-2d8e-64e7-6ced.ngrok-free.app/twitch/eventsub',
       secret: process.env.TWITCH_WEBHOOK_SECRET
     }
   };
