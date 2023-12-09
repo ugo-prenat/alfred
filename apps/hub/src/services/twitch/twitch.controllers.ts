@@ -13,6 +13,12 @@ import {
 } from '@stats-station/utils';
 import { Context } from 'hono';
 import { makeTwitchFetcherParams } from './twitch.utils';
+import { get } from 'http';
+import {
+  getBroadcasterFollowersTotal,
+  getBroadcasterSubscribersTotal,
+  getEventSubSubscriptions
+} from './twitch.api';
 
 const TWITCH_SUBSCRIPTION_TYPE =
   TWITCH_EVENTSUB_HEADER_SUBSCRIPTION_TYPE.toLowerCase();
@@ -31,7 +37,7 @@ export const handleTwitchWebhook = async (c: Context) => {
     }
 
     case undefined:
-      return c.json({ message: 'no subscription type' }, 400);
+      return c.json({ message: 'no subscription type given' }, 400);
     default:
       return c.json(
         { message: `subscription type '${subscriptionType}' not supported` },
@@ -58,12 +64,29 @@ export const createEventSubSubscription = (c: Context) => {
     }
   };
 
-  return twitchFetcher
-    .post<IGetTwitchEventSubSubscriptionResponse>(
-      '/eventsub/subscriptions',
-      fetcherParams,
-      { body: JSON.stringify(payload) }
-    )
+  return getEventSubSubscriptions(fetcherParams, payload)
     .then((res) => c.json(res))
+    .catch((err: APIError) => c.json(logError(err), err.status));
+};
+
+export const handleGetBroadcasterSubscribers = (c: Context) => {
+  const broadcasterId = c.req.param('broadcasterId');
+  const fetcherParams: ITwitchFetcherParams = makeTwitchFetcherParams(
+    process.env.TWITCH_APP_ACCESS_TOKEN
+  );
+
+  return getBroadcasterSubscribersTotal(broadcasterId, fetcherParams)
+    .then((total) => c.json({ totalSubscriber: total }))
+    .catch((err: APIError) => c.json(logError(err), err.status));
+};
+
+export const handleGetBroadcasterFollowers = (c: Context) => {
+  const broadcasterId = c.req.param('broadcasterId');
+  const fetcherParams: ITwitchFetcherParams = makeTwitchFetcherParams(
+    process.env.TWITCH_APP_ACCESS_TOKEN
+  );
+
+  return getBroadcasterFollowersTotal(broadcasterId, fetcherParams)
+    .then((total) => c.json({ totalFollower: total }))
     .catch((err: APIError) => c.json(logError(err), err.status));
 };

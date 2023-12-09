@@ -1,23 +1,15 @@
-import {
-  IGetTwitchUsersResponse,
-  IGetTwitchEventSubSubscriptionResponse,
-  APIError
-} from '@stats-station/models';
-import {
-  ITwitchFetcherParams,
-  logError,
-  twitchFetcher
-} from '@stats-station/utils';
+import { APIError } from '@stats-station/models';
+import { ITwitchFetcherParams, logError } from '@stats-station/utils';
 import { Context } from 'hono';
 import { makeTwitchFetcherParams } from './twitch.utils';
+import { getEventSubSubscriptions, getUser } from './twitch.api';
 
 export const getTwitchUser = (c: Context) => {
   const twitchAccessToken = c.req.param('twitchAccessToken');
   const fetcherParams: ITwitchFetcherParams =
     makeTwitchFetcherParams(twitchAccessToken);
 
-  return twitchFetcher
-    .get<IGetTwitchUsersResponse>(`/users`, fetcherParams)
+  return getUser(fetcherParams)
     .then((res) => c.json(res.data[0]))
     .catch((err: APIError) =>
       c.json({ message: err.message, stack: err.stack }, err.status)
@@ -32,11 +24,7 @@ export const getTwitchEventSubSubscriptions = (c: Context) => {
   // à apprfondir -> https://dev.twitch.tv/docs/api/reference/#get-eventsub-subscriptions
   // params, body, headers, etc... pour mieux filtrer les subscriptions
 
-  return twitchFetcher
-    .get<IGetTwitchEventSubSubscriptionResponse>(
-      `/eventsub/subscriptions`,
-      fetcherParams
-    )
+  return getEventSubSubscriptions(fetcherParams)
     .then((res) => c.json(res))
     .catch((err: APIError) => c.json(logError(err), err.status));
 };
