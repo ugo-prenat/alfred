@@ -1,8 +1,9 @@
 import { Hono } from 'hono';
-import { getTwitter } from './twitter.controllers';
+import { createTweet, getTwitter } from './twitter.controllers';
 
 const twitterRoute = new Hono();
 
 twitterRoute.get('/', getTwitter);
+twitterRoute.post('/tweet', createTweet);
 
 export default twitterRoute;
