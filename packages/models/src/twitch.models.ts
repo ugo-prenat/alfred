@@ -78,6 +78,21 @@ export interface ChannelSubscribe {
   is_gift: boolean;
 }
 
+export interface StreamOnline {
+  id: string;
+  broadcaster_user_id: string;
+  broadcaster_user_login: string;
+  broadcaster_user_name: string;
+  type: 'live' | 'playlist' | 'watch_party' | 'premiere' | 'rerun';
+  started_at: string;
+}
+
+export interface StreamOffline {
+  broadcaster_user_id: string;
+  broadcaster_user_login: string;
+  broadcaster_user_name: string;
+}
+
 export interface IGetBroadcasterSubscribersResponse {
   data: {
     broadcaster_id: string;

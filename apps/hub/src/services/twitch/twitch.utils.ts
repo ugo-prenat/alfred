@@ -7,6 +7,7 @@ import {
   TWITCH_EVENTSUB_HEADER_MESSAGE_TIMESTAMP,
   TWITCH_HMAC_PREFIX
 } from '@stats-station/constants';
+import { ITwitchEventSubSubscriptionCreation } from '@stats-station/models';
 
 export const makeTwitchFetcherParams = (
   twitchAccessToken: string
@@ -65,3 +66,14 @@ const verifyMessage = (hmac: string, verifySignature: string | null) => {
     Buffer.from(verifySignature)
   );
 };
+
+export const makeEventSubRequestBody = (
+  props: Omit<ITwitchEventSubSubscriptionCreation, 'transport'>
+): ITwitchEventSubSubscriptionCreation => ({
+  ...props,
+  transport: {
+    method: 'webhook',
+    callback: `${process.env.TWITCH_WEBHOOK_CALLBACK_URL}/twitch/eventsub`,
+    secret: process.env.TWITCH_WEBHOOK_SECRET
+  }
+});

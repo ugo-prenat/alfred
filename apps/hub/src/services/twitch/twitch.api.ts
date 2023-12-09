@@ -5,7 +5,7 @@ import {
   ITwitchEventSubSubscriptionCreation
 } from '@stats-station/models';
 
-export const getEventSubSubscriptions = (
+export const createEventSubSubscriptions = (
   fetcherParams: ITwitchFetcherParams,
   payload: ITwitchEventSubSubscriptionCreation
 ): Promise<IGetTwitchEventSubSubscriptionResponse> =>

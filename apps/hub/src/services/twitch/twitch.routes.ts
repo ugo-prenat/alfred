@@ -1,16 +1,16 @@
 import { Hono } from 'hono';
+import { handleTwitchWebhook, twitchWebhookAuth } from './twitch.middleware';
+import { createEventSubSubscription } from './twitch.eventsub';
 import {
-  createEventSubSubscription,
   handleGetBroadcasterFollowers,
-  handleGetBroadcasterSubscribers,
-  handleTwitchWebhook
-} from './twitch.controllers';
-import { twitchWebhookAuth } from './twitch.middleware';
+  handleGetBroadcasterSubscribers
+} from './twitch.broadcasters';
 
 const twitchRoute = new Hono();
 
 twitchRoute.post('/eventsub', twitchWebhookAuth, handleTwitchWebhook);
 twitchRoute.post('/eventsub/subscriptions', createEventSubSubscription);
+
 twitchRoute.get(
   '/broadcaster/:broadcasterId/subscribers',
   handleGetBroadcasterSubscribers

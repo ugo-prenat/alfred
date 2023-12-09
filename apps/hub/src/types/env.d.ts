@@ -8,6 +8,8 @@ declare global {
       TWITCH_WEBHOOK_SECRET: string;
       TWITCH_APP_ACCESS_TOKEN: string;
       TWITCH_CLIENT_SECRET: string;
+      TWITCH_WEBHOOK_CALLBACK_URL: string;
+      TEMP_TWITCH_USER_ACCESS_TOKEN: string;
       TWITCH_CLIENT_ID: string;
       MONGO_URI: string;
       TWITTER_API_KEY: string;
