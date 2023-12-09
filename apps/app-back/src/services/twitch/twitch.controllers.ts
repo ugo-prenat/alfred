@@ -11,9 +11,7 @@ export const getTwitchUser = (c: Context) => {
 
   return getUser(fetcherParams)
     .then((res) => c.json(res.data[0]))
-    .catch((err: APIError) =>
-      c.json({ message: err.message, stack: err.stack }, err.status)
-    );
+    .catch((err: APIError) => c.json(logError(err), err.status));
 };
 
 export const getTwitchEventSubSubscriptions = (c: Context) => {
