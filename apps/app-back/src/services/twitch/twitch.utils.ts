@@ -1,4 +1,4 @@
-import { ITwitchFetcherParams } from '@stats-station/utils';
+import { ITwitchFetcherParams } from '@stats-station/models';
 
 export const makeTwitchFetcherParams = (
   twitchAccessToken: string

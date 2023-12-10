@@ -1,8 +1,8 @@
-import { HTTPMethod } from '@stats-station/models';
+import { HTTPMethod, ITwitchFetcherParams } from '@stats-station/models';
 import { fetcher } from './fetcher';
-import { ITwitchFetcherParams, TWITCH_API_URL } from './fetcher.models';
 
 const TWITCH_FETCHER_ORIGIN = 'twitch';
+const TWITCH_API_URL = 'https://api.twitch.tv/helix';
 
 const makeTwitchFetcher =
   (method: HTTPMethod) =>

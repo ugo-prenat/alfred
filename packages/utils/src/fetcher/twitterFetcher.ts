@@ -1,23 +1,26 @@
 import { HTTPMethod, ITwitterFetcherParams } from '@stats-station/models';
 import { fetcher } from './fetcher';
+import { makeTwitterOAuth1a } from './fetcher.utils';
 
 const TWITTER_FETCHER_ORIGIN = 'twitter';
 
 const makeTwitterFetcher =
   (method: HTTPMethod) =>
   <T>(
-    url: string,
-    { host, version }: ITwitterFetcherParams,
+    pathUrl: string,
+    { host, version, authorization }: ITwitterFetcherParams,
     init?: RequestInit
-  ): Promise<T> =>
-    fetcher[method]<T>(`${host}/${version}${url}`, TWITTER_FETCHER_ORIGIN, {
+  ): Promise<T> => {
+    const url = `${host}/${version}${pathUrl}`;
+    return fetcher[method]<T>(url, TWITTER_FETCHER_ORIGIN, {
       ...init,
       headers: {
-        // 'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}`,
+        'Content-Type': 'application/json',
+        Authorization: makeTwitterOAuth1a({ method, url }, authorization),
         ...init?.headers
       }
     });
+  };
 
 export const twitterFetcher = {
   get: makeTwitterFetcher('GET'),

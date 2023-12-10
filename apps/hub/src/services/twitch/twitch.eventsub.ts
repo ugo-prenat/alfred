@@ -2,10 +2,11 @@ import {
   APIError,
   ChannelSubscribe,
   ITwitchEventsub,
+  ITwitchFetcherParams,
   StreamOffline,
   StreamOnline
 } from '@stats-station/models';
-import { ITwitchFetcherParams, logError } from '@stats-station/utils';
+import { logError } from '@stats-station/utils';
 import { Context } from 'hono';
 import {
   makeEventSubRequestBody,

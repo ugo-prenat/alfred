@@ -1,8 +1,9 @@
 import {
   IGetTwitchEventSubSubscriptionResponse,
-  IGetTwitchUsersResponse
+  IGetTwitchUsersResponse,
+  ITwitchFetcherParams
 } from '@stats-station/models';
-import { ITwitchFetcherParams, twitchFetcher } from '@stats-station/utils';
+import { twitchFetcher } from '@stats-station/utils';
 
 export const getUser = (
   fetcherParams: ITwitchFetcherParams

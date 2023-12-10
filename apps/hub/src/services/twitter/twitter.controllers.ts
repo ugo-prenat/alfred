@@ -1,23 +1,22 @@
 import {
   APIError,
-  ICreateTweetResponse,
-  ITwitterFetcherParams
+  ICreateTweetPayload,
+  ITwitterOAuthOptions
 } from '@stats-station/models';
-import { logError, twitterFetcher } from '@stats-station/utils';
+import { logError } from '@stats-station/utils';
 import { Context } from 'hono';
-import { postTweet } from './twitter.api';
+import { createTweet } from './twitter.api';
 
-export const getTwitter = (c: Context) => c.json({ message: 'GET /twitter' });
-
-export const createTweet = (c: Context) => {
-  const fetcherParams: ITwitterFetcherParams = {
-    host: 'https://api.twitter.com',
-    version: '2',
-    bearerToken: process.env.TWITTER_BEARER_TOKEN
+export const handleCreateTweet = (c: Context) => {
+  const oAuthOptions: ITwitterOAuthOptions = {
+    api_key: process.env.TWITTER_API_KEY,
+    api_secret_key: process.env.TWITTER_API_KEY_SECRET,
+    access_token: process.env.TWITTER_ACCESS_TOKEN,
+    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
   };
-  const payload = { text: 'station 🚂' };
+  const payload: ICreateTweetPayload = { text: 'pouet pouet' };
 
-  return postTweet(c, fetcherParams, payload)
+  return createTweet(oAuthOptions, payload)
     .then((res) => c.json(res))
     .catch((err: APIError) => c.json(logError(err), err.status));
 };

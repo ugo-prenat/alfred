@@ -1,5 +1,5 @@
-import { APIError } from '@stats-station/models';
-import { ITwitchFetcherParams, logError } from '@stats-station/utils';
+import { APIError, ITwitchFetcherParams } from '@stats-station/models';
+import { logError } from '@stats-station/utils';
 import { Context } from 'hono';
 import { makeTwitchFetcherParams } from './twitch.utils';
 import { getEventSubSubscriptions, getUser } from './twitch.api';

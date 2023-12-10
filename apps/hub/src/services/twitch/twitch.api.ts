@@ -1,8 +1,9 @@
-import { ITwitchFetcherParams, twitchFetcher } from '@stats-station/utils';
+import { twitchFetcher } from '@stats-station/utils';
 import {
   IGetBroadcasterSubscribersResponse,
   IGetTwitchEventSubSubscriptionResponse,
-  ITwitchEventSubSubscriptionCreation
+  ITwitchEventSubSubscriptionCreation,
+  ITwitchFetcherParams
 } from '@stats-station/models';
 
 export const createEventSubSubscriptions = (

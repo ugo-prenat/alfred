@@ -1,5 +1,10 @@
 import { TWITCH_EVENTSUB_MESSAGE_TYPES } from '@stats-station/constants';
 
+export interface ITwitchFetcherParams {
+  twitchClientId: string;
+  twitchAccessToken: string;
+}
+
 export interface ITwitchUser {
   id: string;
   type: string;

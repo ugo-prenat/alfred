@@ -1,4 +1,3 @@
-import { ITwitchFetcherParams } from '@stats-station/utils';
 import { Context, Next } from 'hono';
 import crypto from 'crypto';
 import {
@@ -7,7 +6,10 @@ import {
   TWITCH_EVENTSUB_HEADER_MESSAGE_TIMESTAMP,
   TWITCH_HMAC_PREFIX
 } from '@stats-station/constants';
-import { ITwitchEventSubSubscriptionCreation } from '@stats-station/models';
+import {
+  ITwitchEventSubSubscriptionCreation,
+  ITwitchFetcherParams
+} from '@stats-station/models';
 
 export const makeTwitchFetcherParams = (
   twitchAccessToken: string
