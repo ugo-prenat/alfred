@@ -14,7 +14,7 @@ export const handleCreateTweet = (c: Context) => {
     access_token: process.env.TWITTER_ACCESS_TOKEN,
     access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
   };
-  const payload: ICreateTweetPayload = { text: 'pouet pouet' };
+  const payload: ICreateTweetPayload = { text: 'station 🚂' };
 
   return createTweet(oAuthOptions, payload)
     .then((res) => c.json(res))

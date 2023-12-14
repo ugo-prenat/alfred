@@ -2,6 +2,7 @@ import { twitchFetcher } from '@stats-station/utils';
 import {
   IGetBroadcasterSubscribersResponse,
   IGetTwitchEventSubSubscriptionResponse,
+  IGetTwitchStreamResponse,
   ITwitchEventSubSubscriptionCreation,
   ITwitchFetcherParams
 } from '@stats-station/models';
@@ -37,3 +38,17 @@ export const getBroadcasterFollowersTotal = (
       fetcherParams
     )
     .then((data) => data.total);
+
+export interface IGetStreamParams {
+  broadcasterId: string;
+  type: 'live' | 'all';
+}
+
+export const getStream = (
+  { broadcasterId, type }: IGetStreamParams,
+  fetcherParams: ITwitchFetcherParams
+): Promise<IGetTwitchStreamResponse> =>
+  twitchFetcher.get<IGetTwitchStreamResponse>(
+    `/streams?user_id=${broadcasterId}&type=${type}`,
+    fetcherParams
+  );

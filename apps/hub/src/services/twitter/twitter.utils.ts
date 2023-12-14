@@ -1,0 +1,27 @@
+import {
+  ITwitchStream,
+  ITwitterOAuthOptions,
+  StreamOnline
+} from '@stats-station/models';
+
+export const makeTwitterOAuthOptions = (): ITwitterOAuthOptions => ({
+  api_key: process.env.TWITTER_API_KEY,
+  api_secret_key: process.env.TWITTER_API_KEY_SECRET,
+  access_token: process.env.TWITTER_ACCESS_TOKEN,
+  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+});
+
+export const makeChannelOnlineTweetText = (
+  event: StreamOnline,
+  stream?: ITwitchStream
+): string => {
+  const { broadcaster_user_name, broadcaster_user_login } = event;
+  if (!stream)
+    return `${broadcaster_user_name} just went live\nhttps://twitch.tv/${broadcaster_user_login}`;
+
+  const { user_name, user_login, game_name, title } = stream;
+  return `${user_name} just went live\n
+  ${title}\n
+  playing ${game_name}\n
+  https://twitch.tv/${user_login}`;
+};

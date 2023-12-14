@@ -117,3 +117,25 @@ export interface IGetBroadcasterSubscribersResponse {
   total: number;
   points: number;
 }
+
+export interface ITwitchStream {
+  id: string;
+  user_id: string;
+  user_login: string;
+  user_name: string;
+  game_id: string;
+  game_name: string;
+  type: 'live' | '';
+  title: string;
+  tags: string[];
+  viewer_count: number;
+  started_at: string;
+  thumbnail_url: string;
+  is_mature: boolean;
+  language: string;
+}
+
+export interface IGetTwitchStreamResponse {
+  data: ITwitchStream[];
+  pagination: { cursor: string };
+}
