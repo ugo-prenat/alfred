@@ -3,8 +3,7 @@ import {
   IGetBroadcasterSubscribersResponse,
   IGetTwitchEventSubSubscriptionResponse,
   IGetTwitchStreamResponse,
-  ITwitchEventSubSubscriptionCreation,
-  ITwitchFetcherParams
+  ITwitchEventSubSubscriptionCreation
 } from '@stats-station/models';
 import { makeTwitchFetcherParams } from './twitch.utils';
 

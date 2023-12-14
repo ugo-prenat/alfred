@@ -8,8 +8,11 @@ import {
 } from '@stats-station/constants';
 import {
   ITwitchEventSubSubscriptionCreation,
-  ITwitchFetcherParams
+  ITwitchFetcherParams,
+  ITwitchStream
 } from '@stats-station/models';
+import { getStream } from './twitch.api';
+import { logError } from '@stats-station/utils';
 
 export const makeTwitchFetcherParams = (
   twitchAccessToken: string
@@ -79,3 +82,13 @@ export const makeEventSubRequestBody = (
     secret: process.env.TWITCH_WEBHOOK_SECRET
   }
 });
+
+export const handleGetStream = (
+  broadcasterId: string
+): Promise<ITwitchStream | null> =>
+  getStream({ broadcasterId, type: 'live' })
+    .then((res) => res.data[0])
+    .catch((err) => {
+      logError(err);
+      return null;
+    });

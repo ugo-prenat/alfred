@@ -1,18 +1,15 @@
 import {
   APIError,
   ChannelSubscribe,
+  IGetTwitchStreamResponse,
   ITwitchEventsub,
-  ITwitchFetcherParams,
-  ITwitterOAuthOptions,
+  ITwitchStream,
   StreamOffline,
   StreamOnline
 } from '@stats-station/models';
 import { logError } from '@stats-station/utils';
 import { Context } from 'hono';
-import {
-  makeEventSubRequestBody,
-  makeTwitchFetcherParams
-} from './twitch.utils';
+import { handleGetStream, makeEventSubRequestBody } from './twitch.utils';
 import { createEventSubSubscriptions, getStream } from './twitch.api';
 import { makeChannelOnlineTweetText } from '../twitter/twitter.utils';
 import { createTweet } from '../twitter/twitter.api';
@@ -39,21 +36,14 @@ export const handleChannelSubscribe = async (c: Context) => {
 export const handleChannelOnline = async (c: Context) => {
   const { event } = (await c.req.json()) as ITwitchEventsub<StreamOnline>;
 
-  return getStream({ broadcasterId: event.broadcaster_user_id, type: 'live' })
-    .then((res) => {
-      const tweetText: string = makeChannelOnlineTweetText(event, res.data[0]);
-      return createTweet({ text: tweetText })
-        .then((res) => c.json(res))
-        .catch((err: APIError) => c.json(logError(err), err.status));
-    })
-    .catch((err: APIError) => {
-      logError(err);
+  const maybeStream: ITwitchStream | null = await handleGetStream(
+    event.broadcaster_user_id
+  );
 
-      const tweetText: string = makeChannelOnlineTweetText(event);
-      return createTweet({ text: tweetText })
-        .then((res) => c.json(res))
-        .catch((err: APIError) => c.json(logError(err), err.status));
-    });
+  const tweetText: string = makeChannelOnlineTweetText(event, maybeStream);
+  return createTweet({ text: tweetText })
+    .then((res) => c.json(res))
+    .catch((err: APIError) => c.json(logError(err), err.status));
 };
 
 export const handleChannelOffline = async (c: Context) => {

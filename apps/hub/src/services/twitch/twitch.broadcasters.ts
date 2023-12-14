@@ -1,11 +1,10 @@
 import { logError } from '@stats-station/utils';
 import { Context } from 'hono';
-import { makeTwitchFetcherParams } from './twitch.utils';
 import {
   getBroadcasterFollowersTotal,
   getBroadcasterSubscribersTotal
 } from './twitch.api';
-import { APIError, ITwitchFetcherParams } from '@stats-station/models';
+import { APIError } from '@stats-station/models';
 
 export const handleGetBroadcasterSubscribers = (c: Context) => {
   const broadcasterId = c.req.param('broadcasterId');

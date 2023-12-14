@@ -13,7 +13,7 @@ export const makeTwitterOAuthOptions = (): ITwitterOAuthOptions => ({
 
 export const makeChannelOnlineTweetText = (
   event: StreamOnline,
-  stream?: ITwitchStream
+  stream: ITwitchStream | null
 ): string => {
   const { broadcaster_user_name, broadcaster_user_login } = event;
   if (!stream)
