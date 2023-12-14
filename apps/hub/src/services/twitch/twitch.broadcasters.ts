@@ -9,22 +9,16 @@ import { APIError, ITwitchFetcherParams } from '@stats-station/models';
 
 export const handleGetBroadcasterSubscribers = (c: Context) => {
   const broadcasterId = c.req.param('broadcasterId');
-  const fetcherParams: ITwitchFetcherParams = makeTwitchFetcherParams(
-    process.env.TEMP_TWITCH_USER_ACCESS_TOKEN
-  );
 
-  return getBroadcasterSubscribersTotal(broadcasterId, fetcherParams)
+  return getBroadcasterSubscribersTotal(broadcasterId)
     .then((total) => c.json({ totalSubscriber: total }))
     .catch((err: APIError) => c.json(logError(err), err.status));
 };
 
 export const handleGetBroadcasterFollowers = (c: Context) => {
   const broadcasterId = c.req.param('broadcasterId');
-  const fetcherParams: ITwitchFetcherParams = makeTwitchFetcherParams(
-    process.env.TEMP_TWITCH_USER_ACCESS_TOKEN
-  );
 
-  return getBroadcasterFollowersTotal(broadcasterId, fetcherParams)
+  return getBroadcasterFollowersTotal(broadcasterId)
     .then((total) => c.json({ totalFollower: total }))
     .catch((err: APIError) => c.json(logError(err), err.status));
 };

@@ -6,36 +6,34 @@ import {
   ITwitchEventSubSubscriptionCreation,
   ITwitchFetcherParams
 } from '@stats-station/models';
+import { makeTwitchFetcherParams } from './twitch.utils';
 
 export const createEventSubSubscriptions = (
-  fetcherParams: ITwitchFetcherParams,
   payload: ITwitchEventSubSubscriptionCreation
 ): Promise<IGetTwitchEventSubSubscriptionResponse> =>
   twitchFetcher.post<IGetTwitchEventSubSubscriptionResponse>(
     '/eventsub/subscriptions',
-    fetcherParams,
+    makeTwitchFetcherParams(process.env.TWITCH_APP_ACCESS_TOKEN),
     { body: JSON.stringify(payload) }
   );
 
 export const getBroadcasterSubscribersTotal = (
-  broadcasterId: string,
-  fetcherParams: ITwitchFetcherParams
+  broadcasterId: string
 ): Promise<number> =>
   twitchFetcher
     .get<IGetBroadcasterSubscribersResponse>(
       `/subscriptions?broadcaster_id=${broadcasterId}&first=1`,
-      fetcherParams
+      makeTwitchFetcherParams(process.env.TEMP_TWITCH_USER_ACCESS_TOKEN)
     )
     .then((data) => data.total);
 
 export const getBroadcasterFollowersTotal = (
-  broadcasterId: string,
-  fetcherParams: ITwitchFetcherParams
+  broadcasterId: string
 ): Promise<number> =>
   twitchFetcher
     .get<IGetBroadcasterSubscribersResponse>(
       `/channels/followers?broadcaster_id=${broadcasterId}&first=1`,
-      fetcherParams
+      makeTwitchFetcherParams(process.env.TEMP_TWITCH_USER_ACCESS_TOKEN)
     )
     .then((data) => data.total);
 
@@ -44,11 +42,11 @@ export interface IGetStreamParams {
   type: 'live' | 'all';
 }
 
-export const getStream = (
-  { broadcasterId, type }: IGetStreamParams,
-  fetcherParams: ITwitchFetcherParams
-): Promise<IGetTwitchStreamResponse> =>
+export const getStream = ({
+  broadcasterId,
+  type
+}: IGetStreamParams): Promise<IGetTwitchStreamResponse> =>
   twitchFetcher.get<IGetTwitchStreamResponse>(
     `/streams?user_id=${broadcasterId}&type=${type}`,
-    fetcherParams
+    makeTwitchFetcherParams(process.env.TWITCH_APP_ACCESS_TOKEN)
   );

@@ -1,19 +1,16 @@
 import {
   ICreateTweetPayload,
   ICreateTweetResponse,
-  ITwitterFetcherParams,
-  ITwitterOAuthOptions
+  ITwitterFetcherParams
 } from '@stats-station/models';
 import { twitterFetcher } from '@stats-station/utils';
+import { makeTwitterOAuthOptions } from './twitter.utils';
 
-export const createTweet = (
-  oAuthOptions: ITwitterOAuthOptions,
-  payload: ICreateTweetPayload
-) => {
+export const createTweet = (payload: ICreateTweetPayload) => {
   const fetcherParams: ITwitterFetcherParams = {
     host: 'https://api.twitter.com',
     version: '2',
-    authorization: oAuthOptions
+    authorization: makeTwitterOAuthOptions()
   };
 
   return twitterFetcher.post<ICreateTweetResponse>('/tweets', fetcherParams, {
