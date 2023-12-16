@@ -1,7 +1,7 @@
 import {
   APIError,
   ChannelSubscribe,
-  IGetTwitchStreamResponse,
+  ITwitchClip,
   ITwitchEventsub,
   ITwitchStream,
   StreamOffline,
@@ -9,9 +9,16 @@ import {
 } from '@stats-station/models';
 import { logError } from '@stats-station/utils';
 import { Context } from 'hono';
-import { handleGetStream, makeEventSubRequestBody } from './twitch.utils';
-import { createEventSubSubscriptions, getStream } from './twitch.api';
-import { makeChannelOnlineTweetText } from '../twitter/twitter.utils';
+import {
+  handleGetLastStream,
+  handleGetMostViewedStreamClip,
+  makeEventSubRequestBody
+} from './twitch.utils';
+import { createEventSubSubscriptions } from './twitch.api';
+import {
+  makeStreamOfflineTweetText,
+  makeStreamOnlineTweetText
+} from '../twitter/twitter.utils';
 import { createTweet } from '../twitter/twitter.api';
 
 export const createEventSubSubscription = (c: Context) => {
@@ -33,22 +40,28 @@ export const handleChannelSubscribe = async (c: Context) => {
   });
 };
 
-export const handleChannelOnline = async (c: Context) => {
+export const handleStreamOnline = async (c: Context) => {
   const { event } = (await c.req.json()) as ITwitchEventsub<StreamOnline>;
 
-  const maybeStream: ITwitchStream | null = await handleGetStream(
+  const maybeStream: ITwitchStream | null = await handleGetLastStream(
     event.broadcaster_user_id
   );
 
-  const tweetText: string = makeChannelOnlineTweetText(event, maybeStream);
+  const tweetText: string = makeStreamOnlineTweetText(event, maybeStream);
   return createTweet({ text: tweetText })
     .then((res) => c.json(res))
     .catch((err: APIError) => c.json(logError(err), err.status));
 };
 
-export const handleChannelOffline = async (c: Context) => {
+export const handleStreamOffline = async (c: Context) => {
   const { event } = (await c.req.json()) as ITwitchEventsub<StreamOffline>;
-  return c.json({
-    message: `${event.broadcaster_user_name} just went offline`
-  });
+  const { broadcaster_user_id } = event;
+
+  const maybeClip: ITwitchClip | null =
+    await handleGetMostViewedStreamClip(broadcaster_user_id);
+
+  const tweetText: string = makeStreamOfflineTweetText(event, maybeClip);
+  return createTweet({ text: tweetText })
+    .then((res) => c.json(res))
+    .catch((err: APIError) => c.json(logError(err), err.status));
 };

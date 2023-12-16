@@ -7,11 +7,12 @@ import {
   TWITCH_HMAC_PREFIX
 } from '@stats-station/constants';
 import {
+  ITwitchClip,
   ITwitchEventSubSubscriptionCreation,
   ITwitchFetcherParams,
   ITwitchStream
 } from '@stats-station/models';
-import { getStream } from './twitch.api';
+import { getClips, getStream } from './twitch.api';
 import { logError } from '@stats-station/utils';
 
 export const makeTwitchFetcherParams = (
@@ -83,7 +84,7 @@ export const makeEventSubRequestBody = (
   }
 });
 
-export const handleGetStream = (
+export const handleGetLastStream = (
   broadcasterId: string
 ): Promise<ITwitchStream | null> =>
   getStream({ broadcasterId, type: 'live' })
@@ -92,3 +93,22 @@ export const handleGetStream = (
       logError(err);
       return null;
     });
+
+export const handleGetMostViewedStreamClip = async (
+  broadcasterId: string
+): Promise<ITwitchClip | null> => {
+  const maybeStream: ITwitchStream | null =
+    await handleGetLastStream(broadcasterId);
+
+  if (!maybeStream) return null;
+
+  const { started_at: startedAt } = maybeStream;
+  const endedAt = new Date().toISOString();
+
+  return getClips({ broadcasterId, startedAt, endedAt })
+    .then((res) => res.data[0])
+    .catch((err) => {
+      logError(err);
+      return null;
+    });
+};
