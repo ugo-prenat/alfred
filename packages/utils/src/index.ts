@@ -1,9 +1,9 @@
-export * from './logger/hono.logger';
-export * from './logger/pino.logger';
+export * from './loggers/hono.loggers';
+export * from './loggers/api.loggers';
 
-export * from './fetcher/fetcher';
-export * from './fetcher/twitchFetcher';
-export * from './fetcher/twitterFetcher';
+export * from './fetchers/fetcher';
+export * from './fetchers/twitchFetcher';
+export * from './fetchers/twitterFetcher';
 
 export * from './errors/errors';
 

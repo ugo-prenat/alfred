@@ -1,4 +1,4 @@
-import pino, { DestinationStream, TransportMultiOptions } from 'pino';
+import pino, { DestinationStream } from 'pino';
 
 interface IPinoTransport {
   target: string;
@@ -15,7 +15,7 @@ const fileTransport: IPinoTransport = {
   target: 'pino-pretty',
   options: {
     ignore: 'pid,hostname',
-    destination: './logs/output.log',
+    destination: `./logs/${process.env.npm_package_name}.log`,
     translateTime: 'SYS:standard',
     mkdir: true
   }
@@ -35,4 +35,6 @@ const transport: DestinationStream = pino.transport({
   targets: [fileTransport, terminalTransport]
 });
 
-export const logger = pino(transport);
+export const logger = pino(transport).child({
+  name: process.env.npm_package_name
+});

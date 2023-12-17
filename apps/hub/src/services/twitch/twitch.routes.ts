@@ -22,7 +22,7 @@ twitchRoute.get(
 );
 
 twitchRoute.get('/', (c: Context) => {
-  logger.warn({ foo: Math.random() }, 'Hello Twitch!');
+  logger.warn({ foo: process.env.npm_package_name }, 'Hello Twitch!');
   return c.json({ message: 'Hello Twitch!' });
 });
 
