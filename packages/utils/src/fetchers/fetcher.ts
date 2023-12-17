@@ -15,8 +15,8 @@ const makeFetcher =
         return res.json().then((data) => {
           throw new APIError(res.statusText, res.status, {
             api: origin,
-            url,
             method,
+            url,
             ...getPayload(init),
             response: data
           });
@@ -26,8 +26,8 @@ const makeFetcher =
         if (err instanceof APIError) throw err;
         throw new APIError(err.message, err.status || 500, {
           api: origin,
-          url,
           method,
+          url,
           ...getPayload(init),
           response: err.message
         });

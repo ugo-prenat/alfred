@@ -1,7 +1,7 @@
 export interface IOrigin {
   api: string;
-  url: string;
   method: string;
+  url: string;
   payload?: any;
   response?: any;
 }

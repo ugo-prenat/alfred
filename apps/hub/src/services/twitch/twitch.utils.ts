@@ -13,7 +13,7 @@ import {
   ITwitchStream
 } from '@stats-station/models';
 import { getClips, getStream } from './twitch.api';
-import { logError } from '@stats-station/utils';
+import { logError, logger } from '@stats-station/utils';
 
 export const makeTwitchFetcherParams = (
   twitchAccessToken: string
@@ -39,7 +39,10 @@ export const verifySignature = async (c: Context, next: Next) => {
     headers.get(TWITCH_MESSAGE_SIGNATURE)
   );
 
-  if (!isValidSignature) return c.json({ error: 'Invalid signature' }, 403);
+  if (!isValidSignature) {
+    logger.error('invalid signature from Twitch');
+    return c.json({ error: 'Invalid signature' }, 403);
+  }
   await next();
 };
 

@@ -16,7 +16,7 @@ const fileTransport: IPinoTransport = {
   options: {
     ignore: 'pid,hostname',
     destination: `./logs/${process.env.npm_package_name}.log`,
-    translateTime: 'SYS:standard',
+    translateTime: 'SYS:yyyy-mm-dd hh:MM:ss',
     mkdir: true
   }
 };
@@ -35,6 +35,4 @@ const transport: DestinationStream = pino.transport({
   targets: [fileTransport, terminalTransport]
 });
 
-export const logger = pino(transport).child({
-  name: process.env.npm_package_name
-});
+export const logger = pino({ name: process.env.npm_package_name }, transport);

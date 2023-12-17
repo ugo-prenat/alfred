@@ -21,9 +21,4 @@ twitchRoute.get(
   handleGetBroadcasterFollowers
 );
 
-twitchRoute.get('/', (c: Context) => {
-  logger.warn({ foo: process.env.npm_package_name }, 'Hello Twitch!');
-  return c.json({ message: 'Hello Twitch!' });
-});
-
 export default twitchRoute;
