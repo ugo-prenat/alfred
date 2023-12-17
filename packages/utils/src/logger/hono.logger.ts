@@ -1,7 +1,7 @@
 import { HonoRequest } from 'hono';
 import { MiddlewareHandler } from 'hono/types';
 
-export const logger = (): MiddlewareHandler => {
+export const honoLogger = (): MiddlewareHandler => {
   return async (c, next) => {
     const req = c.req;
 
