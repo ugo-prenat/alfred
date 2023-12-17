@@ -1,14 +1,9 @@
-import pino, { DestinationStream } from 'pino';
+import { APIError, IOrigin } from '@stats-station/models';
+import pino, { DestinationStream, Logger } from 'pino';
 
 interface IPinoTransport {
   target: string;
-  options: {
-    ignore?: string;
-    destination?: string | number;
-    translateTime?: string;
-    colorize?: boolean;
-    mkdir?: boolean;
-  };
+  options: { [key: string]: unknown };
 }
 
 const fileTransport: IPinoTransport = {
@@ -31,8 +26,40 @@ const terminalTransport: IPinoTransport = {
   }
 };
 
-const transport: DestinationStream = pino.transport({
-  targets: [fileTransport, terminalTransport]
+const makeBetterStackTransport = (sourceToken: string): IPinoTransport => ({
+  target: '@logtail/pino',
+  options: { sourceToken }
 });
 
-export const logger = pino({ name: process.env.npm_package_name }, transport);
+const makeTransport = (betterStackSourceToken: string): DestinationStream =>
+  pino.transport({
+    targets: [
+      fileTransport,
+      terminalTransport,
+      makeBetterStackTransport(betterStackSourceToken)
+    ]
+  });
+
+export const logError = (logger: Logger<string>) => (err: APIError) => {
+  const error = {
+    status: err.status,
+    origin: err.origin
+  };
+  logger.error({ origin: error.origin }, err.message);
+  return error;
+};
+
+interface ICreateLoggerProps {
+  name: string;
+  betterStackSourceToken: string;
+  level?: string;
+}
+
+export const createLogger = ({
+  name,
+  level,
+  betterStackSourceToken
+}: ICreateLoggerProps) => {
+  const logger = pino({ name, level }, makeTransport(betterStackSourceToken));
+  return { logger, logError: logError(logger) };
+};

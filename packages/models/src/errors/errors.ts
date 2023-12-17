@@ -2,8 +2,8 @@ export interface IOrigin {
   api: string;
   method: string;
   url: string;
-  payload?: any;
-  response?: any;
+  payload?: unknown;
+  response?: unknown;
 }
 
 export class APIError extends Error {

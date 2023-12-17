@@ -1,7 +1,7 @@
 import { APIError, ICreateTweetPayload } from '@stats-station/models';
-import { logError } from '@stats-station/utils';
 import { Context } from 'hono';
 import { createTweet } from './twitter.api';
+import { logError } from '@/utils/logger.utils';
 
 export const handleCreateTweet = (c: Context) => {
   const payload: ICreateTweetPayload = { text: 'station 🚂' };

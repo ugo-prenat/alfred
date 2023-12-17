@@ -5,6 +5,8 @@ declare global {
     interface ProcessEnv {
       PORT: number;
       NODE_ENV: NodeEnv;
+      LOG_LEVEL: string;
+      BETTERSTACK_SOURCE_TOKEN: string;
       TWITCH_WEBHOOK_SECRET: string;
       TWITCH_APP_ACCESS_TOKEN: string;
       TWITCH_CLIENT_SECRET: string;

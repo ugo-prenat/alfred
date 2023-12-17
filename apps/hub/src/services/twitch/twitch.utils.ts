@@ -13,7 +13,7 @@ import {
   ITwitchStream
 } from '@stats-station/models';
 import { getClips, getStream } from './twitch.api';
-import { logError, logger } from '@stats-station/utils';
+import { logError, logger } from '@/utils/logger.utils';
 
 export const makeTwitchFetcherParams = (
   twitchAccessToken: string
@@ -88,20 +88,34 @@ export const makeEventSubRequestBody = (
 });
 
 export const handleGetLastStream = (
-  broadcasterId: string
+  broadcasterId: string,
+  broadcasterName: string
 ): Promise<ITwitchStream | null> =>
   getStream({ broadcasterId, type: 'live' })
-    .then((res) => res.data[0])
+    .then((res) => {
+      const maybeStream: ITwitchStream | undefined = res.data[0];
+      if (!maybeStream) {
+        logger.warn(
+          res,
+          `no live stream found for Twitch broadcaster ${broadcasterName}`
+        );
+        return null;
+      }
+      return maybeStream;
+    })
     .catch((err) => {
-      logError(err);
+      logger.warn(err, "can't getting last stream");
       return null;
     });
 
 export const handleGetMostViewedStreamClip = async (
-  broadcasterId: string
+  broadcasterId: string,
+  broadcasterName: string
 ): Promise<ITwitchClip | null> => {
-  const maybeStream: ITwitchStream | null =
-    await handleGetLastStream(broadcasterId);
+  const maybeStream: ITwitchStream | null = await handleGetLastStream(
+    broadcasterId,
+    broadcasterName
+  );
 
   if (!maybeStream) return null;
 
@@ -109,7 +123,17 @@ export const handleGetMostViewedStreamClip = async (
   const endedAt = new Date().toISOString();
 
   return getClips({ broadcasterId, startedAt, endedAt })
-    .then((res) => res.data[0])
+    .then((res) => {
+      const maybeClip: ITwitchClip | undefined = res.data[0];
+      if (!maybeClip) {
+        logger.warn(
+          res,
+          `no clips found for last stream of Twitch broadcaster ${broadcasterName}`
+        );
+        return null;
+      }
+      return maybeClip;
+    })
     .catch((err) => {
       logError(err);
       return null;

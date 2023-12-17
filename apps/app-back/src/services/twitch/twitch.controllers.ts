@@ -1,8 +1,8 @@
 import { APIError, ITwitchFetcherParams } from '@stats-station/models';
-import { logError } from '@stats-station/utils';
 import { Context } from 'hono';
 import { makeTwitchFetcherParams } from './twitch.utils';
 import { getEventSubSubscriptions, getUser } from './twitch.api';
+import { logError } from '@/utils/logger.utils';
 
 export const getTwitchUser = (c: Context) => {
   const twitchAccessToken = c.req.param('twitchAccessToken');

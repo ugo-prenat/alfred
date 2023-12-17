@@ -14,7 +14,8 @@
     "@stats-station/models": "workspace:*",
     "@stats-station/utils": "workspace:*",
     "hono": "^3.10.1",
-    "mongoose": "^8.0.1"
+    "mongoose": "^8.0.1",
+    "pino": "^8.17.1"
   },
   "devDependencies": {
     "@stats-station/eslint-config": "workspace:*",

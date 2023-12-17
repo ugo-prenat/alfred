@@ -9,6 +9,7 @@
     "build": "tsup src/index.ts"
   },
   "dependencies": {
+    "@logtail/pino": "^0.4.17",
     "@stats-station/models": "workspace:*",
     "hono": "^3.10.1",
     "pino": "^8.17.1",

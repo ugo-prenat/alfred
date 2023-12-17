@@ -1,7 +1,7 @@
 import { serve } from '@hono/node-server';
 import { createServer } from './server';
 import { dbConnect } from './db.config';
-import { logger } from '@stats-station/utils';
+import { logger } from './utils/logger.utils';
 
 const port = process.env.PORT;
 const server = createServer();

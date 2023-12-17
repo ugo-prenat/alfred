@@ -7,7 +7,6 @@ import {
   StreamOffline,
   StreamOnline
 } from '@stats-station/models';
-import { logError } from '@stats-station/utils';
 import { Context } from 'hono';
 import {
   handleGetLastStream,
@@ -20,6 +19,7 @@ import {
   makeStreamOnlineTweetText
 } from '../twitter/twitter.utils';
 import { createTweet } from '../twitter/twitter.api';
+import { logError } from '@/utils/logger.utils';
 
 export const createEventSubSubscription = (c: Context) => {
   const payload = makeEventSubRequestBody({
@@ -42,9 +42,11 @@ export const handleChannelSubscribe = async (c: Context) => {
 
 export const handleStreamOnline = async (c: Context) => {
   const { event } = (await c.req.json()) as ITwitchEventsub<StreamOnline>;
+  const { broadcaster_user_id, broadcaster_user_name } = event;
 
   const maybeStream: ITwitchStream | null = await handleGetLastStream(
-    event.broadcaster_user_id
+    broadcaster_user_id,
+    broadcaster_user_name
   );
 
   const tweetText: string = makeStreamOnlineTweetText(event, maybeStream);
@@ -55,10 +57,12 @@ export const handleStreamOnline = async (c: Context) => {
 
 export const handleStreamOffline = async (c: Context) => {
   const { event } = (await c.req.json()) as ITwitchEventsub<StreamOffline>;
-  const { broadcaster_user_id } = event;
+  const { broadcaster_user_id, broadcaster_user_name } = event;
 
-  const maybeClip: ITwitchClip | null =
-    await handleGetMostViewedStreamClip(broadcaster_user_id);
+  const maybeClip: ITwitchClip | null = await handleGetMostViewedStreamClip(
+    broadcaster_user_id,
+    broadcaster_user_name
+  );
 
   const tweetText: string = makeStreamOfflineTweetText(event, maybeClip);
   return createTweet({ text: tweetText })
