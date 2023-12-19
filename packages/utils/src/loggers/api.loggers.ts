@@ -1,4 +1,4 @@
-import { APIError, IOrigin } from '@stats-station/models';
+import { API, APIError, IOrigin } from '@stats-station/models';
 import pino, { DestinationStream, Logger } from 'pino';
 
 interface IPinoTransport {
@@ -50,7 +50,7 @@ export const logError = (logger: Logger<string>) => (err: APIError) => {
 };
 
 interface ICreateLoggerProps {
-  name: string;
+  name: API;
   betterStackSourceToken: string;
   level?: string;
 }
