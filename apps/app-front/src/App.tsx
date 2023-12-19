@@ -22,7 +22,7 @@ const App = () => {
 
   useEffect(() => {
     if (twitchToken) {
-      fetch(`http://localhost:3000/twitch/broadcasters/${twitchToken}`)
+      fetch(`http://localhost:3000/twitch/broadcaster?token=${twitchToken}`)
         .then((res) => res.json())
         .then((data: ITwitchBroadcaster) => setBroadcaster(data));
     }

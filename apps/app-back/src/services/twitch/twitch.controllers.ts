@@ -1,12 +1,22 @@
 import { APIError, ITwitchFetcherParams } from '@stats-station/models';
 import { Context } from 'hono';
 import { handleGetBroadcaster, makeTwitchFetcherParams } from './twitch.utils';
-import { getBroadcaster, getEventSubSubscriptions } from './twitch.api';
+import { getEventSubSubscriptions } from './twitch.api';
 import { logError } from '@/utils/logger.utils';
-import { isEmpty } from '@stats-station/utils';
 
 export const getTwitchUser = (c: Context) => {
-  const twitchAccessToken = c.req.param('twitchAccessToken');
+  const twitchAccessToken = c.req.query('token');
+  const { method, url } = c.req.raw;
+
+  if (!twitchAccessToken) {
+    const error = new APIError('No access token provided', 400, {
+      api: 'app-back',
+      method,
+      url
+    });
+    return c.json(logError(error), 400);
+  }
+
   const fetcherParams: ITwitchFetcherParams =
     makeTwitchFetcherParams(twitchAccessToken);
 

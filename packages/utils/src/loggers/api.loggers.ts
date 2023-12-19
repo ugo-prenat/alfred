@@ -42,10 +42,10 @@ const makeTransport = (betterStackSourceToken: string): DestinationStream =>
 
 export const logError = (logger: Logger<string>) => (err: APIError) => {
   const error = {
-    status: err.status,
+    message: err.message,
     origin: err.origin
   };
-  logger.error({ origin: error.origin }, err.message);
+  logger.error({ message: error.message, origin: error.origin }, err.message);
   return error;
 };
 

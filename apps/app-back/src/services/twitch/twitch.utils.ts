@@ -5,7 +5,6 @@ import {
 } from '@stats-station/models';
 import { getBroadcaster } from './twitch.api';
 import { TWITCH_API_URL, isEmpty } from '@stats-station/utils';
-import { logger } from '@/utils/logger.utils';
 
 export const makeTwitchFetcherParams = (
   twitchAccessToken: string

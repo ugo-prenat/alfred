@@ -6,7 +6,7 @@ import {
 
 const twitchRoute = new Hono();
 
-twitchRoute.get('/broadcasters/:twitchAccessToken', getTwitchUser);
+twitchRoute.get('/broadcaster', getTwitchUser);
 twitchRoute.get(
   '/broadcasters/eventsub/subscriptions',
   getTwitchEventSubSubscriptions
