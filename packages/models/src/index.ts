@@ -1,5 +1,5 @@
 export * from './bots.models';
-export * from './streamers.models';
+export * from './broadcasters.models';
 export * from './twitch.models';
 export * from './twitter.models';
 export * from './errors/errors';

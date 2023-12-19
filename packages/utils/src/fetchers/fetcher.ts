@@ -1,9 +1,9 @@
-import { APIError, HTTPMethod } from '@stats-station/models';
+import { API, APIError, HTTPMethod } from '@stats-station/models';
 import { getPayload } from './fetcher.utils';
 
 const makeFetcher =
   (method: HTTPMethod) =>
-  <T>(url: string, origin: string, init?: RequestInit): Promise<T> =>
+  <T>(url: string, origin: API, init?: RequestInit): Promise<T> =>
     fetch(url, {
       headers: { 'Content-Type': 'application/json', ...init?.headers },
       method,

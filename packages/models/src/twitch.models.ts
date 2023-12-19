@@ -5,7 +5,7 @@ export interface ITwitchFetcherParams {
   twitchAccessToken: string;
 }
 
-export interface ITwitchUser {
+export interface ITwitchBroadcaster {
   id: string;
   type: string;
   login: string;
@@ -17,8 +17,8 @@ export interface ITwitchUser {
   profile_image_url: string;
   offline_image_url: string;
 }
-export interface IGetTwitchUsersResponse {
-  data: ITwitchUser[];
+export interface IGetTwitchBroadcastersResponse {
+  data: ITwitchBroadcaster[];
 }
 
 export interface ITwitchEventSubSubscription {

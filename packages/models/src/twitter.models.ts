@@ -1,4 +1,4 @@
-import { HTTPMethod } from '../dist';
+import { HTTPMethod } from './common.models';
 
 export interface ITwitterFetcherParams {
   host: 'https://api.twitter.com' | 'https://upload.twitter.com';

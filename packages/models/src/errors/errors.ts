@@ -1,5 +1,7 @@
+export type API = 'app-back' | 'hub' | 'scheduler' | 'twitch' | 'twitter';
+
 export interface IOrigin {
-  api: string;
+  api: API;
   method: string;
   url: string;
   payload?: unknown;

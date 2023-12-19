@@ -1,5 +1,9 @@
+import { ITwitchBroadcaster } from '@stats-station/models';
+import { useEffect, useState } from 'react';
+
 const App = () => {
   const twitchToken = document.location.hash.split('&')[0].split('=')[1];
+  const [broadcaster, setBroadcaster] = useState<ITwitchBroadcaster>();
 
   const handleClick = () => {
     const twitchClientId = import.meta.env.VITE_TWITCH_CLIENT_ID;
@@ -16,6 +20,14 @@ const App = () => {
     window.location.href = twitchAuthUrl;
   };
 
+  useEffect(() => {
+    if (twitchToken) {
+      fetch(`http://localhost:3000/twitch/broadcasters/${twitchToken}`)
+        .then((res) => res.json())
+        .then((data: ITwitchBroadcaster) => setBroadcaster(data));
+    }
+  }, []);
+
   return (
     <div
       style={{
@@ -27,7 +39,7 @@ const App = () => {
       }}
     >
       <button onClick={handleClick}>Twitch auth</button>
-      {twitchToken && <p>{twitchToken}</p>}
+      {broadcaster ? <p>{broadcaster.display_name}</p> : <p>no broadcaster</p>}
     </div>
   );
 };
