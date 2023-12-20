@@ -3,7 +3,6 @@ import { validator as honoValidator } from 'hono/validator';
 import { ZodSchema, z } from 'zod';
 import { API, APIError } from '@stats-station/models';
 
-type HasUndefined<T> = undefined extends T ? true : false;
 interface IValidatorAPIError {
   message: string;
   status: number;
@@ -18,14 +17,10 @@ const validator =
     I = z.input<T>,
     O = z.output<T>,
     V extends {
-      in: HasUndefined<I> extends true
-        ? { [K in Target]?: I }
-        : { [K in Target]: I };
+      in: { [K in Target]: I };
       out: { [K in Target]: O };
     } = {
-      in: HasUndefined<I> extends true
-        ? { [K in Target]?: I }
-        : { [K in Target]: I };
+      in: { [K in Target]: I };
       out: { [K in Target]: O };
     }
   >(

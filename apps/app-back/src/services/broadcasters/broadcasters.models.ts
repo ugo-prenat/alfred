@@ -1,4 +1,4 @@
-import { z, ZodSchema, ZodType } from 'zod';
+import { z, ZodSchema } from 'zod';
 
 export interface ICreateBroadcasterPayload {
   twitchToken: string;

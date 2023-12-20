@@ -3,6 +3,7 @@ import { Hono } from 'hono';
 import { honoLogger } from '@stats-station/utils';
 import twitchRoute from './services/twitch/twitch.routes';
 import { logger } from './utils/logger.utils';
+import broadcastersRoute from './services/broadcasters/broadcasters.routes';
 
 export const createServer = () => {
   const app = new Hono();
@@ -10,8 +11,8 @@ export const createServer = () => {
   app.use('*', cors());
   app.use('*', honoLogger());
 
-  app.get('/', (c) => c.json({ message: 'welcome to app-back' }));
   app.route('/twitch', twitchRoute);
+  app.route('/broadcasters', broadcastersRoute);
 
   app.notFound((c) => {
     logger.error(`route ${c.req.path} not found`);

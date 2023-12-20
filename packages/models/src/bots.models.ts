@@ -1,7 +1,6 @@
 export type BotStatus = 'pending' | 'active' | 'inactive';
 
-export interface IBot {
-  id: string;
+export interface IRawBot {
   name: string;
   username: string;
   status: BotStatus;
@@ -18,6 +17,10 @@ export interface ITwitterCredentials {
   bearerToken: 'peut-être possible juste avec le bearer token';
 }
 
-export interface IAPIBot extends Omit<IBot, 'id'> {
+export interface IAPIBot extends IRawBot {
   _id: string;
+}
+
+export interface IBot extends IRawBot {
+  id: string;
 }

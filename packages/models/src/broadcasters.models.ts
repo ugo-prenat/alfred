@@ -1,21 +1,24 @@
-import { ROLES, TWITCH_BROADCASTER_TYPES } from '@stats-station/constants';
+import { ROLES } from '@stats-station/constants';
+import { TwitchBroadcasterType } from './twitch.models';
 
-export type TwitchBroadcasterType = (typeof TWITCH_BROADCASTER_TYPES)[number];
 export type BroadcasterRole = (typeof ROLES)[number];
 
-export interface Ibroadcaster {
-  id: string;
+export interface IRawBroadcaster {
   name: string;
   email: string;
   botId: string;
   username: string;
-  twitchId: number;
+  twitchId: string;
   role: BroadcasterRole;
   twitchToken: string;
   profileImgUrl: string;
   broadcasterType: TwitchBroadcasterType;
 }
 
-export interface IAPIbroadcaster extends Omit<Ibroadcaster, 'id'> {
+export interface IAPIBroadcaster extends IRawBroadcaster {
   _id: string;
+}
+
+export interface IBroadcaster extends IRawBroadcaster {
+  id: string;
 }

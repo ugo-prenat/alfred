@@ -9,3 +9,4 @@ export * from './fetchers/fetcher.utils';
 export * from './utils';
 
 export * from './validators/validators';
+export * from './validators/validators.models';

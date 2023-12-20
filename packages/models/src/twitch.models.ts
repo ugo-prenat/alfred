@@ -1,4 +1,9 @@
-import { TWITCH_EVENTSUB_MESSAGE_TYPES } from '@stats-station/constants';
+import {
+  TWITCH_BROADCASTER_TYPES,
+  TWITCH_EVENTSUB_MESSAGE_TYPES
+} from '@stats-station/constants';
+
+export type TwitchBroadcasterType = (typeof TWITCH_BROADCASTER_TYPES)[number];
 
 export interface ITwitchFetcherParams {
   twitchClientId: string;
@@ -13,7 +18,7 @@ export interface ITwitchBroadcaster {
   created_at: string;
   description: string;
   display_name: string;
-  broadcaster_type: string;
+  broadcaster_type: TwitchBroadcasterType;
   profile_image_url: string;
   offline_image_url: string;
 }
