@@ -7,3 +7,5 @@ export * from './fetchers/twitterFetcher';
 export * from './fetchers/fetcher.utils';
 
 export * from './utils';
+
+export * from './validators/validators';

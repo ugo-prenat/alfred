@@ -22,7 +22,10 @@ const App = () => {
 
   useEffect(() => {
     if (twitchToken) {
-      fetch(`http://localhost:3000/twitch/broadcaster?token=${twitchToken}`)
+      fetch('http://localhost:3000/twitch/broadcasters', {
+        method: 'POST',
+        body: JSON.stringify({ twitchToken })
+      })
         .then((res) => res.json())
         .then((data: ITwitchBroadcaster) => setBroadcaster(data));
     }

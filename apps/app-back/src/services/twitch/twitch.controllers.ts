@@ -1,10 +1,11 @@
 import { APIError, ITwitchFetcherParams } from '@stats-station/models';
-import { Context } from 'hono';
+import { Context, Env } from 'hono';
 import { handleGetBroadcaster, makeTwitchFetcherParams } from './twitch.utils';
 import { getEventSubSubscriptions } from './twitch.api';
 import { logError } from '@/utils/logger.utils';
+import { ICreateBroadcasterPayload } from './twitch.models';
 
-export const getTwitchUser = (c: Context) => {
+export const getTwitchBroadcaster = (c: Context) => {
   const twitchAccessToken = c.req.query('token');
   const { method, url } = c.req.raw;
 
@@ -23,6 +24,14 @@ export const getTwitchUser = (c: Context) => {
   return handleGetBroadcaster(fetcherParams)
     .then((res) => c.json(res))
     .catch((err: APIError) => c.json(logError(err), err.status));
+};
+
+export const createTwitchBroadcaster = async (c: Context) => {
+  const twitchToken = await c.req.json();
+
+  const maybeBroadcaster = '';
+
+  return c.json({ message: 'ok' });
 };
 
 export const getTwitchEventSubSubscriptions = (c: Context) => {

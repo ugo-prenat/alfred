@@ -1,12 +1,20 @@
 import { Hono } from 'hono';
 import {
-  getTwitchUser,
+  createTwitchBroadcaster,
+  getTwitchBroadcaster,
   getTwitchEventSubSubscriptions
 } from './twitch.controllers';
+import { payloadValidator } from '@stats-station/utils';
+import { createBrodcasterSchema } from './twitch.models';
 
 const twitchRoute = new Hono();
 
-twitchRoute.get('/broadcaster', getTwitchUser);
+twitchRoute.get('/broadcasters', getTwitchBroadcaster);
+twitchRoute.post(
+  '/broadcasters',
+  payloadValidator(createBrodcasterSchema),
+  createTwitchBroadcaster
+);
 twitchRoute.get(
   '/broadcasters/eventsub/subscriptions',
   getTwitchEventSubSubscriptions

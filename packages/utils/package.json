@@ -13,7 +13,8 @@
     "@stats-station/models": "workspace:*",
     "hono": "^3.10.1",
     "pino": "^8.17.1",
-    "pino-pretty": "^10.3.0"
+    "pino-pretty": "^10.3.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@stats-station/tsconfig": "workspace:*",
