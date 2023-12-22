@@ -4,7 +4,7 @@ import {
   ITwitterOAuthOptions,
   StreamOffline,
   StreamOnline
-} from '@stats-station/models';
+} from '@alfred/models';
 
 export const makeTwitterOAuthOptions = (): ITwitterOAuthOptions => ({
   api_key: process.env.TWITTER_API_KEY,

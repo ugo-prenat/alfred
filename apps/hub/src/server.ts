@@ -1,10 +1,10 @@
 import { cors } from 'hono/cors';
 import { Hono } from 'hono';
-import { honoLogger } from '@stats-station/utils';
+import { honoLogger } from '@alfred/utils';
 import twitterRoute from './services/twitter/twitter.routes';
 import twitchRoute from './services/twitch/twitch.routes';
 import { logError, logger } from './utils/logger.utils';
-import { APIError } from '@stats-station/models';
+import { APIError } from '@alfred/models';
 
 export const createServer = () => {
   const app = new Hono();

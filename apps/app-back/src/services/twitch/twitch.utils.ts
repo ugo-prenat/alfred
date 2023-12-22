@@ -2,9 +2,9 @@ import {
   APIError,
   ITwitchBroadcaster,
   ITwitchFetcherParams
-} from '@stats-station/models';
+} from '@alfred/models';
 import { getBroadcaster } from './twitch.api';
-import { TWITCH_API_URL, isEmpty } from '@stats-station/utils';
+import { TWITCH_API_URL, isEmpty } from '@alfred/utils';
 
 export const makeTwitchFetcherParams = (
   twitchAccessToken: string

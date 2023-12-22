@@ -7,16 +7,16 @@ export const SCHEDULER = 'scheduler';
 export const APPS = [APP_FRONT, APP_BACK, HUB, SCHEDULER] as const;
 
 // URLS
-export const APP_FRONT_PROD_URL = 'https://app.stats-station.com';
+export const APP_FRONT_PROD_URL = 'https://app.alfred.com';
 export const APP_FRONT_DEV_URL = 'http://localhost:5173';
 
-export const APP_BACK_PROD_URL = 'https://api.stats-station.com';
+export const APP_BACK_PROD_URL = 'https://api.alfred.com';
 export const APP_BACK_DEV_URL = 'http://localhost:3000';
 
-export const HUB_PROD_URL = 'https://hub.stats-station.com';
+export const HUB_PROD_URL = 'https://hub.alfred.com';
 export const HUB_DEV_URL = 'http://localhost:3001';
 
-export const SCHEDULER_PROD_URL = 'https://scheduler.stats-station.com';
+export const SCHEDULER_PROD_URL = 'https://scheduler.alfred.com';
 export const SCHEDULER_DEV_URL = 'http://localhost:3002';
 
 type IUrlsConf = {

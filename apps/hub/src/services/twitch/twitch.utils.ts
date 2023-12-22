@@ -5,13 +5,13 @@ import {
   TWITCH_EVENTSUB_HEADER_MESSAGE_SIGNATURE,
   TWITCH_EVENTSUB_HEADER_MESSAGE_TIMESTAMP,
   TWITCH_HMAC_PREFIX
-} from '@stats-station/constants';
+} from '@alfred/constants';
 import {
   ITwitchClip,
   ITwitchEventSubSubscriptionCreation,
   ITwitchFetcherParams,
   ITwitchStream
-} from '@stats-station/models';
+} from '@alfred/models';
 import { getClips, getStream } from './twitch.api';
 import { logError, logger } from '@/utils/logger.utils';
 

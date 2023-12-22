@@ -1,5 +1,5 @@
 {
-  "name": "@stats-station/tsconfig",
+  "name": "@alfred/tsconfig",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",

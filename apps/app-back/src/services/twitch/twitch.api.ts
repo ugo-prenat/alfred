@@ -2,8 +2,8 @@ import {
   IGetTwitchBroadcastersResponse,
   IGetTwitchEventSubSubscriptionResponse,
   ITwitchFetcherParams
-} from '@stats-station/models';
-import { twitchFetcher } from '@stats-station/utils';
+} from '@alfred/models';
+import { twitchFetcher } from '@alfred/utils';
 
 export const getBroadcaster = (
   fetcherParams: ITwitchFetcherParams

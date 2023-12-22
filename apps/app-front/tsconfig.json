@@ -1,5 +1,5 @@
 {
-  "extends": "@stats-station/tsconfig/vite.json",
+  "extends": "@alfred/tsconfig/vite.json",
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

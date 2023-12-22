@@ -4,7 +4,7 @@ import {
   IBroadcaster,
   IRawBroadcaster,
   ITwitchBroadcaster
-} from '@stats-station/models';
+} from '@alfred/models';
 import mongoose from 'mongoose';
 
 export const makeRawBroadcaster = (

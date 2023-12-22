@@ -1,4 +1,4 @@
-import { APIError, ITwitchFetcherParams } from '@stats-station/models';
+import { APIError, ITwitchFetcherParams } from '@alfred/models';
 import { Context } from 'hono';
 import { makeTwitchFetcherParams } from './twitch.utils';
 import { getEventSubSubscriptions } from './twitch.api';

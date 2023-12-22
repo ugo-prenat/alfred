@@ -1,4 +1,4 @@
-import { NodeEnv } from '@stats-station/models';
+import { NodeEnv } from '@alfred/models';
 
 declare global {
   namespace NodeJS {

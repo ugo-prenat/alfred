@@ -1,7 +1,7 @@
-import { ITwitterRequestOptions } from '@stats-station/models';
-import { TwitterSignatureOAuthOptions } from '@stats-station/models';
-import { ITwitterExtendedOAuthOptions } from '@stats-station/models';
-import { HTTPMethod, ITwitterOAuthOptions } from '@stats-station/models';
+import { ITwitterRequestOptions } from '@alfred/models';
+import { TwitterSignatureOAuthOptions } from '@alfred/models';
+import { ITwitterExtendedOAuthOptions } from '@alfred/models';
+import { HTTPMethod, ITwitterOAuthOptions } from '@alfred/models';
 import crypto from 'crypto';
 
 type JsonObject = { [key: string]: unknown };

@@ -1,5 +1,5 @@
 {
-  "name": "@stats-station/models",
+  "name": "@alfred/models",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -10,12 +10,12 @@
     "build": "tsup src/index.ts"
   },
   "dependencies": {
-    "@stats-station/constants": "workspace:*",
+    "@alfred/constants": "workspace:*",
     "mongoose": "^8.0.1"
   },
   "devDependencies": {
-    "@stats-station/eslint-config": "workspace:*",
-    "@stats-station/tsconfig": "workspace:*",
+    "@alfred/eslint-config": "workspace:*",
+    "@alfred/tsconfig": "workspace:*",
     "@types/node": "^18.11.9",
     "tsup": "^8.0.1",
     "typescript": "^5.2.2"

@@ -1,4 +1,4 @@
-import { HTTPMethod, ITwitchFetcherParams } from '@stats-station/models';
+import { HTTPMethod, ITwitchFetcherParams } from '@alfred/models';
 import { fetcher } from './fetcher';
 
 const TWITCH_FETCHER_ORIGIN = 'twitch';

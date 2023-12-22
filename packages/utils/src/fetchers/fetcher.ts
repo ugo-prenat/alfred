@@ -1,4 +1,4 @@
-import { API, APIError, HTTPMethod } from '@stats-station/models';
+import { API, APIError, HTTPMethod } from '@alfred/models';
 import { getPayload } from './fetcher.utils';
 
 const makeFetcher =

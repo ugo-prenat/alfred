@@ -5,7 +5,7 @@ import {
   TWITCH_EVENTSUB_REVOCATION_MESSAGE_TYPE,
   TWITCH_EVENTSUB_HEADER_MESSAGE_TYPE,
   TWITCH_EVENTSUB_HEADER_SUBSCRIPTION_TYPE
-} from '@stats-station/constants';
+} from '@alfred/constants';
 import { verifySignature } from './twitch.utils';
 import { Context } from 'hono';
 import {

@@ -1,4 +1,4 @@
-import { PayloadContext } from '@stats-station/utils';
+import { PayloadContext } from '@alfred/utils';
 import { ICreateBroadcasterPayload } from './broadcasters.models';
 import {
   APIError,
@@ -9,7 +9,7 @@ import {
   IDBBot,
   IRawBroadcaster,
   ITwitchFetcherParams
-} from '@stats-station/models';
+} from '@alfred/models';
 import {
   handleGetTwitchBroadcaster,
   makeTwitchFetcherParams

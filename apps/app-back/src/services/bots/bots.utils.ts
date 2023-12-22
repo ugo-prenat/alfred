@@ -1,4 +1,4 @@
-import { IAPIBot, IBot, IBroadcaster, IDBBot } from '@stats-station/models';
+import { IAPIBot, IBot, IBroadcaster, IDBBot } from '@alfred/models';
 import mongoose from 'mongoose';
 
 export const makeDBBot = (

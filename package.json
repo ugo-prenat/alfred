@@ -7,11 +7,11 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "@stats-station/tsconfig": "workspace:*",
+    "@alfred/tsconfig": "workspace:*",
     "eslint": "^8.48.0",
     "prettier": "^3.0.3",
     "turbo": "^1.11.2"
   },
   "packageManager": "pnpm@8.9.0",
-  "name": "stats-station"
+  "name": "alfred"
 }

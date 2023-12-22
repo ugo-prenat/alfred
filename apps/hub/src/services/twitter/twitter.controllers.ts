@@ -1,4 +1,4 @@
-import { APIError, ICreateTweetPayload } from '@stats-station/models';
+import { APIError, ICreateTweetPayload } from '@alfred/models';
 import { Context } from 'hono';
 import { createTweet } from './twitter.api';
 import { logError } from '@/utils/logger.utils';

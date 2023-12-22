@@ -1,6 +1,6 @@
 import { TwitchBroadcasterType } from './twitch.models';
 import mongoose, { Document, Schema } from 'mongoose';
-import { ROLES } from '@stats-station/constants';
+import { ROLES } from '@alfred/constants';
 
 export const BROADCASTER_COLLECTION = 'broadcasters';
 export type BroadcasterRole = (typeof ROLES)[number];

@@ -3,7 +3,7 @@ import {
   getBroadcasterFollowersTotal,
   getBroadcasterSubscribersTotal
 } from './twitch.api';
-import { APIError } from '@stats-station/models';
+import { APIError } from '@alfred/models';
 import { logError } from '@/utils/logger.utils';
 
 export const handleGetBroadcasterSubscribers = (c: Context) => {

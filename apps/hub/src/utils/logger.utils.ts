@@ -1,6 +1,6 @@
 import { Logger } from 'pino';
-import { createLogger } from '@stats-station/utils';
-import { API, APIError, IOrigin } from '@stats-station/models';
+import { createLogger } from '@alfred/utils';
+import { API, APIError, IOrigin } from '@alfred/models';
 
 interface ICreateLoggerReturn {
   logger: Logger<string>;

@@ -1,5 +1,5 @@
 {
-  "name": "@stats-station/utils",
+  "name": "@alfred/utils",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -10,14 +10,14 @@
   },
   "dependencies": {
     "@logtail/pino": "^0.4.17",
-    "@stats-station/models": "workspace:*",
+    "@alfred/models": "workspace:*",
     "hono": "^3.10.1",
     "pino": "^8.17.1",
     "pino-pretty": "^10.3.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@stats-station/tsconfig": "workspace:*",
+    "@alfred/tsconfig": "workspace:*",
     "@types/node": "^18.11.9",
     "tsup": "^8.0.1",
     "typescript": "^5.2.2"

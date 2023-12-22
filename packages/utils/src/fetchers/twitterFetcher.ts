@@ -1,4 +1,4 @@
-import { HTTPMethod, ITwitterFetcherParams } from '@stats-station/models';
+import { HTTPMethod, ITwitterFetcherParams } from '@alfred/models';
 import { fetcher } from './fetcher';
 import { makeTwitterOAuth1a } from './fetcher.utils';
 

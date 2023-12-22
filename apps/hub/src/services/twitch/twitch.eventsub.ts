@@ -6,7 +6,7 @@ import {
   ITwitchStream,
   StreamOffline,
   StreamOnline
-} from '@stats-station/models';
+} from '@alfred/models';
 import { Context } from 'hono';
 import {
   handleGetLastStream,

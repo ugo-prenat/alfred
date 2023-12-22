@@ -6,7 +6,7 @@
       "@/*": ["src/*"]
     }
   },
-  "extends": "@stats-station/tsconfig/base.json",
+  "extends": "@alfred/tsconfig/base.json",
   "exclude": ["node_modules"],
   "include": ["./src"]
 }

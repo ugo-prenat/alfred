@@ -1,4 +1,4 @@
-import { API, APIError } from '@stats-station/models';
+import { API, APIError } from '@alfred/models';
 import pino, { DestinationStream, Logger } from 'pino';
 
 interface IPinoTransport {

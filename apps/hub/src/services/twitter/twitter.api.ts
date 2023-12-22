@@ -2,8 +2,8 @@ import {
   ICreateTweetPayload,
   ICreateTweetResponse,
   ITwitterFetcherParams
-} from '@stats-station/models';
-import { twitterFetcher } from '@stats-station/utils';
+} from '@alfred/models';
+import { twitterFetcher } from '@alfred/utils';
 import { makeTwitterOAuthOptions } from './twitter.utils';
 
 export const createTweet = (payload: ICreateTweetPayload) => {

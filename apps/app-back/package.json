@@ -10,17 +10,17 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.2.3",
-    "@stats-station/constants": "workspace:*",
-    "@stats-station/models": "workspace:*",
-    "@stats-station/utils": "workspace:*",
+    "@alfred/constants": "workspace:*",
+    "@alfred/models": "workspace:*",
+    "@alfred/utils": "workspace:*",
     "hono": "^3.10.1",
     "mongoose": "^8.0.1",
     "pino": "^8.17.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@stats-station/eslint-config": "workspace:*",
-    "@stats-station/tsconfig": "workspace:*",
+    "@alfred/eslint-config": "workspace:*",
+    "@alfred/tsconfig": "workspace:*",
     "@total-typescript/ts-reset": "^0.5.1",
     "@types/node": "^20.9.1",
     "tsup": "^8.0.1"

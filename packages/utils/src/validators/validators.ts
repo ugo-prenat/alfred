@@ -1,7 +1,7 @@
 import { Context, Env, MiddlewareHandler, ValidationTargets } from 'hono';
 import { validator as honoValidator } from 'hono/validator';
 import { ZodSchema, z } from 'zod';
-import { API, APIError } from '@stats-station/models';
+import { API, APIError } from '@alfred/models';
 import { Logger } from 'pino';
 
 interface IValidatorAPIError {

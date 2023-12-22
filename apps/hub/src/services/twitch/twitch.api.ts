@@ -1,11 +1,11 @@
-import { twitchFetcher } from '@stats-station/utils';
+import { twitchFetcher } from '@alfred/utils';
 import {
   IGetBroadcasterSubscribersResponse,
   IGetTwitchClipsResponse,
   IGetTwitchEventSubSubscriptionResponse,
   IGetTwitchStreamResponse,
   ITwitchEventSubSubscriptionCreation
-} from '@stats-station/models';
+} from '@alfred/models';
 import { makeTwitchFetcherParams } from './twitch.utils';
 
 export const createEventSubSubscriptions = (

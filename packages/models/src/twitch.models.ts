@@ -1,7 +1,7 @@
 import {
   TWITCH_BROADCASTER_TYPES,
   TWITCH_EVENTSUB_MESSAGE_TYPES
-} from '@stats-station/constants';
+} from '@alfred/constants';
 
 export type TwitchBroadcasterType = (typeof TWITCH_BROADCASTER_TYPES)[number];
 
