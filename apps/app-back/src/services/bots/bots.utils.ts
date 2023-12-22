@@ -11,7 +11,7 @@ export const makeDBBot = (
     _id: botId,
     status: 'pending',
     broadcasterId: id,
-    name: `${name} bot`,
+    name: `${name} BOT`,
     username: `${username}Bot`,
     profileImgUrl:
       'https://pbs.twimg.com/profile_images/1734921292548026368/aLVkLFDP_400x400.jpg'

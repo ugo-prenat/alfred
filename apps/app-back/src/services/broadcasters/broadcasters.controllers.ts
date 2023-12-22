@@ -16,12 +16,15 @@ import {
 } from '../twitch/twitch.utils';
 import {
   handleDeleteBroadcaster,
+  handleGetBroadcaster,
   makeAPIBroadcasterToBroadcaster,
+  makeAPIBroadcastersToBroadcasters,
   makeRawBroadcaster
 } from './broadcasters.utils';
 import { logError, logger } from '@/utils/logger.utils';
 import { makeAPIBotToBot, makeDBBot } from '../bots/bots.utils';
 import mongoose from 'mongoose';
+import { Context } from 'hono';
 
 export const createBroadcaster = (
   c: PayloadContext<ICreateBroadcasterPayload>
@@ -67,4 +70,28 @@ export const createBroadcaster = (
         });
     })
     .catch((err: APIError) => c.json(logError(err), err.status));
+};
+
+export const getBroadcasters = (c: Context) => {
+  const broadcasterId: string | undefined = c.req.query('broadcasterId');
+
+  if (broadcasterId) return getBroadcaster(c);
+
+  return Broadcaster.find()
+    .then(makeAPIBroadcastersToBroadcasters)
+    .then((broadcasters: IBroadcaster[]) => c.json(broadcasters))
+    .catch((err) => c.json(logError(err), err.status));
+};
+
+export const getBroadcaster = (c: Context) => {
+  const broadcasterIdQuery = c.req.query('broadcasterId');
+  const broadcasterIdParam = c.req.param('broadcasterId');
+
+  if (!broadcasterIdQuery && !broadcasterIdParam)
+    return c.json({ error: 'broadcasterId required' }, 400);
+
+  return handleGetBroadcaster(broadcasterIdQuery || broadcasterIdParam)
+    .then(makeAPIBroadcasterToBroadcaster)
+    .then((broadcaster: IBroadcaster) => c.json(broadcaster))
+    .catch((err) => c.json(logError(err), err.status));
 };

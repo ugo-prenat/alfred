@@ -1,7 +1,10 @@
-import { ITwitterRequestOptions } from '@alfred/models';
-import { TwitterSignatureOAuthOptions } from '@alfred/models';
-import { ITwitterExtendedOAuthOptions } from '@alfred/models';
-import { HTTPMethod, ITwitterOAuthOptions } from '@alfred/models';
+import {
+  HTTPMethod,
+  ITwitterExtendedOAuthOptions,
+  ITwitterOAuthOptions,
+  ITwitterRequestOptions,
+  TwitterSignatureOAuthOptions
+} from '@alfred/models';
 import crypto from 'crypto';
 
 type JsonObject = { [key: string]: unknown };
@@ -29,8 +32,8 @@ const hideValues = (obj: JsonObject, pathsToHide: string[]): JsonObject => {
         pathsToHide.includes([...currentPath, key].join('.'))
           ? '***'
           : typeof value === 'object' && value !== null
-          ? hideRecursive(value as JsonObject, [...currentPath, key])
-          : value
+            ? hideRecursive(value as JsonObject, [...currentPath, key])
+            : value
       ])
     );
 
