@@ -1,11 +1,10 @@
-import { Context, Hono } from 'hono';
+import { Hono } from 'hono';
 import { handleTwitchWebhook, twitchWebhookAuth } from './twitch.middleware';
 import { createEventSubSubscription } from './twitch.eventsub';
 import {
   handleGetBroadcasterFollowers,
   handleGetBroadcasterSubscribers
 } from './twitch.broadcasters';
-import { logger } from '@stats-station/utils';
 
 const twitchRoute = new Hono();
 
