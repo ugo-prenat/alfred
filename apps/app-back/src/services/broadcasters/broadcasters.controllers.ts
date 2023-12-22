@@ -84,6 +84,7 @@ export const getBroadcasters = (c: Context) => {
 };
 
 export const getBroadcaster = (c: Context) => {
+  const { method, url } = c.req.raw;
   const broadcasterIdQuery = c.req.query('broadcasterId');
   const broadcasterIdParam = c.req.param('broadcasterId');
 
@@ -93,5 +94,14 @@ export const getBroadcaster = (c: Context) => {
   return handleGetBroadcaster(broadcasterIdQuery || broadcasterIdParam)
     .then(makeAPIBroadcasterToBroadcaster)
     .then((broadcaster: IBroadcaster) => c.json(broadcaster))
-    .catch((err) => c.json(logError(err), err.status));
+    .catch((err) => {
+      const error = new APIError('broadcaster not found', 400, {
+        api: 'app-back',
+        url,
+        method,
+        response: err,
+        payload: { broadcasterId: broadcasterIdQuery || broadcasterIdParam }
+      });
+      return c.json(logError(error), error.status);
+    });
 };
