@@ -13,7 +13,7 @@ export const makeTwitchFetcherParams = (
   twitchClientId: process.env.TWITCH_CLIENT_ID
 });
 
-export const handleGetBroadcaster = (
+export const handleGetTwitchBroadcaster = (
   fetcherParams: ITwitchFetcherParams
 ): Promise<ITwitchBroadcaster> =>
   getBroadcaster(fetcherParams)

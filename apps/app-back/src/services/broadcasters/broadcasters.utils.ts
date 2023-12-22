@@ -1,4 +1,5 @@
 import {
+  Broadcaster,
   IAPIBroadcaster,
   IBroadcaster,
   IRawBroadcaster,
@@ -39,3 +40,10 @@ export const makeAPIBroadcasterToBroadcaster = (
   const { _id, ...broadcaster } = apiBroadcaster.toObject();
   return { id: _id.toString(), ...broadcaster };
 };
+
+export const handleDeleteBroadcaster = (broadcasterId: string) =>
+  Broadcaster.findByIdAndDelete(broadcasterId).then((broadcaster) => {
+    if (!broadcaster) throw new Error('broadcaster not found');
+
+    return broadcaster;
+  });

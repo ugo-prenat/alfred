@@ -11,10 +11,11 @@ import {
   ITwitchFetcherParams
 } from '@stats-station/models';
 import {
-  handleGetBroadcaster,
+  handleGetTwitchBroadcaster,
   makeTwitchFetcherParams
 } from '../twitch/twitch.utils';
 import {
+  handleDeleteBroadcaster,
   makeAPIBroadcasterToBroadcaster,
   makeRawBroadcaster
 } from './broadcasters.utils';
@@ -30,7 +31,7 @@ export const createBroadcaster = (
   const fetcherParams: ITwitchFetcherParams =
     makeTwitchFetcherParams(twitchToken);
 
-  return handleGetBroadcaster(fetcherParams)
+  return handleGetTwitchBroadcaster(fetcherParams)
     .then((twitchBroadcaster) => {
       const botId = new mongoose.Types.ObjectId();
 
@@ -49,13 +50,21 @@ export const createBroadcaster = (
             .then(makeAPIBotToBot)
             .then((bot: IBot) => {
               logger.info(
-                `broadcaster ${broadcaster.id} and bot ${bot.id} created`
+                `broadcaster '${broadcaster.name}' (${broadcaster.id}) and bot '${bot.name}' (${bot.id}) created`
               );
               return c.json({ broadcaster, bot }, 201);
             })
+            .catch((err) => {
+              logger.error(
+                err,
+                `error creating bot ${botId}, deleting broadcaster ${broadcaster.id}`
+              );
+              return handleDeleteBroadcaster(broadcaster.id)
+                .then(() => c.json(logError(err), 500))
+                .catch((err) => c.json(logError(err), err.status));
+            })
             .catch((err: APIError) => c.json(logError(err), err.status));
-        })
-        .catch((err: APIError) => c.json(logError(err), err.status));
+        });
     })
     .catch((err: APIError) => c.json(logError(err), err.status));
 };
