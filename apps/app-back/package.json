@@ -9,10 +9,10 @@
     "build": "tsup src/index.ts"
   },
   "dependencies": {
-    "@hono/node-server": "^1.2.3",
     "@alfred/constants": "workspace:*",
     "@alfred/models": "workspace:*",
     "@alfred/utils": "workspace:*",
+    "@hono/node-server": "^1.2.3",
     "hono": "^3.10.1",
     "mongoose": "^8.0.1",
     "pino": "^8.17.1",
@@ -23,6 +23,7 @@
     "@alfred/tsconfig": "workspace:*",
     "@total-typescript/ts-reset": "^0.5.1",
     "@types/node": "^20.9.1",
-    "tsup": "^8.0.1"
+    "tsup": "^8.0.1",
+    "typescript": "^5.2.2"
   }
 }
