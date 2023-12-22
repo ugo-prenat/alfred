@@ -29,7 +29,7 @@ export const makeRawBroadcaster = (
     role: 'member',
     twitchToken,
     profileImgUrl: profile_image_url,
-    broadcasterType: broadcaster_type
+    twitchType: broadcaster_type
   };
 };
 

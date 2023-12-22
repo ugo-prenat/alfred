@@ -18,13 +18,13 @@ export interface IRawBot {
   name: string;
   username: string;
   status: BotStatus;
-  streamerId: string;
+  broadcasterId: string;
   profileImgUrl: string;
 }
 
 const botSchema = new Schema(
   {
-    streamerId: {
+    broadcasterId: {
       type: Schema.Types.ObjectId,
       ref: BROADCASTER_COLLECTION,
       required: true

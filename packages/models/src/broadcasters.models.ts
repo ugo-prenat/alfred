@@ -25,21 +25,20 @@ export interface IRawBroadcaster {
   role: BroadcasterRole;
   twitchToken: string;
   profileImgUrl: string;
-  broadcasterType: TwitchBroadcasterType;
+  twitchType: TwitchBroadcasterType;
 }
 
 const broadcasterSchema = new Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true },
-    // botId: { type: Schema.Types.ObjectId ref: BOTS_COLLECTION },
-    botId: { type: String },
+    botId: { type: Schema.Types.ObjectId, ref: 'bots', required: true },
     username: { type: String, required: true },
     twitchId: { type: String, required: true },
     role: { type: String, required: true },
     twitchToken: { type: String, required: true },
     profileImgUrl: { type: String, required: true },
-    broadcasterType: { type: String, required: true }
+    twitchType: { type: String, required: true }
   },
   { versionKey: false }
 );

@@ -9,10 +9,10 @@ export const makeDBBot = (
 
   return {
     _id: botId,
+    status: 'pending',
+    broadcasterId: id,
     name: `${name} bot`,
     username: `${username}Bot`,
-    status: 'pending',
-    streamerId: id,
     profileImgUrl:
       'https://pbs.twimg.com/profile_images/1734921292548026368/aLVkLFDP_400x400.jpg'
   };
