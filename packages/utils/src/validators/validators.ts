@@ -2,6 +2,7 @@ import { Context, Env, MiddlewareHandler, ValidationTargets } from 'hono';
 import { validator as honoValidator } from 'hono/validator';
 import { ZodSchema, z } from 'zod';
 import { API, APIError } from '@stats-station/models';
+import { Logger } from 'pino';
 
 interface IValidatorAPIError {
   message: string;
@@ -24,9 +25,9 @@ const validator =
       out: { [K in Target]: O };
     }
   >(
-    target: Target,
-    { message, status }: IValidatorAPIError
+    logger: Logger<string>
   ) =>
+  (target: Target, { message, status }: IValidatorAPIError) =>
   (schema: T): MiddlewareHandler<E, P, V> =>
     honoValidator(target, async (payload: z.infer<T>, c: Context) => {
       const { method, url } = c.req.raw;
@@ -39,13 +40,16 @@ const validator =
           url,
           response: result
         });
+        logger.error({ message: err.message, origin: err.origin }, err.message);
         return c.json({ message: err.message, origin: err.origin }, err.status);
       }
       const data = result.data as z.infer<T>;
       return data;
     });
 
-export const payloadValidator = validator('json', {
+const payloadValidatorAPIError: IValidatorAPIError = {
   message: 'Invalid payload',
   status: 400
-});
+};
+export const createPayloadValidator = (logger: Logger<string>) =>
+  validator(logger)('json', payloadValidatorAPIError);

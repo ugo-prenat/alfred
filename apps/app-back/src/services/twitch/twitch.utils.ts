@@ -25,6 +25,12 @@ export const handleGetBroadcaster = (
           url: `${TWITCH_API_URL}/users`
         });
 
-      return res.data[0];
+      const broadcaster: ITwitchBroadcaster = res.data[0];
+      return {
+        ...broadcaster,
+        broadcaster_type: isEmpty(broadcaster.broadcaster_type)
+          ? 'normal'
+          : broadcaster.broadcaster_type
+      };
     })
     .catch((err: APIError) => Promise.reject(err));

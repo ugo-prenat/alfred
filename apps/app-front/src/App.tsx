@@ -1,5 +1,5 @@
 import { ITwitchBroadcaster } from '@stats-station/models';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const App = () => {
   const twitchToken = document.location.hash.split('&')[0].split('=')[1];
@@ -20,29 +20,37 @@ const App = () => {
     window.location.href = twitchAuthUrl;
   };
 
-  useEffect(() => {
-    if (twitchToken) {
-      fetch('http://localhost:3000/twitch/broadcasters', {
+  const handleCreate = () => {
+    if (twitchToken)
+      fetch('http://localhost:3000/broadcasters', {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ twitchToken })
       })
         .then((res) => res.json())
         .then((data: ITwitchBroadcaster) => setBroadcaster(data));
-    }
-  }, []);
+  };
 
   return (
     <div
       style={{
         display: 'flex',
         alignItems: 'center',
+        gap: '1rem',
         flexDirection: 'column',
         justifyContent: 'center',
         height: '100vh'
       }}
     >
       <button onClick={handleClick}>Twitch auth</button>
-      {broadcaster ? <p>{broadcaster.display_name}</p> : <p>no broadcaster</p>}
+      <button onClick={handleCreate} disabled={!twitchToken}>
+        Create streamer and bot
+      </button>
+      {broadcaster ? (
+        <p>{broadcaster.display_name} logged</p>
+      ) : (
+        <p>no broadcaster</p>
+      )}
     </div>
   );
 };

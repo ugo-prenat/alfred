@@ -48,7 +48,7 @@ export const URLS_CONF: IUrlsConf = {
 // TWITCH
 export const AFFILIATE_TWITCH_BROADCASTER = 'affiliate';
 export const PARTNER_TWITCH_BROADCASTER = 'partner';
-export const NORMAL_TWITCH_BROADCASTER = '';
+export const NORMAL_TWITCH_BROADCASTER = 'normal';
 
 export const TWITCH_BROADCASTER_TYPES = [
   AFFILIATE_TWITCH_BROADCASTER,

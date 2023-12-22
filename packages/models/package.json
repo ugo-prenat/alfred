@@ -10,7 +10,8 @@
     "build": "tsup src/index.ts"
   },
   "dependencies": {
-    "@stats-station/constants": "workspace:*"
+    "@stats-station/constants": "workspace:*",
+    "mongoose": "^8.0.1"
   },
   "devDependencies": {
     "@stats-station/eslint-config": "workspace:*",

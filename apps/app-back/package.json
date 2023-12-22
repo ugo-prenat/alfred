@@ -21,6 +21,7 @@
   "devDependencies": {
     "@stats-station/eslint-config": "workspace:*",
     "@stats-station/tsconfig": "workspace:*",
+    "@total-typescript/ts-reset": "^0.5.1",
     "@types/node": "^20.9.1",
     "tsup": "^8.0.1"
   }
