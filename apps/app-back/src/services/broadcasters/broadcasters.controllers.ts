@@ -18,7 +18,7 @@ import {
   makeAPIBroadcasterToBroadcaster,
   makeRawBroadcaster
 } from './broadcasters.utils';
-import { logError } from '@/utils/logger.utils';
+import { logError, logger } from '@/utils/logger.utils';
 import { makeAPIBotToBot, makeDBBot } from '../bots/bots.utils';
 import mongoose from 'mongoose';
 
@@ -47,12 +47,12 @@ export const createBroadcaster = (
 
           return Bot.create(newBot)
             .then(makeAPIBotToBot)
-            .then((bot: IBot) =>
-              c.json(
-                { message: 'broadcaster and bot created', broadcaster, bot },
-                201
-              )
-            )
+            .then((bot: IBot) => {
+              logger.info(
+                `broadcaster ${broadcaster.id} and bot ${bot.id} created`
+              );
+              return c.json({ broadcaster, bot }, 201);
+            })
             .catch((err: APIError) => c.json(logError(err), err.status));
         })
         .catch((err: APIError) => c.json(logError(err), err.status));

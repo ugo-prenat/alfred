@@ -1,9 +1,8 @@
-import { ITwitchBroadcaster } from '@stats-station/models';
 import { useState } from 'react';
 
 const App = () => {
   const twitchToken = document.location.hash.split('&')[0].split('=')[1];
-  const [broadcaster, setBroadcaster] = useState<ITwitchBroadcaster>();
+  const [data, setData] = useState<{ broadcaster: string; bot: string }>();
 
   const handleClick = () => {
     const twitchClientId = import.meta.env.VITE_TWITCH_CLIENT_ID;
@@ -28,7 +27,9 @@ const App = () => {
         body: JSON.stringify({ twitchToken })
       })
         .then((res) => res.json())
-        .then((data: ITwitchBroadcaster) => setBroadcaster(data));
+        .then((data) =>
+          setData({ broadcaster: data.broadcaster.name, bot: data.bot.name })
+        );
   };
 
   return (
@@ -43,13 +44,17 @@ const App = () => {
       }}
     >
       <button onClick={handleClick}>Twitch auth</button>
-      <button onClick={handleCreate} disabled={!twitchToken}>
+      <button onClick={handleCreate} disabled={!twitchToken || !!data}>
         Create streamer and bot
       </button>
-      {broadcaster ? (
-        <p>{broadcaster.display_name} logged</p>
+      {data ? (
+        <p>
+          broadcaster: {data.broadcaster}
+          <br />
+          bot: {data.bot}
+        </p>
       ) : (
-        <p>no broadcaster</p>
+        <p>not logged in</p>
       )}
     </div>
   );
