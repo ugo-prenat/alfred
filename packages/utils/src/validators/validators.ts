@@ -43,6 +43,5 @@ const validator =
     });
 
 export const createValidators = (logger: Logger<string>) => ({
-  payloadValidator: validator(logger, 'json'),
-  headersValidator: validator(logger, 'header')
+  payloadValidator: validator(logger, 'json')
 });
