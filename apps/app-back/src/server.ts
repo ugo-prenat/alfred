@@ -22,7 +22,7 @@ export const createServer = () => {
 
   app.onError((err, c) => {
     const { url, method } = c.req.raw;
-    const { name, message } = err;
+    const { message } = err;
 
     const error = new APIError(message, 500, {
       url,

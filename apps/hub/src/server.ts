@@ -27,7 +27,7 @@ export const createServer = () => {
     const error = new APIError(message, 500, {
       url,
       method,
-      api: 'app-back',
+      api: 'hub',
       response: { name: 'Hono error', message }
     });
     return c.json(logError(error), error.status);

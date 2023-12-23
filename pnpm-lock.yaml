@@ -212,6 +212,9 @@ importers:
 
   packages/utils:
     dependencies:
+      '@alfred/constants':
+        specifier: workspace:*
+        version: link:../constants
       '@alfred/models':
         specifier: workspace:*
         version: link:../models

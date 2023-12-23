@@ -11,6 +11,7 @@
   "dependencies": {
     "@logtail/pino": "^0.4.17",
     "@alfred/models": "workspace:*",
+    "@alfred/constants": "workspace:*",
     "hono": "^3.10.1",
     "pino": "^8.17.1",
     "pino-pretty": "^10.3.0",

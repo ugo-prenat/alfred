@@ -11,6 +11,8 @@ declare global {
       TWITCH_CLIENT_ID: string;
       TWITCH_CLIENT_SECRET: string;
       TWITCH_APP_ACCESS_TOKEN: string;
+      JWT_SECRET: string;
+      JWT_REFRESH_SECRET: string;
     }
   }
 }

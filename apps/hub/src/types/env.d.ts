@@ -22,6 +22,8 @@ declare global {
       TWITTER_CLIENT_SECRET: string;
       TWITTER_BEARER_TOKEN: string;
       TWITTER_APP_ID: string;
+      JWT_SECRET: string;
+      JWT_REFRESH_SECRET: string;
     }
   }
 }

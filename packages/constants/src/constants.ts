@@ -102,6 +102,13 @@ export const ROLES = [
   OWNER_ROLE
 ] as const;
 
+export const ROLE_LEVELS = {
+  [MEMBER_ROLE]: 0,
+  [MODERATOR_ROLE]: 1,
+  [ADMIN_ROLE]: 2,
+  [OWNER_ROLE]: 3
+};
+
 export const ROLES_CONF = {
   [MEMBER_ROLE]: { level: 0, role: MEMBER_ROLE },
   [MODERATOR_ROLE]: { level: 1, role: MODERATOR_ROLE },

@@ -1,4 +1,4 @@
-import { PayloadContext } from '@alfred/utils';
+import { PayloadContext, signJwt } from '@alfred/utils';
 import { ICreateBroadcasterPayload } from './broadcasters.models';
 import {
   APIError,
@@ -55,7 +55,12 @@ export const createBroadcaster = (
               logger.info(
                 `broadcaster '${broadcaster.name}' (${broadcaster.id}) and bot '${bot.name}' (${bot.id}) created`
               );
-              return c.json({ broadcaster, bot }, 201);
+              return signJwt(
+                { role: broadcaster.role, sub: broadcaster.id },
+                process.env.JWT_SECRET
+              )
+                .then((token) => c.json({ token }, 201))
+                .catch((err) => c.json(logError(err), 500));
             })
             .catch((err) => {
               logger.error(

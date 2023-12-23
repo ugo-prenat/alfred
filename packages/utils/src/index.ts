@@ -10,3 +10,6 @@ export * from './helpers/helpers.utils';
 
 export * from './validators/validators';
 export * from './validators/validators.models';
+
+export * from './auth/jwt.auth';
+export * from './auth/jwt.utils';
