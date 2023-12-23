@@ -3,23 +3,22 @@ import { Context, MiddlewareHandler, Next } from 'hono';
 import { verify } from 'hono/jwt';
 import { ITokenPayload, userHasRequiredRole } from './jwt.utils';
 
-interface IAuthProps {
-  requiredRole: BroadcasterRole;
-  userCanPerformAction: boolean;
-}
-
 const auth =
   (requiredRole: BroadcasterRole, secret: string): MiddlewareHandler =>
   async (c: Context, next: Next) => {
     const headerToken = c.req.header('Authorization');
     const token = headerToken?.split(' ')[1];
 
+    const broadcasterId = c.req.param('broadcasterId');
+
     if (!headerToken || !token)
       return c.json({ error: 'No token provided' }, 401);
 
     return verify(token, secret)
-      .then(async ({ role }: ITokenPayload) => {
-        if (!userHasRequiredRole(role, requiredRole))
+      .then(async ({ role, sub }: ITokenPayload) => {
+        const userCanPerformAction = broadcasterId === sub;
+
+        if (!userHasRequiredRole(role, requiredRole) && !userCanPerformAction)
           return c.json(
             { error: "You don't have permission to call this endpoint" },
             403

@@ -12,7 +12,7 @@ import { signJwt } from '@alfred/utils';
 const broadcastersRoute = new Hono();
 
 broadcastersRoute.get('/auth/gettoken', (c) => {
-  return signJwt({ role: 'admin', sub: 'user id' }, process.env.JWT_SECRET)
+  return signJwt({ role: 'member', sub: 'uprenat' }, process.env.JWT_SECRET)
     .then((token) => c.json({ token }))
     .catch((err) => c.json({ err }, 500));
 });
@@ -20,6 +20,10 @@ broadcastersRoute.get('/auth/normal', checkAuth, (c) =>
   c.json({ message: 'ok' })
 );
 broadcastersRoute.get('/auth/admin', requiredAuth('admin'), (c) =>
+  c.json({ message: 'ok' })
+);
+
+broadcastersRoute.get('/patch/:broadcasterId', requiredAuth('admin'), (c) =>
   c.json({ message: 'ok' })
 );
 
