@@ -2,6 +2,7 @@ import { BroadcasterRole } from '@alfred/models';
 import { Context, MiddlewareHandler, Next } from 'hono';
 import { verify } from 'hono/jwt';
 import { ITokenPayload, userHasRequiredRole } from './jwt.utils';
+import { JWT_ALGORITHM, JWT_TOKEN_EXPIRED_ERROR } from '@alfred/constants';
 
 const auth =
   (requiredRole: BroadcasterRole, secret: string): MiddlewareHandler =>
@@ -14,7 +15,7 @@ const auth =
     if (!headerToken || !token)
       return c.json({ error: 'No token provided' }, 401);
 
-    return verify(token, secret)
+    return verify(token, secret, JWT_ALGORITHM)
       .then(async ({ role, sub }: ITokenPayload) => {
         const userCanPerformAction = broadcasterId === sub;
 
@@ -25,7 +26,15 @@ const auth =
           );
         await next();
       })
-      .catch(() => c.json({ error: 'Invalid token' }, 401));
+      .catch((err) =>
+        c.json(
+          {
+            error:
+              err.name === JWT_TOKEN_EXPIRED_ERROR ? err.name : 'Invalid token'
+          },
+          401
+        )
+      );
   };
 
 const checkAuth = (secret: string) => auth('member', secret);

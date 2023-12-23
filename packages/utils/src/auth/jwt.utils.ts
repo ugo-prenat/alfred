@@ -1,8 +1,10 @@
-import { ROLE_LEVELS } from '@alfred/constants';
+import {
+  JWT_ALGORITHM,
+  JWT_EXPIRATION_TIME,
+  ROLE_LEVELS
+} from '@alfred/constants';
 import { BroadcasterRole } from '@alfred/models';
 import { sign } from 'hono/jwt';
-
-const JWT_EXPIRATION_TIME = 60 * 60; // 1 hour
 
 export interface ITokenPayload {
   sub: string;
@@ -24,7 +26,7 @@ export const signJwt = (
     exp: now + JWT_EXPIRATION_TIME
   };
 
-  return sign(payload, secret, 'HS256');
+  return sign(payload, secret, JWT_ALGORITHM);
 };
 
 export const userHasRequiredRole = (

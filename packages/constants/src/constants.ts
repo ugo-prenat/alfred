@@ -115,3 +115,8 @@ export const ROLES_CONF = {
   [ADMIN_ROLE]: { level: 2, role: ADMIN_ROLE },
   [OWNER_ROLE]: { level: 3, role: OWNER_ROLE }
 };
+
+// JWT
+export const JWT_ALGORITHM = 'HS256';
+export const JWT_EXPIRATION_TIME = 60 * 60; // 1 hour
+export const JWT_TOKEN_EXPIRED_ERROR = 'JwtTokenExpired';
