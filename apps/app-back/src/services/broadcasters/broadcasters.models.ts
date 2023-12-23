@@ -5,3 +5,11 @@ export interface ICreateBroadcasterPayload {
 }
 export const createBrodcasterSchema: ZodSchema<ICreateBroadcasterPayload> =
   z.object({ twitchToken: z.string() });
+
+export interface IRefreshTokenPayload {
+  refreshToken: string;
+}
+
+export const refreshTokenSchema: ZodSchema<IRefreshTokenPayload> = z.object({
+  refreshToken: z.string()
+});

@@ -74,7 +74,7 @@ export const makeAccessTokens = async (
     const refreshToken = await signRefreshToken(
       broadcasterId,
       broadcasterRole,
-      process.env.JWT_SECRET
+      process.env.JWT_REFRESH_SECRET
     );
     return { accessToken, refreshToken };
   } catch (err) {

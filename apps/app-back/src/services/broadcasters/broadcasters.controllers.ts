@@ -1,9 +1,13 @@
 import { PayloadContext } from '@alfred/utils';
-import { ICreateBroadcasterPayload } from './broadcasters.models';
+import {
+  ICreateBroadcasterPayload,
+  IRefreshTokenPayload
+} from './broadcasters.models';
 import {
   APIError,
   Bot,
   Broadcaster,
+  BroadcasterRole,
   IBot,
   IBroadcaster,
   IDBBot,
@@ -26,7 +30,8 @@ import { logError, logger } from '@/utils/logger.utils';
 import { makeAPIBotToBot, makeDBBot } from '../bots/bots.utils';
 import mongoose from 'mongoose';
 import { Context } from 'hono';
-import { decode } from 'hono/jwt';
+import { verify } from 'hono/jwt';
+import { JWT_ALGORITHM } from '@alfred/constants';
 
 export const createBroadcaster = (
   c: PayloadContext<ICreateBroadcasterPayload>
@@ -114,16 +119,14 @@ export const getBroadcaster = (c: Context) => {
     });
 };
 
-export const refreshToken = (c: Context) => {
-  const headerToken = c.req.header('Authorization');
-  const token = headerToken?.split(' ')[1];
+export const refreshToken = (c: PayloadContext<IRefreshTokenPayload>) => {
+  const { refreshToken } = c.req.valid('json');
 
-  if (!headerToken || !token)
-    return c.json({ error: 'No token provided' }, 401);
-
-  const { payload } = decode(token);
-
-  return makeAccessTokens(payload.sub, payload.role)
-    .then((tokens) => c.json(tokens))
-    .catch((err) => c.json({ error: err.message }, 500));
+  return verify(refreshToken, process.env.JWT_REFRESH_SECRET, JWT_ALGORITHM)
+    .then(({ role, sub }: { role: BroadcasterRole; sub: string }) =>
+      makeAccessTokens(sub, role)
+        .then((tokens) => c.json(tokens))
+        .catch((err) => c.json({ error: err.message }, 500))
+    )
+    .catch(() => c.json({ error: 'Invalid refresh token' }, 401));
 };

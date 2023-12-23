@@ -1,5 +1,8 @@
 import { Hono } from 'hono';
-import { createBrodcasterSchema } from './broadcasters.models';
+import {
+  createBrodcasterSchema,
+  refreshTokenSchema
+} from './broadcasters.models';
 import {
   createBroadcaster,
   getBroadcaster,
@@ -7,27 +10,19 @@ import {
   refreshToken
 } from './broadcasters.controllers';
 import { payloadValidator } from '@/utils/validator.utils';
-import { checkAuth, requiredAuth } from '@/utils/auth.utils';
 import { makeAccessTokens } from './broadcasters.utils';
 
 const broadcastersRoute = new Hono();
 
-broadcastersRoute.get('/token/refresh', refreshToken);
-
-broadcastersRoute.get('/auth/gettoken', (c) => {
-  return makeAccessTokens('uprenat', 'member')
+broadcastersRoute.post(
+  '/token/refresh',
+  payloadValidator(refreshTokenSchema),
+  refreshToken
+);
+broadcastersRoute.get('/auth/gettoken', (c) =>
+  makeAccessTokens('uprenat', 'member')
     .then((tokens) => c.json(tokens))
-    .catch((err) => c.json({ error: err.message }, 500));
-});
-broadcastersRoute.get('/auth/normal', checkAuth, (c) =>
-  c.json({ message: 'ok' })
-);
-broadcastersRoute.get('/auth/admin', requiredAuth('admin'), (c) =>
-  c.json({ message: 'ok' })
-);
-
-broadcastersRoute.get('/patch/:broadcasterId', requiredAuth('admin'), (c) =>
-  c.json({ message: 'ok' })
+    .catch((err) => c.json({ error: err.message }, 500))
 );
 
 broadcastersRoute.get('/', getBroadcasters);
