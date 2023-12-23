@@ -9,10 +9,7 @@ interface IAuthProps {
 }
 
 const auth =
-  (
-    { requiredRole, userCanPerformAction }: IAuthProps,
-    secret: string
-  ): MiddlewareHandler =>
+  (requiredRole: BroadcasterRole, secret: string): MiddlewareHandler =>
   async (c: Context, next: Next) => {
     const headerToken = c.req.header('Authorization');
     const token = headerToken?.split(' ')[1];
@@ -22,14 +19,7 @@ const auth =
 
     return verify(token, secret)
       .then(async ({ role }: ITokenPayload) => {
-        console.log({
-          userRole: role,
-          requiredRole,
-          userHasRequiredRole: userHasRequiredRole(role, requiredRole),
-          userCanPerformAction
-        });
-
-        if (!userHasRequiredRole(role, requiredRole) || !userCanPerformAction)
+        if (!userHasRequiredRole(role, requiredRole))
           return c.json(
             { error: "You don't have permission to call this endpoint" },
             403
@@ -39,16 +29,10 @@ const auth =
       .catch(() => c.json({ error: 'Invalid token' }, 401));
   };
 
-const checkAuth = (secret: string) =>
-  auth({ requiredRole: 'member', userCanPerformAction: true }, secret);
+const checkAuth = (secret: string) => auth('member', secret);
 
-const requiredAuth =
-  (secret: string) =>
-  (
-    requiredRole: BroadcasterRole,
-    { userCanPerformAction = true }: { userCanPerformAction?: boolean } = {}
-  ) =>
-    auth({ requiredRole, userCanPerformAction }, secret);
+const requiredAuth = (secret: string) => (requiredRole: BroadcasterRole) =>
+  auth(requiredRole, secret);
 
 export const createAuth = (secret: string) => ({
   checkAuth: checkAuth(secret),
