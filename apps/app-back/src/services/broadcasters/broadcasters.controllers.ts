@@ -1,4 +1,4 @@
-import { PayloadContext, signJwt } from '@alfred/utils';
+import { PayloadContext } from '@alfred/utils';
 import { ICreateBroadcasterPayload } from './broadcasters.models';
 import {
   APIError,
@@ -19,12 +19,14 @@ import {
   handleGetBroadcaster,
   makeAPIBroadcasterToBroadcaster,
   makeAPIBroadcastersToBroadcasters,
+  makeAccessTokens,
   makeRawBroadcaster
 } from './broadcasters.utils';
 import { logError, logger } from '@/utils/logger.utils';
 import { makeAPIBotToBot, makeDBBot } from '../bots/bots.utils';
 import mongoose from 'mongoose';
 import { Context } from 'hono';
+import { decode } from 'hono/jwt';
 
 export const createBroadcaster = (
   c: PayloadContext<ICreateBroadcasterPayload>
@@ -51,16 +53,17 @@ export const createBroadcaster = (
 
           return Bot.create(newBot)
             .then(makeAPIBotToBot)
-            .then((bot: IBot) => {
+            .then(async (bot: IBot) => {
               logger.info(
                 `broadcaster '${broadcaster.name}' (${broadcaster.id}) and bot '${bot.name}' (${bot.id}) created`
               );
-              return signJwt(
-                { role: broadcaster.role, sub: broadcaster.id },
-                process.env.JWT_SECRET
-              )
-                .then((token) => c.json({ token }, 201))
-                .catch((err) => c.json(logError(err), 500));
+
+              const { accessToken, refreshToken } = await makeAccessTokens(
+                broadcaster.id,
+                broadcaster.role
+              );
+
+              return c.json({ accessToken, refreshToken }, 201);
             })
             .catch((err) => {
               logger.error(
@@ -109,4 +112,18 @@ export const getBroadcaster = (c: Context) => {
       });
       return c.json(logError(error), error.status);
     });
+};
+
+export const refreshToken = (c: Context) => {
+  const headerToken = c.req.header('Authorization');
+  const token = headerToken?.split(' ')[1];
+
+  if (!headerToken || !token)
+    return c.json({ error: 'No token provided' }, 401);
+
+  const { payload } = decode(token);
+
+  return makeAccessTokens(payload.sub, payload.role)
+    .then((tokens) => c.json(tokens))
+    .catch((err) => c.json({ error: err.message }, 500));
 };

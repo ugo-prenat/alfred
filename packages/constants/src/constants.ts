@@ -119,4 +119,5 @@ export const ROLES_CONF = {
 // JWT
 export const JWT_ALGORITHM = 'HS256';
 export const JWT_EXPIRATION_TIME = 60 * 60; // 1 hour
+export const JWT_REFRESH_EXPIRATION_TIME = 60 * 60 * 24 * 30 * 12; // 1 year
 export const JWT_TOKEN_EXPIRED_ERROR = 'JwtTokenExpired';

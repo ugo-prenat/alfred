@@ -1,10 +1,12 @@
 import {
   Broadcaster,
+  BroadcasterRole,
   IAPIBroadcaster,
   IBroadcaster,
   IRawBroadcaster,
   ITwitchBroadcaster
 } from '@alfred/models';
+import { signAccessToken, signRefreshToken } from '@alfred/utils';
 import mongoose from 'mongoose';
 
 export const makeRawBroadcaster = (
@@ -58,3 +60,24 @@ export const handleGetBroadcaster = (
     if (!broadcaster) throw new Error('broadcaster not found');
     return broadcaster;
   });
+
+export const makeAccessTokens = async (
+  broadcasterId: string,
+  broadcasterRole: BroadcasterRole
+) => {
+  try {
+    const accessToken = await signAccessToken(
+      broadcasterId,
+      broadcasterRole,
+      process.env.JWT_SECRET
+    );
+    const refreshToken = await signRefreshToken(
+      broadcasterId,
+      broadcasterRole,
+      process.env.JWT_SECRET
+    );
+    return { accessToken, refreshToken };
+  } catch (err) {
+    throw new Error('error creating access tokens');
+  }
+};

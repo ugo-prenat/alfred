@@ -3,18 +3,21 @@ import { createBrodcasterSchema } from './broadcasters.models';
 import {
   createBroadcaster,
   getBroadcaster,
-  getBroadcasters
+  getBroadcasters,
+  refreshToken
 } from './broadcasters.controllers';
 import { payloadValidator } from '@/utils/validator.utils';
 import { checkAuth, requiredAuth } from '@/utils/auth.utils';
-import { signJwt } from '@alfred/utils';
+import { makeAccessTokens } from './broadcasters.utils';
 
 const broadcastersRoute = new Hono();
 
+broadcastersRoute.get('/token/refresh', refreshToken);
+
 broadcastersRoute.get('/auth/gettoken', (c) => {
-  return signJwt({ role: 'member', sub: 'uprenat' }, process.env.JWT_SECRET)
-    .then((token) => c.json({ token }))
-    .catch((err) => c.json({ err }, 500));
+  return makeAccessTokens('uprenat', 'member')
+    .then((tokens) => c.json(tokens))
+    .catch((err) => c.json({ error: err.message }, 500));
 });
 broadcastersRoute.get('/auth/normal', checkAuth, (c) =>
   c.json({ message: 'ok' })

@@ -34,7 +34,7 @@ const botSchema = new Schema(
     username: { type: String, required: true },
     profileImgUrl: { type: String, required: true }
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
 export const Bot = mongoose.model(BOTS_COLLECTION, botSchema);

@@ -40,7 +40,7 @@ const broadcasterSchema = new Schema(
     profileImgUrl: { type: String, required: true },
     twitchType: { type: String, required: true }
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
 export const Broadcaster = mongoose.model(
