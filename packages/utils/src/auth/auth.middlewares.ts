@@ -1,7 +1,7 @@
 import { BroadcasterRole } from '@alfred/models';
 import { Context, MiddlewareHandler, Next } from 'hono';
 import { verify } from 'hono/jwt';
-import { userHasRequiredRole } from './jwt.utils';
+import { userHasRequiredRole } from './auth.utils';
 import { JWT_ALGORITHM, JWT_TOKEN_EXPIRED_ERROR } from '@alfred/constants';
 import { IJwtPayload } from './auth.models';
 
