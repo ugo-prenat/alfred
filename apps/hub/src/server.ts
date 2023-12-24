@@ -16,8 +16,9 @@ export const createServer = () => {
   app.route('/twitch', twitchRoute);
 
   app.notFound((c) => {
-    logger.error(`route ${c.req.path} not found`);
-    return c.json({ error: `route ${c.req.path} not found` }, 404);
+    const { method, path } = c.req;
+    logger.error(`route ${path} not found`);
+    return c.json({ error: `route ${method} ${path} not found` }, 404);
   });
 
   app.onError((err, c) => {

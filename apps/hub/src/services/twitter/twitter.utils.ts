@@ -2,7 +2,6 @@ import {
   Bot,
   IBot,
   ICreateTweetPayload,
-  ICreateTweetResponse,
   IRawTweet,
   ITwitchClip,
   ITwitchStream,
@@ -50,21 +49,15 @@ export const createTweet = async (
   broadcasterId: string
 ) => {
   try {
-    const bot: IBot = await Bot.findOne({ broadcasterId }).then(
-      makeAPIBotToBot
-    );
-    const tweet: ICreateTweetResponse = await postTweet(payload);
+    const { id: botId }: IBot = await Bot.findOne({
+      broadcasterId
+    }).then(makeAPIBotToBot);
 
-    return saveTweet(tweet, bot);
+    const { id: tweetId, text } = (await postTweet(payload)).data;
+
+    const newTweet: IRawTweet = { tweetId, text, botId, broadcasterId };
+    return Tweet.create(newTweet);
   } catch (err) {
     throw err;
   }
-};
-
-const saveTweet = (tweet: ICreateTweetResponse, bot: IBot) => {
-  const { id: tweetId, text } = tweet.data;
-  const { broadcasterId, id: botId } = bot;
-
-  const newTweet: IRawTweet = { tweetId, text, botId, broadcasterId };
-  return Tweet.create(newTweet);
 };
