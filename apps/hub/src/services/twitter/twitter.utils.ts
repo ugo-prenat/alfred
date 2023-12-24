@@ -1,10 +1,18 @@
 import {
+  Bot,
+  IBot,
+  ICreateTweetPayload,
+  ICreateTweetResponse,
+  IRawTweet,
   ITwitchClip,
   ITwitchStream,
   ITwitterOAuthOptions,
   StreamOffline,
-  StreamOnline
+  StreamOnline,
+  Tweet
 } from '@alfred/models';
+import { postTweet } from './twitter.api';
+import { makeAPIBotToBot } from '../bots/bots.utils';
 
 export const makeTwitterOAuthOptions = (): ITwitterOAuthOptions => ({
   api_key: process.env.TWITTER_API_KEY,
@@ -35,4 +43,28 @@ export const makeStreamOfflineTweetText = (
   if (!clip) return `${broadcaster_user_name} just went offline`;
 
   return `${broadcaster_user_name} just went offline\n\ncheck out the most popular clip of the stream:\n${clip.url}`;
+};
+
+export const createTweet = async (
+  payload: ICreateTweetPayload,
+  broadcasterId: string
+) => {
+  try {
+    const bot: IBot = await Bot.findOne({ broadcasterId }).then(
+      makeAPIBotToBot
+    );
+    const tweet: ICreateTweetResponse = await postTweet(payload);
+
+    return saveTweet(tweet, bot);
+  } catch (err) {
+    throw err;
+  }
+};
+
+const saveTweet = (tweet: ICreateTweetResponse, bot: IBot) => {
+  const { id: tweetId, text } = tweet.data;
+  const { broadcasterId, id: botId } = bot;
+
+  const newTweet: IRawTweet = { tweetId, text, botId, broadcasterId };
+  return Tweet.create(newTweet);
 };

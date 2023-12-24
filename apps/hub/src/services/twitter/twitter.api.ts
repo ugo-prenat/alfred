@@ -6,7 +6,7 @@ import {
 import { twitterFetcher } from '@alfred/utils';
 import { makeTwitterOAuthOptions } from './twitter.utils';
 
-export const createTweet = (payload: ICreateTweetPayload) => {
+export const postTweet = (payload: ICreateTweetPayload) => {
   const fetcherParams: ITwitterFetcherParams = {
     host: 'https://api.twitter.com',
     version: '2',

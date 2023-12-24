@@ -18,7 +18,7 @@ import {
   makeStreamOfflineTweetText,
   makeStreamOnlineTweetText
 } from '../twitter/twitter.utils';
-import { createTweet } from '../twitter/twitter.api';
+import { postTweet } from '../twitter/twitter.api';
 import { logError } from '@/utils/logger.utils';
 
 export const createEventSubSubscription = (c: Context) => {
@@ -50,7 +50,7 @@ export const handleStreamOnline = async (c: Context) => {
   );
 
   const tweetText: string = makeStreamOnlineTweetText(event, maybeStream);
-  return createTweet({ text: tweetText })
+  return postTweet({ text: tweetText })
     .then((res) => c.json(res))
     .catch((err: APIError) => c.json(logError(err), err.status));
 };
@@ -65,7 +65,7 @@ export const handleStreamOffline = async (c: Context) => {
   );
 
   const tweetText: string = makeStreamOfflineTweetText(event, maybeClip);
-  return createTweet({ text: tweetText })
+  return postTweet({ text: tweetText })
     .then((res) => c.json(res))
     .catch((err: APIError) => c.json(logError(err), err.status));
 };

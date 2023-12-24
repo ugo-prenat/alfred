@@ -13,3 +13,4 @@ export * from './validators/validators.models';
 
 export * from './auth/jwt.auth';
 export * from './auth/jwt.utils';
+export * from './auth/auth.models';

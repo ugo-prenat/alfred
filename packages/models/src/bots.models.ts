@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import { BROADCASTER_COLLECTION } from './broadcasters.models';
+import { BROADCASTERS_COLLECTION } from './broadcasters.models';
 
 export const BOTS_COLLECTION = 'bots';
 export type BotStatus = 'pending' | 'active' | 'inactive';
@@ -26,7 +26,7 @@ const botSchema = new Schema(
   {
     broadcasterId: {
       type: Schema.Types.ObjectId,
-      ref: BROADCASTER_COLLECTION,
+      ref: BROADCASTERS_COLLECTION,
       required: true
     },
     name: { type: String, required: true },

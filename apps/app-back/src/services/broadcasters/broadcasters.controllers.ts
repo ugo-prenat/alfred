@@ -122,6 +122,8 @@ export const getBroadcaster = (c: Context) => {
 export const refreshToken = (c: PayloadContext<IRefreshTokenPayload>) => {
   const { refreshToken } = c.req.valid('json');
 
+  // pour plus de sécu, invalider le refresh token présent dans la req pour que le seul refresh token valide soit celui qui est renvoyé au client
+
   return verify(refreshToken, process.env.JWT_REFRESH_SECRET, JWT_ALGORITHM)
     .then(({ role, sub }: { role: BroadcasterRole; sub: string }) =>
       makeAccessTokens(sub, role)

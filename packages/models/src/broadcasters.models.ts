@@ -2,7 +2,7 @@ import { TwitchBroadcasterType } from './twitch.models';
 import mongoose, { Document, Schema } from 'mongoose';
 import { ROLES } from '@alfred/constants';
 
-export const BROADCASTER_COLLECTION = 'broadcasters';
+export const BROADCASTERS_COLLECTION = 'broadcasters';
 export type BroadcasterRole = (typeof ROLES)[number];
 
 interface IDBBroadcaster extends IRawBroadcaster {
@@ -44,6 +44,6 @@ const broadcasterSchema = new Schema(
 );
 
 export const Broadcaster = mongoose.model(
-  BROADCASTER_COLLECTION,
+  BROADCASTERS_COLLECTION,
   broadcasterSchema
 );

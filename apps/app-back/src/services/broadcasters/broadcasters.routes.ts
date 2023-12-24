@@ -20,7 +20,7 @@ broadcastersRoute.post(
   refreshToken
 );
 broadcastersRoute.get('/auth/gettoken', (c) =>
-  makeAccessTokens('uprenat', 'member')
+  makeAccessTokens('6586fb58511d26755fc6e323', 'member')
     .then((tokens) => c.json(tokens))
     .catch((err) => c.json({ error: err.message }, 500))
 );
