@@ -4,14 +4,9 @@ import { verify } from 'hono/jwt';
 import { userHasRequiredRole } from './auth.utils';
 import { JWT_ALGORITHM, JWT_TOKEN_EXPIRED_ERROR } from '@alfred/constants';
 import { IJwtPayload } from './auth.models';
-import { Logger } from 'pino';
 
 const auth =
-  (
-    requiredRole: BroadcasterRole,
-    secret: string,
-    logger: Logger<string>
-  ): MiddlewareHandler =>
+  (requiredRole: BroadcasterRole, secret: string): MiddlewareHandler =>
   async (c: Context, next: Next) => {
     const headerToken = c.req.header('Authorization');
     const token = headerToken?.split(' ')[1];
@@ -38,7 +33,6 @@ const auth =
         await next();
       })
       .catch((err) => {
-        logger.error(err);
         return c.json(
           {
             error:
@@ -49,14 +43,12 @@ const auth =
       });
   };
 
-const checkAuth = (secret: string, logger: Logger<string>) =>
-  auth('member', secret, logger);
+const checkAuth = (secret: string) => auth('member', secret);
 
-const requiredAuth =
-  (secret: string, logger: Logger<string>) => (requiredRole: BroadcasterRole) =>
-    auth(requiredRole, secret, logger);
+const requiredAuth = (secret: string) => (requiredRole: BroadcasterRole) =>
+  auth(requiredRole, secret);
 
-export const createAuth = (secret: string, logger: Logger<string>) => ({
-  checkAuth: checkAuth(secret, logger),
-  requiredAuth: requiredAuth(secret, logger)
+export const createAuth = (secret: string) => ({
+  checkAuth: checkAuth(secret),
+  requiredAuth: requiredAuth(secret)
 });
