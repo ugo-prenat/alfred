@@ -41,12 +41,8 @@ const makeTransport = (betterStackSourceToken: string): DestinationStream =>
   });
 
 export const logError = (logger: Logger<string>) => (err: APIError) => {
-  const error = {
-    message: err.message,
-    origin: err.origin
-  };
-  logger.error({ message: error.message, origin: error.origin }, err.message);
-  return error;
+  logger.error({ origin: err.origin }, err.message);
+  return { error: err.message };
 };
 
 interface ICreateLoggerProps {
