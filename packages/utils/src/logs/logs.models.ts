@@ -1,5 +1,4 @@
-import { API, APIError } from '@alfred/models';
-import pino, { DestinationStream, Logger } from 'pino';
+import pino, { DestinationStream } from 'pino';
 
 interface IPinoTransport {
   target: string;
@@ -31,7 +30,9 @@ const makeBetterStackTransport = (sourceToken: string): IPinoTransport => ({
   options: { sourceToken }
 });
 
-const makeTransport = (betterStackSourceToken: string): DestinationStream =>
+export const makeTransport = (
+  betterStackSourceToken: string
+): DestinationStream =>
   pino.transport({
     targets: [
       fileTransport,
@@ -39,23 +40,3 @@ const makeTransport = (betterStackSourceToken: string): DestinationStream =>
       makeBetterStackTransport(betterStackSourceToken)
     ]
   });
-
-export const logError = (logger: Logger<string>) => (err: APIError) => {
-  logger.error({ origin: err.origin }, err.message);
-  return { error: err.message };
-};
-
-interface ICreateLoggerProps {
-  name: API;
-  betterStackSourceToken: string;
-  level?: string;
-}
-
-export const createLogger = ({
-  name,
-  level,
-  betterStackSourceToken
-}: ICreateLoggerProps) => {
-  const logger = pino({ name, level }, makeTransport(betterStackSourceToken));
-  return { logger, logError: logError(logger) };
-};

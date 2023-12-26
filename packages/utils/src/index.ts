@@ -1,5 +1,4 @@
-export * from './loggers/hono.loggers';
-export * from './loggers/api.loggers';
+export * from './logs/logs';
 
 export * from './fetchers/fetcher';
 export * from './fetchers/twitchFetcher';

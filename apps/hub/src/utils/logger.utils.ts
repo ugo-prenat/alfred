@@ -1,10 +1,10 @@
 import { Logger } from 'pino';
 import { createLogger } from '@alfred/utils';
-import { API, APIError, IOrigin } from '@alfred/models';
+import { API, APIError } from '@alfred/models';
 
 interface ICreateLoggerReturn {
   logger: Logger<string>;
-  logError: (err: APIError) => { status: number; origin: IOrigin };
+  logError: (err: APIError) => { error: string };
 }
 
 export const { logger, logError }: ICreateLoggerReturn = createLogger({
