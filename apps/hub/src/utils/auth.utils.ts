@@ -1,3 +1,3 @@
-import { createAuth } from '@alfred/utils';
+import { authMiddleware } from '@alfred/utils';
 
-export const { checkAuth, requiredAuth } = createAuth(process.env.JWT_SECRET);
+export const checkAuth = authMiddleware(process.env.JWT_SECRET);

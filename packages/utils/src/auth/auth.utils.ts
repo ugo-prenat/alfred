@@ -6,6 +6,7 @@ import {
 } from '@alfred/constants';
 import { BroadcasterRole } from '@alfred/models';
 import { sign } from 'hono/jwt';
+import { IJwtPayload } from './auth.models';
 
 export const signAccessToken = (
   sub: string,
@@ -41,12 +42,26 @@ export const signRefreshToken = (
   return sign(payload, secret, JWT_ALGORITHM);
 };
 
-export const userHasRequiredRole = (
+const userHasRequiredRole = (
   userRole: BroadcasterRole,
   requiredRole: BroadcasterRole
 ): boolean => {
   const userRoleLevel = ROLE_LEVELS[userRole];
   const requiredRoleLevel = ROLE_LEVELS[requiredRole];
-
   return userRoleLevel >= requiredRoleLevel;
+};
+
+export const checkIfUsercanPerformAction = (
+  jwt: IJwtPayload,
+  {
+    requiredRole,
+    broadcasterId
+  }: { requiredRole: BroadcasterRole; broadcasterId: string }
+): boolean => {
+  const userCanPerformAction = broadcasterId === jwt.sub;
+
+  if (!userHasRequiredRole(jwt.role, requiredRole) && !userCanPerformAction)
+    throw new Error("You don't have permission to call this endpoint");
+
+  return true;
 };
