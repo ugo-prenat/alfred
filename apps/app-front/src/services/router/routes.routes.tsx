@@ -11,7 +11,7 @@ import AdminPage from '@pages/admin/Admin.page';
 import FeaturesPage from '@pages/features/Features.page';
 import Nav from '@components/nav/Nav';
 
-const isAuthenticated = false;
+const isAuthenticated = true;
 
 export const rootRoute = new RootRoute({
   component: () => (
