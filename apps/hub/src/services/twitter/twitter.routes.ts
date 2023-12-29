@@ -1,10 +1,10 @@
 import { Hono } from 'hono';
 import { handleCreateTweet, handleDeleteTweet } from './twitter.controllers';
-import { checkAuth } from '@/utils/auth.utils';
+import { basicAuth } from '@/utils/auth.utils';
 
 const twitterRoute = new Hono();
 
-twitterRoute.use('/*', checkAuth);
+twitterRoute.use('/*', basicAuth);
 
 twitterRoute.post('/tweets', handleCreateTweet);
 twitterRoute.delete('/tweets/:tweetId', handleDeleteTweet);

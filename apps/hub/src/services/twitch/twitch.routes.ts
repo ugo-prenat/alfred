@@ -5,18 +5,20 @@ import {
   handleGetBroadcasterFollowers,
   handleGetBroadcasterSubscribers
 } from './twitch.broadcasters';
+import { basicAuth } from '@/utils/auth.utils';
 
 const twitchRoute = new Hono();
+twitchRoute.use('/broadcasters/*', basicAuth);
 
 twitchRoute.post('/eventsub', twitchWebhookAuth, handleTwitchWebhook);
 twitchRoute.post('/eventsub/subscriptions', createEventSubSubscription);
 
 twitchRoute.get(
-  '/broadcaster/:broadcasterId/subscribers',
+  '/broadcasters/:broadcasterId/subscribers',
   handleGetBroadcasterSubscribers
 );
 twitchRoute.get(
-  '/broadcaster/:broadcasterId/followers',
+  '/broadcasters/:broadcasterId/followers',
   handleGetBroadcasterFollowers
 );
 

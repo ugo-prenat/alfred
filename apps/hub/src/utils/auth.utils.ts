@@ -1,3 +1,4 @@
-import { authMiddleware } from '@alfred/utils';
+import { createAuthMiddlewares } from '@alfred/utils';
 
-export const checkAuth = authMiddleware(process.env.JWT_SECRET);
+export const { basicAuth, checkAuthByBroadcasterId, restrictedRoute } =
+  createAuthMiddlewares(process.env.JWT_SECRET);

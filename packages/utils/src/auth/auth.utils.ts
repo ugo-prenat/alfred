@@ -42,7 +42,7 @@ export const signRefreshToken = (
   return sign(payload, secret, JWT_ALGORITHM);
 };
 
-const userHasRequiredRole = (
+export const userHasRequiredRole = (
   userRole: BroadcasterRole,
   requiredRole: BroadcasterRole
 ): boolean => {
@@ -51,17 +51,13 @@ const userHasRequiredRole = (
   return userRoleLevel >= requiredRoleLevel;
 };
 
-export const checkIfUsercanPerformAction = (
+export const userCanPerformAction = (
   jwt: IJwtPayload,
-  {
-    requiredRole,
-    broadcasterId
-  }: { requiredRole: BroadcasterRole; broadcasterId: string }
+  broadcasterId: string | undefined,
+  requiredRole: BroadcasterRole
 ): boolean => {
   const userCanPerformAction = broadcasterId === jwt.sub;
-
-  if (!userHasRequiredRole(jwt.role, requiredRole) && !userCanPerformAction)
-    throw new Error("You don't have permission to call this endpoint");
-
-  return true;
+  return !userHasRequiredRole(jwt.role, requiredRole) && !userCanPerformAction
+    ? false
+    : true;
 };
