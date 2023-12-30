@@ -27,7 +27,7 @@ const App = () => {
         body: JSON.stringify({ twitchToken })
       })
         .then((res) => res.json())
-        .then((data) =>
+        .then((data: any) =>
           setData({ broadcaster: data.broadcaster.name, bot: data.bot.name })
         );
   };
