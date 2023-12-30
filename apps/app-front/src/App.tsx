@@ -1,5 +1,5 @@
 import './index.css';
-import '@services/i18n/config.i18n';
+import '@services/i18n/config';
 
 import { useEffect } from 'react';
 import { Toaster } from '@components/ui/shadcn/sonner';
