@@ -1,5 +1,4 @@
 import { Theme } from '@services/state/preferences/preferences.models';
-import { usePreferencesStore } from '@services/state/preferences/preferences.store';
 import { FC } from 'react';
 import {
   DropdownMenu,
@@ -9,6 +8,7 @@ import {
 } from './ui/shadcn/dropdown-menu';
 import { Button } from './ui/shadcn/button';
 import { Moon, Sun } from 'lucide-react';
+import { usePreferences } from '@services/state/preferences/preferences.stores';
 
 interface IThemeSelect {
   label: string;
@@ -21,7 +21,7 @@ interface IThemeSelectProps {
 }
 
 const ThemeSelect: FC<{ compact?: boolean }> = ({ compact = false }) => {
-  const { setTheme } = usePreferencesStore();
+  const { setTheme } = usePreferences();
 
   const handleChange = (theme: Theme) => () => {
     setTheme(theme);
@@ -62,7 +62,7 @@ const CompactThemeSelect: FC<IThemeSelectProps> = ({ themes, onChange }) => {
           <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent>
         {themes.map(({ label, value }) => (
           <DropdownMenuItem key={value} onClick={onChange(value)}>
             {label}

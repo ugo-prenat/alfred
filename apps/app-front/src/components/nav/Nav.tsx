@@ -1,3 +1,4 @@
+import LangSelect from '@components/LangSelect';
 import ThemeSelect from '@components/ThemeSelect';
 import { Link } from '@tanstack/react-router';
 
@@ -12,7 +13,8 @@ const Nav = () => {
         <Link to="/admin/broadcasters">Admin broadcasters</Link>
       </div>
 
-      <div>
+      <div className="flex gap-x-2">
+        <LangSelect compact />
         <ThemeSelect compact />
       </div>
     </div>

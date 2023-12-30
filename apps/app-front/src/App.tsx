@@ -1,14 +1,15 @@
 import './index.css';
+import '@services/i18n/config.i18n';
 
 import { useEffect } from 'react';
 import { Toaster } from '@components/ui/shadcn/sonner';
 import { RouterProvider } from '@tanstack/react-router';
 import { router } from './services/router/index.routes';
-import { usePreferencesStore } from '@services/state/preferences/preferences.store';
+import { usePreferences } from '@services/state/preferences/preferences.stores';
 import { updateRootElement } from '@services/state/preferences/preferences.utils';
 
 const App = () => {
-  const { theme } = usePreferencesStore();
+  const { theme } = usePreferences();
 
   useEffect(() => {
     updateRootElement(theme);

@@ -1,22 +1,24 @@
 import { Button } from '@components/ui/shadcn/button';
+import { useTranslation } from '@services/i18n/useTranslation';
 import { toast } from 'sonner';
 
 const FeaturesPage = () => {
+  const t = useTranslation();
+
   const handleCLick = () => {
-    toast.loading('toasted', {
+    toast('toasted', {
       action: {
         label: 'action',
         onClick: () => {
           console.log('clicked');
         }
-      },
-      dismissible: true
+      }
     });
   };
 
   return (
     <div>
-      <p>Features</p>
+      <p>{t('features.title')}</p>
       <Button className="animate-in zoom-in duration-500" onClick={handleCLick}>
         toast
       </Button>
