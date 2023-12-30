@@ -1,3 +1,4 @@
+import Page from '@components/Page';
 import { Button } from '@components/ui/shadcn/button';
 import { useTranslation } from '@services/i18n/useTranslation';
 import { toast } from 'sonner';
@@ -17,12 +18,12 @@ const FeaturesPage = () => {
   };
 
   return (
-    <div>
+    <Page>
       <p>{t('features.title')}</p>
       <Button className="animate-in zoom-in duration-500" onClick={handleCLick}>
         toast
       </Button>
-    </div>
+    </Page>
   );
 };
 

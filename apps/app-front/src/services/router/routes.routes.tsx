@@ -1,7 +1,6 @@
 import {
   Navigate,
   NotFoundRoute,
-  Outlet,
   RootRoute,
   Route,
   redirect
@@ -9,18 +8,12 @@ import {
 import AdminBroadcastersPage from '@pages/admin/broadcasters/Broadcasters.page';
 import AdminPage from '@pages/admin/Admin.page';
 import FeaturesPage from '@pages/features/Features.page';
-import Nav from '@components/nav/Nav';
+import Root from '@components/nav/Root';
 
 const isAuthenticated = true;
 
 export const rootRoute = new RootRoute({
-  component: () => (
-    <>
-      <Nav />
-      <hr />
-      <Outlet />
-    </>
-  )
+  component: () => <Root />
 });
 
 export const protectedRoute = new Route({
@@ -51,7 +44,7 @@ export const loginRoute = new Route({
 export const featuresRoute = new Route({
   getParentRoute: () => protectedRoute,
   path: '/features',
-  component: FeaturesPage
+  component: () => <FeaturesPage />
 });
 
 // Admin
@@ -62,12 +55,12 @@ export const adminRoute = new Route({
 export const adminIndexRoute = new Route({
   getParentRoute: () => adminRoute,
   path: '/',
-  component: AdminPage
+  component: () => <AdminPage />
 });
 export const adminBroadcastersRoute = new Route({
   getParentRoute: () => adminRoute,
   path: '/broadcasters',
-  component: AdminBroadcastersPage
+  component: () => <AdminBroadcastersPage />
 });
 
 // Not found
