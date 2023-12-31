@@ -3,7 +3,6 @@ import { usePreferences } from '@services/state/preferences/preferences.stores';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@utils/tailwind.utils';
 import { Bot, History, Package, Shield } from 'lucide-react';
-import ToggleMenuBtn from './ToggleMenuBtn';
 
 const Menu = () => {
   const t = useTranslation();
@@ -16,7 +15,7 @@ const Menu = () => {
   return (
     <div
       className={cn(
-        'h-full flex flex-col justify-between px-8 py-6 border-r dark:border-primary-foreground',
+        'h-full flex flex-col justify-between px-8 py-10 border-r dark:border-primary-foreground',
         { hidden: !isMenuOpen }
       )}
     >
@@ -39,8 +38,7 @@ const Menu = () => {
         </Link>
       </div>
 
-      <div>
-        <ToggleMenuBtn />
+      <div className="relative">
         <p>broadcaster/bot link</p>
       </div>
     </div>

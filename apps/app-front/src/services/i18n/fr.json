@@ -13,6 +13,8 @@
   "nav.history": "Historique",
   "nav.admin": "Admin",
   "nav.admin.broadcasters": "Broadcasters",
+  "nav.menu.action.open": "Ouvrir le menu",
+  "nav.menu.action.close": "Fermer le menu",
 
   "features.title": "Fonctionnalités"
 }

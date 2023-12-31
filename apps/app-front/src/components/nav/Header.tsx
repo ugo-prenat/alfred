@@ -4,11 +4,12 @@ import LangSelect from '@components/LangSelect';
 import ThemeSelect from '@components/ThemeSelect';
 import IconLink from '@components/ui/IconLink';
 import { Separator } from '@components/ui/shadcn/separator';
+import ToggleMenuBtn from './ToggleMenuBtn';
 
 const Header = () => {
   return (
-    <div className="h-12 flex justify-between items-center px-6 border-b dark:border-primary-foreground">
-      <p></p>
+    <div className="h-12 flex justify-between items-center px-2 border-b dark:border-primary-foreground">
+      <ToggleMenuBtn />
 
       <div className="flex items-center gap-x-2">
         <LangSelect compact />

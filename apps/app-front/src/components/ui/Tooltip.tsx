@@ -6,16 +6,27 @@ import {
   TooltipContent
 } from './shadcn/tooltip';
 
+const DEFAULT_TOOLTIP_DELAY_DURATION = 200;
+
 interface ITooltipProps extends PropsWithChildren {
   text: string;
+  className?: string;
+  side?: 'left' | 'top' | 'right' | 'bottom';
+  delay?: number;
 }
 
-const Tooltip: FC<ITooltipProps> = ({ children, text }) => {
+const Tooltip: FC<ITooltipProps> = ({
+  children,
+  text,
+  className,
+  side,
+  delay = DEFAULT_TOOLTIP_DELAY_DURATION
+}) => {
   return (
-    <TooltipProvider>
+    <TooltipProvider delayDuration={delay}>
       <ShadcnTooltip>
-        <TooltipTrigger>{children}</TooltipTrigger>
-        <TooltipContent>
+        <TooltipTrigger className={className}>{children}</TooltipTrigger>
+        <TooltipContent side={side}>
           <p>{text}</p>
         </TooltipContent>
       </ShadcnTooltip>
