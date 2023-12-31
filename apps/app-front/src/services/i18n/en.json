@@ -8,5 +8,11 @@
   "language.fr": "Français",
   "language.en": "English",
 
+  "nav.features": "Features",
+  "nav.bot": "Bot management",
+  "nav.history": "History",
+  "nav.admin": "Admin",
+  "nav.admin.broadcasters": "Broadcasters",
+
   "features.title": "Features"
 }

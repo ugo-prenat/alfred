@@ -7,7 +7,7 @@ import { Separator } from '@components/ui/shadcn/separator';
 
 const Header = () => {
   return (
-    <div className="h-12 flex justify-between items-center px-6 border-b">
+    <div className="h-12 flex justify-between items-center px-6 border-b dark:border-primary-foreground">
       <p></p>
 
       <div className="flex items-center gap-x-2">

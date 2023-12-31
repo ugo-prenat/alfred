@@ -1,5 +1,7 @@
+import Page from '@components/Page';
+
 const AdminBroadcastersPage = () => {
-  return <div>Admin Broadcasters Page</div>;
+  return <Page>Admin Broadcasters Page</Page>;
 };
 
 export default AdminBroadcastersPage;

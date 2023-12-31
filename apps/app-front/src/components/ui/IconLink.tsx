@@ -14,7 +14,7 @@ const IconLink: FC<IIconButtonProps> = ({
   ...props
 }) => {
   return (
-    <a href={href}>
+    <a href={href} target="_blank" rel="noopener noreferrer">
       <Button
         variant="outline"
         size="icon"

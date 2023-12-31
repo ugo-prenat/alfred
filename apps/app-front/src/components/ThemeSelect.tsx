@@ -9,6 +9,7 @@ import {
 import { Button } from './ui/shadcn/button';
 import { Moon, Sun } from 'lucide-react';
 import { usePreferences } from '@services/state/preferences/preferences.stores';
+import { useTranslation } from '@services/i18n/useTranslation';
 
 interface IThemeSelect {
   label: string;
@@ -22,15 +23,16 @@ interface IThemeSelectProps {
 
 const ThemeSelect: FC<{ compact?: boolean }> = ({ compact = false }) => {
   const { setTheme } = usePreferences();
+  const t = useTranslation();
 
   const handleChange = (theme: Theme) => () => {
     setTheme(theme);
   };
 
   const themes: IThemeSelect[] = [
-    { label: 'intl light', value: 'light' },
-    { label: 'intl dark', value: 'dark' },
-    { label: 'intl system', value: 'system' }
+    { label: t('theme.light'), value: 'light' },
+    { label: t('theme.dark'), value: 'dark' },
+    { label: t('theme.system'), value: 'system' }
   ];
 
   const themeSelectProps: IThemeSelectProps = {
