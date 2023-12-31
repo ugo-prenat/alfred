@@ -15,6 +15,8 @@ interface IPreferencesStore {
   setTheme: (theme: Theme) => void;
   lang: Lang;
   setLang: (lang: Lang) => void;
+  isMenuOpen: boolean;
+  toggleMenu: () => void;
 }
 
 export const usePreferences = create<IPreferencesStore>()(
@@ -29,7 +31,9 @@ export const usePreferences = create<IPreferencesStore>()(
       setLang: (lang) => {
         i18next.changeLanguage(lang);
         set({ lang });
-      }
+      },
+      isMenuOpen: true,
+      toggleMenu: () => set((state) => ({ isMenuOpen: !state.isMenuOpen }))
     }),
     { name: PREFERENCES_STORAGE_KEY }
   )
