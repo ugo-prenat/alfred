@@ -21,17 +21,15 @@ const Tooltip: FC<ITooltipProps> = ({
   className,
   side,
   delay = DEFAULT_TOOLTIP_DELAY_DURATION
-}) => {
-  return (
-    <TooltipProvider delayDuration={delay}>
-      <ShadcnTooltip>
-        <TooltipTrigger className={className}>{children}</TooltipTrigger>
-        <TooltipContent side={side}>
-          <p>{text}</p>
-        </TooltipContent>
-      </ShadcnTooltip>
-    </TooltipProvider>
-  );
-};
+}) => (
+  <TooltipProvider delayDuration={delay}>
+    <ShadcnTooltip>
+      <TooltipTrigger className={className}>{children}</TooltipTrigger>
+      <TooltipContent side={side}>
+        <p>{text}</p>
+      </TooltipContent>
+    </ShadcnTooltip>
+  </TooltipProvider>
+);
 
 export default Tooltip;

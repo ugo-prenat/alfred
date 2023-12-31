@@ -1,3 +1,5 @@
+import Sheet from '@components/ui/Sheet';
+import { useWindowSize } from '@hooks/useWindowSize';
 import { useTranslation } from '@services/i18n/useTranslation';
 import { usePreferences } from '@services/state/preferences/preferences.stores';
 import { Link } from '@tanstack/react-router';
@@ -5,8 +7,33 @@ import { cn } from '@utils/tailwind.utils';
 import { Bot, History, Package, Shield } from 'lucide-react';
 
 const Menu = () => {
+  const { isMenuOpen, toggleMenu } = usePreferences();
+  const { width } = useWindowSize();
+
+  const handleOpenChange = (open: boolean) =>
+    !open &&
+    setTimeout(() => {
+      // wait for animation to finish
+      toggleMenu();
+    }, 300);
+
+  if (!isMenuOpen) return null;
+
+  return width < 1024 ? (
+    <Sheet
+      open={isMenuOpen}
+      side="left"
+      onOpenChange={handleOpenChange}
+      className="w-fit p-0 border-none border-r-0"
+      content={<Content />}
+    />
+  ) : (
+    <Content />
+  );
+};
+
+const Content = () => {
   const t = useTranslation();
-  const { isMenuOpen } = usePreferences();
 
   const linkClasses =
     'flex items-center gap-4 p-2 text-muted-foreground dark:font-light rounded-md whitespace-nowrap hover:text-foreground transition-all duration-100 ease-in-out';
@@ -15,12 +42,11 @@ const Menu = () => {
   return (
     <div
       className={cn(
-        'h-full flex flex-col justify-between px-8 py-10 border-r dark:border-primary-foreground',
-        { hidden: !isMenuOpen }
+        'h-full flex flex-col justify-between px-8 py-10 border-r dark:border-primary-foreground'
       )}
     >
       <div className="flex flex-col gap-4">
-        <Link to="/" className={linkClasses}>
+        <Link to="/features" className={linkClasses}>
           <Package className={iconClasses} />
           {t('nav.features')}
         </Link>
