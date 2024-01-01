@@ -1,6 +1,6 @@
-import { PayloadContext } from '@alfred/utils';
+import { PayloadContext, ensureError } from '@alfred/utils';
 import {
-  ICreateBroadcasterPayload,
+  ITwitchTokenPayload,
   IRefreshTokenPayload
 } from './broadcasters.models';
 import {
@@ -20,22 +20,21 @@ import {
 } from '../twitch/twitch.utils';
 import {
   handleDeleteBroadcaster,
-  handleGetBroadcaster,
+  handleGetBroadcasterById,
+  handleGetBroadcasterByTwitchId,
   makeAPIBroadcasterToBroadcaster,
   makeAPIBroadcastersToBroadcasters,
   makeAccessTokens,
   makeRawBroadcaster
 } from './broadcasters.utils';
 import { logError, logger } from '@/utils/logger.utils';
-import { makeAPIBotToBot, makeDBBot } from '../bots/bots.utils';
+import { handleGetBot, makeAPIBotToBot, makeDBBot } from '../bots/bots.utils';
 import mongoose from 'mongoose';
 import { Context } from 'hono';
 import { verify } from 'hono/jwt';
 import { JWT_ALGORITHM } from '@alfred/constants';
 
-export const createBroadcaster = (
-  c: PayloadContext<ICreateBroadcasterPayload>
-) => {
+export const createBroadcaster = (c: PayloadContext<ITwitchTokenPayload>) => {
   const { twitchToken } = c.req.valid('json');
 
   const fetcherParams: ITwitchFetcherParams =
@@ -104,7 +103,7 @@ export const getBroadcaster = (c: Context) => {
   if (!broadcasterIdQuery && !broadcasterIdParam)
     return c.json({ error: 'broadcasterId required' }, 400);
 
-  return handleGetBroadcaster(broadcasterIdQuery || broadcasterIdParam)
+  return handleGetBroadcasterById(broadcasterIdQuery || broadcasterIdParam)
     .then(makeAPIBroadcasterToBroadcaster)
     .then((broadcaster: IBroadcaster) => c.json(broadcaster))
     .catch((err) => {
@@ -131,4 +130,30 @@ export const refreshToken = (c: PayloadContext<IRefreshTokenPayload>) => {
         .catch((err) => c.json({ error: err.message }, 500))
     )
     .catch(() => c.json({ error: 'Invalid refresh token' }, 401));
+};
+
+export const authBroadcaster = async (
+  c: PayloadContext<ITwitchTokenPayload>
+) => {
+  const { twitchToken } = c.req.valid('json');
+  const fetcherParams = makeTwitchFetcherParams(twitchToken);
+
+  try {
+    const twitchBroadcaster = await handleGetTwitchBroadcaster(fetcherParams);
+    const broadcaster = await handleGetBroadcasterByTwitchId(
+      twitchBroadcaster.id
+    ).then(makeAPIBroadcasterToBroadcaster);
+    const bot = await handleGetBot(broadcaster.botId.toString()).then(
+      makeAPIBotToBot
+    );
+
+    const { accessToken, refreshToken } = await makeAccessTokens(
+      broadcaster.id,
+      broadcaster.role
+    );
+    return c.json({ broadcaster, bot, accessToken, refreshToken }, 200);
+  } catch (err) {
+    if (err instanceof APIError) return c.json(logError(err), err.status);
+    return c.json(logError(ensureError(err)), 500);
+  }
 };

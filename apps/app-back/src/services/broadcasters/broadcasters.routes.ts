@@ -1,10 +1,7 @@
 import { Hono } from 'hono';
+import { twitchTokenSchema, refreshTokenSchema } from './broadcasters.models';
 import {
-  createBrodcasterSchema,
-  refreshTokenSchema
-} from './broadcasters.models';
-import {
-  createBroadcaster,
+  authBroadcaster,
   getBroadcaster,
   getBroadcasters,
   refreshToken
@@ -27,10 +24,15 @@ broadcastersRoute.get('/auth/gettoken', (c) =>
 
 broadcastersRoute.get('/', getBroadcasters);
 broadcastersRoute.get('/:broadcasterId', getBroadcaster);
+// broadcastersRoute.post(
+//   '/',
+//   payloadValidator(twitchTokenSchema),
+//   createBroadcaster
+// );
 broadcastersRoute.post(
-  '/',
-  payloadValidator(createBrodcasterSchema),
-  createBroadcaster
+  '/auth',
+  payloadValidator(twitchTokenSchema),
+  authBroadcaster
 );
 
 export default broadcastersRoute;

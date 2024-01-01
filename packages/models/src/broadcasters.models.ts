@@ -49,7 +49,7 @@ export const Broadcaster = mongoose.model(
   broadcasterSchema
 );
 
-export interface ILoginBroadcasterResponse {
+export interface IAuthBroadcasterResponse {
   bot: IBot;
   broadcaster: IBroadcaster;
   accessToken: string;

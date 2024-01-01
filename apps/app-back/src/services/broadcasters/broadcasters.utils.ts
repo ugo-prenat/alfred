@@ -53,10 +53,18 @@ export const handleDeleteBroadcaster = (broadcasterId: string) =>
     return broadcaster;
   });
 
-export const handleGetBroadcaster = (
+export const handleGetBroadcasterById = (
   broadcasterId: string
 ): Promise<IAPIBroadcaster> =>
   Broadcaster.findById(broadcasterId).then((broadcaster) => {
+    if (!broadcaster) throw new Error('broadcaster not found');
+    return broadcaster;
+  });
+
+export const handleGetBroadcasterByTwitchId = (
+  twitchId: string
+): Promise<IAPIBroadcaster> =>
+  Broadcaster.findOne({ twitchId }).then((broadcaster) => {
     if (!broadcaster) throw new Error('broadcaster not found');
     return broadcaster;
   });

@@ -24,8 +24,11 @@ interface ICreateLoggerProps {
   level?: string;
 }
 
-export const logError = (logger: Logger<string>) => (err: APIError) => {
-  logger.error({ origin: err.origin }, err.message);
+export const logError = (logger: Logger<string>) => (err: APIError | Error) => {
+  logger.error(
+    err instanceof APIError ? { origin: err.origin } : err,
+    err.message
+  );
   return { error: err.message };
 };
 

@@ -1,4 +1,4 @@
-import { IAPIBot, IBot, IBroadcaster, IDBBot } from '@alfred/models';
+import { Bot, IAPIBot, IBot, IBroadcaster, IDBBot } from '@alfred/models';
 import mongoose from 'mongoose';
 
 export const makeDBBot = (
@@ -22,3 +22,9 @@ export const makeAPIBotToBot = (apiBot: IAPIBot): IBot => {
   const { _id, ...bot } = apiBot.toObject();
   return { id: _id.toString(), ...bot };
 };
+
+export const handleGetBot = (botId: string): Promise<IAPIBot> =>
+  Bot.findById(botId).then((bot) => {
+    if (!bot) throw new Error('bot not found');
+    return bot;
+  });

@@ -1,10 +1,11 @@
 import { z, ZodSchema } from 'zod';
 
-export interface ICreateBroadcasterPayload {
+export interface ITwitchTokenPayload {
   twitchToken: string;
 }
-export const createBrodcasterSchema: ZodSchema<ICreateBroadcasterPayload> =
-  z.object({ twitchToken: z.string() });
+export const twitchTokenSchema: ZodSchema<ITwitchTokenPayload> = z.object({
+  twitchToken: z.string()
+});
 
 export interface IRefreshTokenPayload {
   refreshToken: string;

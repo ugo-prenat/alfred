@@ -4,7 +4,7 @@ import { API, APIError } from '@alfred/models';
 
 interface ICreateLoggerReturn {
   logger: Logger<string>;
-  logError: (err: APIError) => { error: string };
+  logError: (err: APIError | Error) => { error: string };
 }
 
 export const { logger, logError }: ICreateLoggerReturn = createLogger({

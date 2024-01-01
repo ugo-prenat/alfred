@@ -23,7 +23,6 @@ const TwitchLoginStep: FC<ITwitchLoginStepProps> = ({ onNextStep }) => {
   }, []);
 
   console.log(data);
-  console.log(status);
 
   const handleLoginTwitch = () => (window.location.href = makeTwitchAuthUrl());
 

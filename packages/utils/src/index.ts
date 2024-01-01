@@ -13,3 +13,5 @@ export * from './validators/validators.models';
 export * from './auth/auth.middlewares';
 export * from './auth/auth.utils';
 export * from './auth/auth.models';
+
+export * from './errors/errors.utils';
