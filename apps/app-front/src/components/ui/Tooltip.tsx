@@ -24,7 +24,9 @@ const Tooltip: FC<ITooltipProps> = ({
 }) => (
   <TooltipProvider delayDuration={delay}>
     <ShadcnTooltip>
-      <TooltipTrigger className={className}>{children}</TooltipTrigger>
+      <TooltipTrigger className={className} asChild>
+        {children}
+      </TooltipTrigger>
       <TooltipContent side={side}>
         <p>{text}</p>
       </TooltipContent>
