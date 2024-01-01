@@ -4,7 +4,7 @@ import { useTranslation } from '@services/i18n/useTranslation';
 import { usePreferences } from '@services/state/preferences/preferences.stores';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@utils/tailwind.utils';
-import { Bot, History, Package, Shield } from 'lucide-react';
+import { Bot, History, LogOut, Package, Shield } from 'lucide-react';
 import { FC, useState } from 'react';
 
 const Menu = () => {
@@ -77,6 +77,10 @@ const Content: FC<{ onLinkClick?: () => void }> = ({ onLinkClick }) => {
       </div>
 
       <div className="relative">
+        <Link to="/onboarding" className={linkClasses} onClick={onLinkClick}>
+          <LogOut className={iconClasses} />
+          {t('nav.onboarding.logout')}
+        </Link>
         <p>broadcaster/bot link</p>
       </div>
     </div>
