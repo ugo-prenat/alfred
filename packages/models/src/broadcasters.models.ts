@@ -50,7 +50,7 @@ export const Broadcaster = mongoose.model(
 );
 
 export interface IAuthBroadcasterResponse {
-  bot: IBot;
+  bot: IBot | null;
   broadcaster: IBroadcaster;
   accessToken: string;
   refreshToken: string;

@@ -5,6 +5,8 @@ import Twitch from '@assets/icons/Twitch';
 import { Description, Title } from '@components/ui/Typography';
 import { makeTwitchAuthUrl } from '@pages/onboarding/onboarding.utils';
 import { useLoginBroadcaster } from '@pages/onboarding/onboarding.hooks';
+import { useAuth } from '@services/state/auth/auth.stores';
+import { router } from '@services/router/index.routes';
 
 interface ITwitchLoginStepProps {
   onNextStep: () => void;
@@ -14,15 +16,28 @@ const TwitchLoginStep: FC<ITwitchLoginStepProps> = ({ onNextStep }) => {
   const twitchToken = document.location.hash.split('&')[0].split('=')[1];
 
   const t = useTranslation();
+  const { setAuth } = useAuth();
   const { handleLoginBroadcaster, data, status } = useLoginBroadcaster();
 
   const isDisabled = status === 'loading';
 
   useEffect(() => {
-    if (twitchToken) handleLoginBroadcaster(twitchToken);
-  }, []);
+    if (twitchToken && !data)
+      handleLoginBroadcaster(twitchToken)
+        .then((data) => {
+          if (data.bot) {
+            setAuth({ ...data, bot: data.bot });
+            router.history.push('/features');
+          }
 
-  console.log(data);
+          /*
+          
+          Gérer l'inscription ici
+          
+          */
+        })
+        .catch((err) => console.log(err));
+  }, []);
 
   const handleLoginTwitch = () => (window.location.href = makeTwitchAuthUrl());
 
