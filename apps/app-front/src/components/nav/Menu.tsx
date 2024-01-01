@@ -5,15 +5,21 @@ import { usePreferences } from '@services/state/preferences/preferences.stores';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@utils/tailwind.utils';
 import { Bot, History, LogOut, Package, Shield } from 'lucide-react';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+
+const HIDE_MENU_BREAKPOINT = 1000;
 
 const Menu = () => {
-  const { isMenuOpen } = usePreferences();
+  const { isMenuOpen, toggleMenu } = usePreferences();
   const { width } = useWindowSize();
+
+  useEffect(() => {
+    if (width <= HIDE_MENU_BREAKPOINT && isMenuOpen) toggleMenu();
+  }, [width]);
 
   if (!isMenuOpen) return null;
 
-  return width < 1024 ? <MenuSheet /> : <Content />;
+  return width <= HIDE_MENU_BREAKPOINT ? <MenuSheet /> : <Content />;
 };
 
 const MenuSheet = () => {
