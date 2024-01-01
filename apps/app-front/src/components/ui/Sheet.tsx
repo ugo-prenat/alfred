@@ -1,6 +1,5 @@
 import { FC, ReactNode } from 'react';
-import { Sheet as ShadcnSheet, SheetClose, SheetContent } from './shadcn/sheet';
-import { Link } from '@tanstack/react-router';
+import { Sheet as ShadcnSheet, SheetContent } from './shadcn/sheet';
 
 interface ISheetProps {
   content: ReactNode;
@@ -19,14 +18,6 @@ const Sheet: FC<ISheetProps> = ({
 }) => (
   <ShadcnSheet defaultOpen={open} onOpenChange={onOpenChange}>
     <SheetContent side={side} className={className}>
-      <SheetClose>
-        <a href="/admin">oui</a>
-      </SheetClose>
-      <SheetClose>
-        <Link to="/admin" onClick={(e) => e.preventDefault()}>
-          hein ?
-        </Link>
-      </SheetClose>
       {content}
     </SheetContent>
   </ShadcnSheet>
