@@ -17,5 +17,7 @@
   "nav.menu.action.close": "Close menu",
   "nav.onboarding.logout": "Logout",
 
+  "onboarding.twitchLogin.twitchLoginBtn": "Connection",
+
   "features.title": "Features"
 }

@@ -1,50 +1,3 @@
-// APPS
-export const APP_FRONT = 'app-front';
-export const APP_BACK = 'app-back';
-export const HUB = 'hub';
-export const SCHEDULER = 'scheduler';
-
-export const APPS = [APP_FRONT, APP_BACK, HUB, SCHEDULER] as const;
-
-// URLS
-export const APP_FRONT_PROD_URL = 'https://app.alfred.com';
-export const APP_FRONT_DEV_URL = 'http://localhost:5173';
-
-export const APP_BACK_PROD_URL = 'https://api.alfred.com';
-export const APP_BACK_DEV_URL = 'http://localhost:3000';
-
-export const HUB_PROD_URL = 'https://hub.alfred.com';
-export const HUB_DEV_URL = 'http://localhost:3001';
-
-export const SCHEDULER_PROD_URL = 'https://scheduler.alfred.com';
-export const SCHEDULER_DEV_URL = 'http://localhost:3002';
-
-type IUrlsConf = {
-  [key in (typeof APPS)[number]]: {
-    development: string;
-    production: string;
-  };
-};
-
-export const URLS_CONF: IUrlsConf = {
-  'app-front': {
-    development: APP_FRONT_DEV_URL,
-    production: APP_FRONT_PROD_URL
-  },
-  'app-back': {
-    development: APP_BACK_DEV_URL,
-    production: APP_BACK_PROD_URL
-  },
-  hub: {
-    development: HUB_DEV_URL,
-    production: HUB_PROD_URL
-  },
-  scheduler: {
-    development: SCHEDULER_DEV_URL,
-    production: SCHEDULER_PROD_URL
-  }
-};
-
 // TWITCH
 export const AFFILIATE_TWITCH_BROADCASTER = 'affiliate';
 export const PARTNER_TWITCH_BROADCASTER = 'partner';
@@ -87,7 +40,10 @@ export const TWITCH_EVENTSUB_WEBHOOK_CALLBACK_VERIFICATION_MESSAGE_TYPE =
 export const TWITCH_EVENTSUB_NOTIFICATION_MESSAGE_TYPE = 'notification';
 export const TWITCH_EVENTSUB_REVOCATION_MESSAGE_TYPE = 'revocation';
 
-export const TWITCH_WEBHOOK_CALLBACK_URL = HUB_PROD_URL + '/twitch/eventsub';
+export const TWITCH_ACCESS_TOKEN_SCOPES = [
+  'user:read:email',
+  'channel:read:subscriptions'
+];
 
 // ROLES
 export const MEMBER_ROLE = 'member';

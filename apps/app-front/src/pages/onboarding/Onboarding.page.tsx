@@ -1,9 +1,19 @@
 import Page from '@components/Page';
+import TwitchLoginStep from './steps/twitchLogin/TwitchLoginStep';
+import { useState } from 'react';
 
 const OnboardingPage = () => {
+  const [activeStep, setActiveStep] = useState<'twitch-login' | 'bot-creation'>(
+    'twitch-login'
+  );
+
+  const handleNextStep = () => setActiveStep('bot-creation');
+
   return (
     <Page>
-      <h1>Onboarding</h1>
+      {activeStep === 'twitch-login' && (
+        <TwitchLoginStep onNextStep={handleNextStep} />
+      )}
     </Page>
   );
 };

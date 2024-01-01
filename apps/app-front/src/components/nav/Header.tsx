@@ -1,5 +1,5 @@
-import { GitHub } from '@assets/icons/GitHub';
-import { X } from '@assets/icons/X';
+import GitHub from '@assets/icons/GitHub';
+import X from '@assets/icons/X';
 import LangSelect from '@components/LangSelect';
 import ThemeSelect from '@components/ThemeSelect';
 import IconLink from '@components/ui/IconLink';

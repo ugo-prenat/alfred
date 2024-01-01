@@ -6,10 +6,14 @@ export const H1: FC<PropsWithChildren> = ({ children }) => (
   </h1>
 );
 
-export const P: FC<PropsWithChildren> = ({ children }) => (
-  <p className="leading-7 [&:not(:first-child)]:mt-6">{children}</p>
+export const Title: FC<PropsWithChildren> = ({ children }) => (
+  <h2 className="text-xl font-bold tracking-tight lg:text-2xl">{children}</h2>
 );
 
-export const Muted: FC<PropsWithChildren> = ({ children }) => (
-  <p className="text-sm text-muted-foreground">{children}</p>
+export const Description: FC<PropsWithChildren> = ({ children }) => (
+  <p className="text-sm text-muted-foreground/80">{children}</p>
+);
+
+export const P: FC<PropsWithChildren> = ({ children }) => (
+  <p className="leading-7 [&:not(:first-child)]:mt-6">{children}</p>
 );

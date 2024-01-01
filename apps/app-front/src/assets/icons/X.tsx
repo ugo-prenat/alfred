@@ -1,6 +1,6 @@
 import { FC, SVGProps } from 'react';
 
-export const X: FC<SVGProps<SVGSVGElement>> = (props) => (
+const X: FC<SVGProps<SVGSVGElement>> = (props) => (
   <svg strokeLinejoin="round" viewBox="0 0 16 16" aria-label="X" {...props}>
     <path
       fillRule="evenodd"
@@ -10,3 +10,5 @@ export const X: FC<SVGProps<SVGSVGElement>> = (props) => (
     ></path>
   </svg>
 );
+
+export default X;

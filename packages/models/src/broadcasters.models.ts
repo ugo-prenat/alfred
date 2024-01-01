@@ -1,6 +1,7 @@
 import { TwitchBroadcasterType } from './twitch.models';
 import mongoose, { Document, Schema } from 'mongoose';
 import { ROLES } from '@alfred/constants';
+import { IBot } from './bots.models';
 
 export const BROADCASTERS_COLLECTION = 'broadcasters';
 export type BroadcasterRole = (typeof ROLES)[number];
@@ -47,3 +48,10 @@ export const Broadcaster = mongoose.model(
   BROADCASTERS_COLLECTION,
   broadcasterSchema
 );
+
+export interface ILoginBroadcasterResponse {
+  bot: IBot;
+  broadcaster: IBroadcaster;
+  accessToken: string;
+  refreshToken: string;
+}

@@ -78,7 +78,7 @@ const Content: FC<{ onLinkClick?: () => void }> = ({ onLinkClick }) => {
 
       <div className="relative">
         <Link to="/onboarding" className={linkClasses} onClick={onLinkClick}>
-          <LogOut className={iconClasses} />
+          <LogOut className={cn('rotate-180', iconClasses)} />
           {t('nav.onboarding.logout')}
         </Link>
         <p>broadcaster/bot link</p>
