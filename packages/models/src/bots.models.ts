@@ -14,6 +14,14 @@ export interface IBot extends IRawBot {
   id: string;
 }
 
+export interface IFrontBot {
+  id: string;
+  name: string;
+  username: string;
+  status: BotStatus;
+  profileImgUrl: string;
+}
+
 export interface IRawBot {
   name: string;
   username: string;

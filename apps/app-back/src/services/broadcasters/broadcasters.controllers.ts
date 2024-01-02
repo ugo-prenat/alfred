@@ -11,6 +11,8 @@ import {
   IBot,
   IBroadcaster,
   IDBBot,
+  IFrontBot,
+  IFrontBroadcaster,
   IRawBroadcaster,
   ITwitchFetcherParams
 } from '@alfred/models';
@@ -23,12 +25,18 @@ import {
   handleGetBroadcasterById,
   handleGetBroadcasterByTwitchId,
   makeAPIBroadcasterToBroadcaster,
+  makeAPIBroadcasterToFrontBroadcaster,
   makeAPIBroadcastersToBroadcasters,
   makeAccessTokens,
   makeRawBroadcaster
 } from './broadcasters.utils';
 import { logError, logger } from '@/utils/logger.utils';
-import { handleGetBot, makeAPIBotToBot, makeDBBot } from '../bots/bots.utils';
+import {
+  handleGetMaybeBot,
+  makeAPIBotToBot,
+  makeDBBot,
+  makeMaybeAPIBotToFrontBot
+} from '../bots/bots.utils';
 import mongoose from 'mongoose';
 import { Context } from 'hono';
 import { verify } from 'hono/jwt';
@@ -140,12 +148,12 @@ export const authBroadcaster = async (
 
   try {
     const twitchBroadcaster = await handleGetTwitchBroadcaster(fetcherParams);
-    const broadcaster = await handleGetBroadcasterByTwitchId(
+    const broadcaster: IFrontBroadcaster = await handleGetBroadcasterByTwitchId(
       twitchBroadcaster.id
-    ).then(makeAPIBroadcasterToBroadcaster);
-    const bot = await handleGetBot(broadcaster.botId.toString()).then(
-      makeAPIBotToBot
-    );
+    ).then(makeAPIBroadcasterToFrontBroadcaster);
+    const bot: IFrontBot | null = await handleGetMaybeBot(
+      broadcaster.botId.toString()
+    ).then(makeMaybeAPIBotToFrontBot);
 
     const { accessToken, refreshToken } = await makeAccessTokens(
       broadcaster.id,

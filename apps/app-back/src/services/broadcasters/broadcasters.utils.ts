@@ -3,6 +3,7 @@ import {
   BroadcasterRole,
   IAPIBroadcaster,
   IBroadcaster,
+  IFrontBroadcaster,
   IRawBroadcaster,
   ITwitchBroadcaster
 } from '@alfred/models';
@@ -41,6 +42,21 @@ export const makeAPIBroadcasterToBroadcaster = (
 ): IBroadcaster => {
   const { _id, ...broadcaster } = apiBroadcaster.toObject();
   return { id: _id.toString(), ...broadcaster };
+};
+
+export const makeAPIBroadcasterToFrontBroadcaster = (
+  apiBroadcaster: IAPIBroadcaster
+): IFrontBroadcaster => {
+  const { _id, botId, name, username, role, profileImgUrl } =
+    apiBroadcaster.toObject();
+  return {
+    id: _id.toString(),
+    botId: botId.toString(),
+    name,
+    username,
+    role,
+    profileImgUrl
+  };
 };
 
 export const makeAPIBroadcastersToBroadcasters = (

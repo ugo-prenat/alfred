@@ -1,23 +1,23 @@
-import { IBot, IBroadcaster } from '@alfred/models';
+import { IFrontBot, IFrontBroadcaster } from '@alfred/models';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export const AUTH_STORAGE_KEY = 'auth';
 
 interface IAuthStore {
-  bot: IBot | null;
+  bot: IFrontBot | null;
   accessToken: string;
   refreshToken: string;
-  broadcaster: IBroadcaster | null;
-  setBot: (bot: IBot) => void;
+  broadcaster: IFrontBroadcaster | null;
+  setBot: (bot: IFrontBot) => void;
   setAccessToken: (accessToken: string) => void;
   setRefreshToken: (refreshToken: string) => void;
-  setBroadcaster: (broadcaster: IBroadcaster) => void;
+  setBroadcaster: (broadcaster: IFrontBroadcaster) => void;
   setAuth: (data: {
-    bot?: IBot;
+    bot?: IFrontBot;
     accessToken?: string;
     refreshToken?: string;
-    broadcaster?: IBroadcaster;
+    broadcaster?: IFrontBroadcaster;
   }) => void;
 }
 

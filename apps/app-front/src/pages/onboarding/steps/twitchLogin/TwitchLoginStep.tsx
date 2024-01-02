@@ -5,8 +5,8 @@ import Twitch from '@assets/icons/Twitch';
 import { Description, Title } from '@components/ui/Typography';
 import { makeTwitchAuthUrl } from '@pages/onboarding/onboarding.utils';
 import { useLoginBroadcaster } from '@pages/onboarding/onboarding.hooks';
-import { useAuth } from '@services/state/auth/auth.stores';
 import { router } from '@services/router/index.routes';
+import { useAuth } from '@services/state/auth/auth.stores';
 
 interface ITwitchLoginStepProps {
   onNextStep: () => void;

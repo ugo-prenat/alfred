@@ -1,7 +1,7 @@
 import { TwitchBroadcasterType } from './twitch.models';
 import mongoose, { Document, Schema } from 'mongoose';
 import { ROLES } from '@alfred/constants';
-import { IBot } from './bots.models';
+import { IFrontBot } from './bots.models';
 
 export const BROADCASTERS_COLLECTION = 'broadcasters';
 export type BroadcasterRole = (typeof ROLES)[number];
@@ -15,6 +15,15 @@ export interface IAPIBroadcaster
 
 export interface IBroadcaster extends IRawBroadcaster {
   id: string;
+}
+
+export interface IFrontBroadcaster {
+  id: string;
+  botId: string;
+  name: string;
+  username: string;
+  role: BroadcasterRole;
+  profileImgUrl: string;
 }
 
 export interface IRawBroadcaster {
@@ -50,8 +59,8 @@ export const Broadcaster = mongoose.model(
 );
 
 export interface IAuthBroadcasterResponse {
-  bot: IBot | null;
-  broadcaster: IBroadcaster;
+  bot: IFrontBot | null;
+  broadcaster: IFrontBroadcaster;
   accessToken: string;
   refreshToken: string;
 }
