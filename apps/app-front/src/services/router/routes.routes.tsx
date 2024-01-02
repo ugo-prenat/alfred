@@ -1,9 +1,9 @@
 import {
   Navigate,
   NotFoundRoute,
+  Outlet,
   RootRoute,
-  Route,
-  redirect
+  Route
 } from '@tanstack/react-router';
 import AdminBroadcastersPage from '@pages/admin/broadcasters/Broadcasters.page';
 import AdminPage from '@pages/admin/Admin.page';
@@ -12,8 +12,9 @@ import Root from '@components/nav/Root';
 import OnboardingPage from '@pages/onboarding/Onboarding.page';
 import BotPage from '@pages/bot/Bot.page';
 import HisotryPage from '@pages/history/History.page';
-
-const isAuthenticated = true;
+import { isAuthenticated } from '@services/state/auth/auth.utils';
+import NoteFoundPage from '@pages/redirection/NotFound.page';
+import UnauthorizedPage from '@pages/redirection/Unauthorized.page';
 
 export const rootRoute = new RootRoute({
   component: () => <Root />
@@ -22,24 +23,16 @@ export const rootRoute = new RootRoute({
 const protectedRoute = new Route({
   getParentRoute: () => rootRoute,
   id: 'protected',
-  beforeLoad: async ({ location }) => {
-    if (!isAuthenticated) {
-      throw redirect({
-        to: '/onboarding',
-        search: { redirect: location.href }
-      });
-    }
-  }
+  component: () => (isAuthenticated() ? <Outlet /> : <UnauthorizedPage />)
 });
 
-// Not found
 export const notFoundRoute = new NotFoundRoute({
   getParentRoute: () => rootRoute,
-  component: () => <h1>Page not found</h1>
+  component: () => <NoteFoundPage />
 });
 
 const homeRedirectRoute = new Route({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => protectedRoute,
   path: '/',
   component: () => <Navigate to="/features" />
 });
