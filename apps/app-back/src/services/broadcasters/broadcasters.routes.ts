@@ -1,13 +1,15 @@
 import { Hono } from 'hono';
-import { twitchTokenSchema, refreshTokenSchema } from './broadcasters.models';
+import { refreshTokenSchema, loginPayloadSchema } from './broadcasters.models';
 import {
   authBroadcaster,
   getBroadcaster,
   getBroadcasters,
+  loginBroadcaster,
   refreshToken
 } from './broadcasters.controllers';
 import { payloadValidator } from '@/utils/validator.utils';
 import { makeAccessTokens } from './broadcasters.utils';
+import { basicAuth } from '@/utils/auth.utils';
 
 const broadcastersRoute = new Hono();
 
@@ -22,17 +24,15 @@ broadcastersRoute.get('/auth/gettoken', (c) =>
     .catch((err) => c.json({ error: err.message }, 500))
 );
 
+broadcastersRoute.get('/auth', basicAuth, authBroadcaster);
+
 broadcastersRoute.get('/', getBroadcasters);
 broadcastersRoute.get('/:broadcasterId', getBroadcaster);
-// broadcastersRoute.post(
-//   '/',
-//   payloadValidator(twitchTokenSchema),
-//   createBroadcaster
-// );
+
 broadcastersRoute.post(
-  '/auth',
-  payloadValidator(twitchTokenSchema),
-  authBroadcaster
+  '/login',
+  payloadValidator(loginPayloadSchema),
+  loginBroadcaster
 );
 
 export default broadcastersRoute;

@@ -11,7 +11,7 @@ interface IProtectedRouteProps {
 const ProtectedRoute: FC<IProtectedRouteProps> = ({
   requiredRole = 'member'
 }) => {
-  const { data: isAuth, error, isPending } = useAuthentication();
+  const { data: isAuth, error, isPending } = useAuthentication(requiredRole);
 
   if (error) console.error(error);
 

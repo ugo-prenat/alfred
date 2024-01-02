@@ -1,16 +1,12 @@
-import { z, ZodSchema } from 'zod';
+import { z } from 'zod';
 
-export interface ITwitchTokenPayload {
-  twitchToken: string;
-}
-export const twitchTokenSchema: ZodSchema<ITwitchTokenPayload> = z.object({
+export const loginPayloadSchema = z.object({
   twitchToken: z.string()
 });
+export interface ILoginPayload extends z.infer<typeof loginPayloadSchema> {}
 
-export interface IRefreshTokenPayload {
-  refreshToken: string;
-}
-
-export const refreshTokenSchema: ZodSchema<IRefreshTokenPayload> = z.object({
+export const refreshTokenSchema = z.object({
   refreshToken: z.string()
 });
+export interface IRefreshTokenPayload
+  extends z.infer<typeof refreshTokenSchema> {}

@@ -1,3 +1,5 @@
+import { getAccessToken } from '@hooks/useTokens';
+
 export type Status = 'idle' | 'loading' | 'success' | 'error';
 
 export interface IInitialStates<T> {
@@ -5,6 +7,7 @@ export interface IInitialStates<T> {
   initialStatus?: Status;
 }
 
-export const defaultInit: RequestInit = {
-  headers: { 'Content-Type': 'application/json' }
+export const defaultHeaders: HeadersInit = {
+  'Content-Type': 'application/json',
+  Authorization: `Bearer ${getAccessToken()}`
 };

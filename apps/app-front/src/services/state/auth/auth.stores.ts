@@ -9,7 +9,10 @@ interface IAuthStore {
   broadcaster: IFrontBroadcaster | null;
   setBot: (bot: IFrontBot) => void;
   setBroadcaster: (broadcaster: IFrontBroadcaster) => void;
-  setAuth: (data: { bot?: IFrontBot; broadcaster?: IFrontBroadcaster }) => void;
+  setAuth: (data: {
+    broadcaster: IFrontBroadcaster;
+    bot: IFrontBot | null;
+  }) => void;
 }
 
 export const useAuth = create<IAuthStore>()(

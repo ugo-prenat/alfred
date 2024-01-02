@@ -1,7 +1,7 @@
-import { IAuthBroadcasterResponse } from '@alfred/models';
 import { fetcher } from '@services/api/fetcher/fetcher.utils';
+import { ILoginBroadcasterResponse } from './onboarding.models';
 
 export const loginBroadcaster = (twitchToken: string) =>
-  fetcher.post<IAuthBroadcasterResponse>('/broadcasters/auth', {
+  fetcher.post<ILoginBroadcasterResponse>('/broadcasters/login', {
     twitchToken
   });
