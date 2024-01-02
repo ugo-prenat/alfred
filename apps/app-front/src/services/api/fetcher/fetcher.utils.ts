@@ -16,11 +16,7 @@ export const fetcher = {
         throw makeAPIError(err.message, err.status || 500, 'GET', url, err);
       }),
 
-  post: <TResponse>(
-    url: string,
-    body: unknown,
-    init?: RequestInit
-  ): Promise<TResponse> =>
+  post: <TResponse>(url: string, body: unknown, init?: RequestInit) =>
     fetch(makeUrl(url), {
       ...defaultInit,
       ...init,

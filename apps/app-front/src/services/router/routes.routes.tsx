@@ -1,7 +1,6 @@
 import {
   Navigate,
   NotFoundRoute,
-  Outlet,
   RootRoute,
   Route
 } from '@tanstack/react-router';
@@ -12,9 +11,8 @@ import Root from '@components/nav/Root';
 import OnboardingPage from '@pages/onboarding/Onboarding.page';
 import BotPage from '@pages/bot/Bot.page';
 import HisotryPage from '@pages/history/History.page';
-import { isAuthenticated } from '@services/state/auth/auth.utils';
 import NoteFoundPage from '@pages/redirection/NotFound.page';
-import UnauthorizedPage from '@pages/redirection/Unauthorized.page';
+import ProtectedRoute from '@components/nav/ProtectedRoute';
 
 export const rootRoute = new RootRoute({
   component: () => <Root />
@@ -23,7 +21,7 @@ export const rootRoute = new RootRoute({
 const protectedRoute = new Route({
   getParentRoute: () => rootRoute,
   id: 'protected',
-  component: () => (isAuthenticated() ? <Outlet /> : <UnauthorizedPage />)
+  component: () => <ProtectedRoute />
 });
 
 export const notFoundRoute = new NotFoundRoute({

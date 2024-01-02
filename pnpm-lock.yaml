@@ -90,6 +90,9 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.0.7
         version: 1.0.7(@types/react-dom@18.2.18)(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)
+      '@tanstack/react-query':
+        specifier: ^5.17.0
+        version: 5.17.0(react@18.2.0)
       '@tanstack/react-router':
         specifier: ^1.0.6
         version: 1.0.6(react-dom@18.2.0)(react@18.2.0)
@@ -136,6 +139,9 @@ importers:
       '@alfred/tsconfig':
         specifier: workspace:*
         version: link:../../packages/tsconfig
+      '@tanstack/eslint-plugin-query':
+        specifier: ^5.14.6
+        version: 5.14.6(eslint@8.56.0)(typescript@5.3.3)
       '@total-typescript/ts-reset':
         specifier: ^0.5.1
         version: 0.5.1
@@ -1764,9 +1770,34 @@ packages:
       tslib: 2.6.2
     dev: false
 
+  /@tanstack/eslint-plugin-query@5.14.6(eslint@8.56.0)(typescript@5.3.3):
+    resolution: {integrity: sha512-vpowwoGoB9JgZy8fljf53ZTW2yYLRQ3Tjx4WQFKxiKugQOctxaTjQk7wlYzuqA/gjzfPL9qHfKW5DTT9CmIpkA==}
+    peerDependencies:
+      eslint: ^8.0.0
+    dependencies:
+      '@typescript-eslint/utils': 5.62.0(eslint@8.56.0)(typescript@5.3.3)
+      eslint: 8.56.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: true
+
   /@tanstack/history@1.0.6:
     resolution: {integrity: sha512-j0RrMUdWH0wrfO1sN5crc8+4hLOIuqGqPmUAXgHo8zU9Lhqn7cmvP4hbtXuKspe2WlTalLrnvGoOLa9G8lPLmA==}
     engines: {node: '>=12'}
+    dev: false
+
+  /@tanstack/query-core@5.17.0:
+    resolution: {integrity: sha512-LoBaPtbMY26kRS+ohII4thTsWkJJsXKGitOLikTo2aqPA4yy7cfFJITs8DRnuERT7tLF5xfG9Lnm33Vp/38Vmw==}
+    dev: false
+
+  /@tanstack/react-query@5.17.0(react@18.2.0):
+    resolution: {integrity: sha512-iNSn6ZA7mHUjrT0a271eKoa1oR1HznlrGbb475awft1kuP3zrhyUCrI8tlGowOr7zRoAxJholjwxO+gfz1IObw==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      '@tanstack/query-core': 5.17.0
+      react: 18.2.0
     dev: false
 
   /@tanstack/react-router@1.0.6(react-dom@18.2.0)(react@18.2.0):
