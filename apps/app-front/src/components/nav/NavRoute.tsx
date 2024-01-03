@@ -2,7 +2,7 @@ import { Outlet } from '@tanstack/react-router';
 import Menu from './Menu';
 import Header from './Header';
 
-const Root = () => (
+const NavRoute = () => (
   <div id="app" className="h-full flex flex-col">
     <Header />
     <div className="flex-1 flex">
@@ -12,4 +12,4 @@ const Root = () => (
   </div>
 );
 
-export default Root;
+export default NavRoute;
