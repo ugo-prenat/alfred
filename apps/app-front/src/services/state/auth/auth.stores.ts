@@ -14,7 +14,7 @@ interface IAuthStore {
   }) => void;
 }
 
-export const useAuth = create<IAuthStore>()((set) => ({
+export const useAuthStore = create<IAuthStore>()((set) => ({
   bot: null,
   broadcaster: null,
   setBot: (bot) => set({ bot }),

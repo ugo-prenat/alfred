@@ -1,9 +1,9 @@
 import { ROLE_LEVELS } from '@alfred/constants';
 import rolesRoutes, { RoleRoute } from '@services/router/roles.routes';
-import { useAuth } from '@services/state/auth/auth.stores';
+import { useAuthStore } from '@services/state/auth/auth.stores';
 
 export const checkUserHasRequiredRouteRole = (pathname: string) => {
-  const { broadcaster } = useAuth.getState();
+  const { broadcaster } = useAuthStore.getState();
   const requiredRouteRole: RoleRoute = getRequiredRouteRole(pathname);
 
   if (!broadcaster) return false;

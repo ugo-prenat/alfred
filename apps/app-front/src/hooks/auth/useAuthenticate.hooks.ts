@@ -2,7 +2,7 @@ import { IFrontBot, IFrontBroadcaster } from '@alfred/models';
 import { useQuery } from '@tanstack/react-query';
 import { useTokens } from '@hooks/useTokens.hooks';
 import { fetcher } from '@services/api/fetcher/fetcher.utils';
-import { useAuth } from '@services/state/auth/auth.stores';
+import { useAuthStore } from '@services/state/auth/auth.stores';
 
 interface ICheckAuthResponse {
   bot: IFrontBot;
@@ -10,7 +10,7 @@ interface ICheckAuthResponse {
 }
 
 export const useAuthenticate = () => {
-  const { setAuth } = useAuth();
+  const { setAuth } = useAuthStore();
   const { accessToken, refreshToken } = useTokens();
 
   const checkAuth = (): Promise<Boolean> => {

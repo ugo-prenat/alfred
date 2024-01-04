@@ -7,7 +7,7 @@ import Twitch from '@assets/icons/Twitch';
 import { Description, Title } from '@components/ui/Typography';
 import { makeTwitchAuthUrl } from '@pages/onboarding/onboarding.utils';
 import { router } from '@services/router/index.routes';
-import { useAuth } from '@services/state/auth/auth.stores';
+import { useAuthStore } from '@services/state/auth/auth.stores';
 import { loginBroadcaster } from '@pages/onboarding/onboarding.api';
 
 interface ITwitchLoginStepProps {
@@ -18,7 +18,7 @@ const TwitchLoginStep: FC<ITwitchLoginStepProps> = ({ onNextStep }) => {
   const twitchToken = document.location.hash.split('&')[0].split('=')[1];
 
   const t = useTranslation();
-  const { setAuth } = useAuth();
+  const { setAuth } = useAuthStore();
   const {
     data,
     mutate: handleLoginBroadcaster,

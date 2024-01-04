@@ -1,9 +1,9 @@
 import { useTokens } from '@hooks/useTokens.hooks';
-import { useAuth } from '@services/state/auth/auth.stores';
+import { useAuthStore } from '@services/state/auth/auth.stores';
 
 export const useUserIsAuth = () => {
   const { accessToken, refreshToken } = useTokens();
-  const { bot, broadcaster } = useAuth();
+  const { bot, broadcaster } = useAuthStore();
 
   return {
     isAuth: !!(accessToken && refreshToken && bot && broadcaster),
