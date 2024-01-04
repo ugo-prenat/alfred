@@ -2,6 +2,7 @@ import './index.css';
 import '@services/i18n/config';
 
 import { useEffect } from 'react';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@components/ui/shadcn/sonner';
 import { RouterProvider } from '@tanstack/react-router';
@@ -20,8 +21,9 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
       <Toaster />
+      <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 };

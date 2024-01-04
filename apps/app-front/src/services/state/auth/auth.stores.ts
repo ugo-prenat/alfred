@@ -1,6 +1,5 @@
 import { IFrontBot, IFrontBroadcaster } from '@alfred/models';
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
 export const AUTH_STORAGE_KEY = 'auth';
 
@@ -15,15 +14,10 @@ interface IAuthStore {
   }) => void;
 }
 
-export const useAuth = create<IAuthStore>()(
-  persist(
-    (set) => ({
-      bot: null,
-      broadcaster: null,
-      setBot: (bot) => set({ bot }),
-      setBroadcaster: (broadcaster) => set({ broadcaster }),
-      setAuth: (data) => set((state) => ({ ...state, ...data }))
-    }),
-    { name: AUTH_STORAGE_KEY }
-  )
-);
+export const useAuth = create<IAuthStore>()((set) => ({
+  bot: null,
+  broadcaster: null,
+  setBot: (bot) => set({ bot }),
+  setBroadcaster: (broadcaster) => set({ broadcaster }),
+  setAuth: (data) => set((state) => ({ ...state, ...data }))
+}));

@@ -3,7 +3,8 @@ import {
   NotFoundRoute,
   Outlet,
   RootRoute,
-  Route
+  Route,
+  redirect
 } from '@tanstack/react-router';
 import AdminBroadcastersPage from '@pages/admin/broadcasters/Broadcasters.page';
 import AdminPage from '@pages/admin/Admin.page';
@@ -13,7 +14,9 @@ import OnboardingPage from '@pages/onboarding/Onboarding.page';
 import BotPage from '@pages/bot/Bot.page';
 import HisotryPage from '@pages/history/History.page';
 import NoteFoundPage from '@pages/redirection/NotFound.page';
-import ProtectedRoute from '@components/nav/ProtectedRoute';
+import { checkUserHasRequiredRouteRole } from '@utils/roles.utils';
+import { getAccessToken, getRefreshToken } from '@hooks/useTokens';
+import UnauthorizedPage from '@pages/redirection/Unauthorized.page';
 
 export const rootRoute = new RootRoute();
 
@@ -32,7 +35,20 @@ export const fullscreenRoute = new Route({
 export const protectedRoute = new Route({
   getParentRoute: () => navRoute,
   id: 'protected',
-  component: () => <ProtectedRoute />
+  beforeLoad: async ({ location }) => {
+    const isAuth = !!(getAccessToken() && getRefreshToken());
+    const userHasRequiredRole = checkUserHasRequiredRouteRole(
+      location.pathname
+    );
+
+    if (!isAuth)
+      throw redirect({
+        to: '/onboarding',
+        search: { redirect: location.href }
+      });
+
+    if (!userHasRequiredRole) throw redirect({ to: '/unauthorized' });
+  }
 });
 
 // Not found
@@ -46,6 +62,12 @@ export const onboardingRoute = new Route({
   getParentRoute: () => fullscreenRoute,
   path: '/onboarding',
   component: () => <OnboardingPage />
+});
+
+export const unauthorizedRoute = new Route({
+  getParentRoute: () => navRoute,
+  path: '/unauthorized',
+  component: () => <UnauthorizedPage />
 });
 
 // Protected

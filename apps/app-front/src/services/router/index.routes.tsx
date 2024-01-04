@@ -12,11 +12,13 @@ import {
   onboardingRoute,
   notFoundRoute,
   protectedRoute,
-  rootRoute
+  rootRoute,
+  unauthorizedRoute
 } from './routes.routes';
 
 const routeTree = rootRoute.addChildren([
   navRoute.addChildren([
+    unauthorizedRoute,
     protectedRoute.addChildren([
       homeRedirectRoute,
       featuresRoute,
