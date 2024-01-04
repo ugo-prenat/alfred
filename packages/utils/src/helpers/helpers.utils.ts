@@ -10,3 +10,6 @@ export const isEmpty = (
 export const isNotEmpty = (
   value: string | number | boolean | Record<string, unknown> | unknown[]
 ) => !isEmpty(value);
+
+export const wait = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));

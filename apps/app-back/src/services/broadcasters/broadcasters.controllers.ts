@@ -1,4 +1,4 @@
-import { IJwtPayload, PayloadContext, ensureError } from '@alfred/utils';
+import { IJwtPayload, PayloadContext, ensureError, wait } from '@alfred/utils';
 import { IRefreshTokenPayload, ILoginPayload } from './broadcasters.models';
 import {
   APIError,
@@ -175,7 +175,9 @@ export const authBroadcaster = async (c: Context) => {
       makeAPIBotToFrontBot
     );
 
-    return c.json({ broadcaster, bot }, 200);
+    return wait(2000).then(() => {
+      return c.json({ broadcaster, bot }, 200);
+    });
   } catch (err) {
     if (err instanceof APIError) return c.json(logError(err), err.status);
     return c.json(logError(ensureError(err)), 500);
