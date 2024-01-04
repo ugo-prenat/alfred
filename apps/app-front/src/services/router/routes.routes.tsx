@@ -15,7 +15,7 @@ import BotPage from '@pages/bot/Bot.page';
 import HisotryPage from '@pages/history/History.page';
 import NoteFoundPage from '@pages/redirection/NotFound.page';
 import { checkUserHasRequiredRouteRole } from '@utils/roles.utils';
-import { getAccessToken, getRefreshToken } from '@hooks/useTokens';
+import { getAccessToken, getRefreshToken } from '@hooks/useTokens.hooks';
 import UnauthorizedPage from '@pages/redirection/Unauthorized.page';
 
 export const rootRoute = new RootRoute();

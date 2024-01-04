@@ -1,6 +1,6 @@
 import { IFrontBot, IFrontBroadcaster } from '@alfred/models';
 import { useQuery } from '@tanstack/react-query';
-import { useTokens } from '@hooks/useTokens';
+import { useTokens } from '@hooks/useTokens.hooks';
 import { fetcher } from '@services/api/fetcher/fetcher.utils';
 import { useAuth } from '@services/state/auth/auth.stores';
 

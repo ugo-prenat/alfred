@@ -1,4 +1,4 @@
-import { useTokens } from '@hooks/useTokens';
+import { useTokens } from '@hooks/useTokens.hooks';
 import { useAuth } from '@services/state/auth/auth.stores';
 
 export const useUserIsAuth = () => {

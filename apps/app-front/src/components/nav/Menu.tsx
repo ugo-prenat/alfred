@@ -1,5 +1,5 @@
 import Sheet from '@components/ui/Sheet';
-import { useWindowSize } from '@hooks/useWindowSize';
+import { useWindowSize } from '@hooks/useWindowSize.hooks';
 import { useTranslation } from '@services/i18n/useTranslation';
 import { usePreferences } from '@services/state/preferences/preferences.stores';
 import { Link } from '@tanstack/react-router';

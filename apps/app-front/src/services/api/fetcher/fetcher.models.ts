@@ -1,4 +1,4 @@
-import { getAccessToken } from '@hooks/useTokens';
+import { getAccessToken } from '@hooks/useTokens.hooks';
 
 export type Status = 'idle' | 'loading' | 'success' | 'error';
 

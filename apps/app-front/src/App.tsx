@@ -7,7 +7,7 @@ import { RouterProvider } from '@tanstack/react-router';
 import { router } from './services/router/index.routes';
 import { usePreferences } from '@services/state/preferences/preferences.stores';
 import { updateRootElement } from '@services/state/preferences/preferences.utils';
-import { useAuthenticate } from '@hooks/auth/useAuthenticate';
+import { useAuthenticate } from '@hooks/auth/useAuthenticate.hooks';
 
 const App = () => {
   const { theme } = usePreferences();
