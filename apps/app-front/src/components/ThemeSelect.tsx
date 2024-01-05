@@ -10,6 +10,7 @@ import { Button } from './ui/shadcn/button';
 import { Moon, Sun } from 'lucide-react';
 import { usePreferences } from '@services/state/preferences/preferences.stores';
 import { useTranslation } from '@services/i18n/useTranslation';
+import Tooltip from './ui/Tooltip';
 
 interface IThemeSelect {
   label: string;
@@ -56,14 +57,17 @@ const LargeThemeSelect: FC<IThemeSelectProps> = () => {
 };
 
 const CompactThemeSelect: FC<IThemeSelectProps> = ({ themes, onChange }) => {
+  const t = useTranslation();
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" className="border-none w-8 h-8">
-          <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-        </Button>
-      </DropdownMenuTrigger>
+      <Tooltip text={t('language')} delay={700}>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" size="icon" className="border-none w-8 h-8">
+            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          </Button>
+        </DropdownMenuTrigger>
+      </Tooltip>
       <DropdownMenuContent>
         {themes.map(({ label, value }) => (
           <DropdownMenuItem key={value} onClick={onChange(value)}>

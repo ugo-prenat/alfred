@@ -8,6 +8,8 @@ import {
   DropdownMenuTrigger
 } from './ui/shadcn/dropdown-menu';
 import { Button } from './ui/shadcn/button';
+import Tooltip from './ui/Tooltip';
+import { useTranslation } from '@services/i18n/useTranslation';
 
 interface ILangSelect {
   label: string;
@@ -43,15 +45,18 @@ const LangSelect: FC<{ compact?: boolean }> = ({ compact = false }) => {
 };
 
 const CompactLangSelect: FC<ILangSelectProps> = ({ lang, langs, onChange }) => {
+  const t = useTranslation();
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" className="border-none w-8 h-8">
-          <span className="h-4 w-4 select-none">
-            {lang === 'fr' ? '🇫🇷' : '🇺🇸'}
-          </span>
-        </Button>
-      </DropdownMenuTrigger>
+      <Tooltip text={t('theme')} delay={700}>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" size="icon" className="border-none w-8 h-8">
+            <span className="h-4 w-4 select-none">
+              {lang === 'fr' ? '🇫🇷' : '🇺🇸'}
+            </span>
+          </Button>
+        </DropdownMenuTrigger>
+      </Tooltip>
       <DropdownMenuContent className="min-w-0">
         {langs.map(({ label, value }) => (
           <DropdownMenuItem key={value} onClick={onChange(value)}>

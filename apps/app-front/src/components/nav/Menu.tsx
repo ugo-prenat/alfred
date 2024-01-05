@@ -5,7 +5,7 @@ import { useTranslation } from '@services/i18n/useTranslation';
 import { usePreferences } from '@services/state/preferences/preferences.stores';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@utils/tailwind.utils';
-import { Bot, History, LogOut, Package, Shield } from 'lucide-react';
+import { Bot, History, Package, Shield } from 'lucide-react';
 import { FC, useEffect, useState } from 'react';
 
 const HIDE_MENU_BREAKPOINT = 1000;
@@ -83,14 +83,7 @@ const Content: FC<{ onLinkClick?: () => void }> = ({ onLinkClick }) => {
         </Link>
       </div>
 
-      <div>
-        <Link to="/onboarding" className={linkClasses} onClick={onLinkClick}>
-          <LogOut className={cn('rotate-180', iconClasses)} />
-          {t('nav.onboarding.logout')}
-        </Link>
-
-        <BroadcasterAndBotLink />
-      </div>
+      <BroadcasterAndBotLink />
     </div>
   );
 };

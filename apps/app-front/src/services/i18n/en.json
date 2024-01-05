@@ -15,7 +15,7 @@
   "nav.admin.broadcasters": "Broadcasters",
   "nav.menu.action.open": "Open menu",
   "nav.menu.action.close": "Close menu",
-  "nav.onboarding.logout": "Logout",
+  "nav.logout": "Logout",
 
   "onboarding.twitchLogin.twitchLoginBtn": "Connection",
 
