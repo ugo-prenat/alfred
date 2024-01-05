@@ -10,7 +10,7 @@ const BroadcasterAndBotLink = () => {
   return (
     <div className="flex flex-col mt-4 cursor-default">
       {broadcaster ? (
-        <InfoDisplayer {...broadcaster} linkType="twitch.tv" />
+        <InfoDisplayer {...broadcaster!} linkType="twitch.tv" />
       ) : (
         <SkeletonInfo />
       )}
@@ -31,11 +31,11 @@ interface IInfoProps {
   linkType: 'twitch.tv' | 'twitter.com';
 }
 
-interface Props extends IInfoProps {
+interface IInfoDisplayerProps extends IInfoProps {
   status?: BotStatus;
 }
 
-const InfoDisplayer: FC<Props> = ({
+const InfoDisplayer: FC<IInfoDisplayerProps> = ({
   name,
   username,
   profileImgUrl,
@@ -49,23 +49,20 @@ const InfoDisplayer: FC<Props> = ({
     <Button
       variant="ghost"
       onClick={handleClick}
-      className="flex justify-start gap-3 p-2"
+      className="flex justify-start gap-3 px-2 py-0"
     >
       <img className="h-6 w-6 rounded-full" src={profileImgUrl} alt={name} />
       <p className="text-muted-foreground whitespace-nowrap text-ellipsis overflow-hidden">
-        {name}
+        {name}uuuuuuuuulatre long
       </p>
     </Button>
   );
 };
 
 const SkeletonInfo = () => (
-  <div className="flex items-center space-x-4">
-    <Skeleton className="h-10 w-10 rounded-full" />
-    <div className="space-y-2">
-      <Skeleton className="h-4 w-[50px]" />
-      <Skeleton className="h-4 w-[0px]" />
-    </div>
+  <div className="flex items-center gap-3 p-2">
+    <Skeleton className="h-6 w-6 rounded-full" />
+    <Skeleton className="h-4 flex-1" />
   </div>
 );
 
