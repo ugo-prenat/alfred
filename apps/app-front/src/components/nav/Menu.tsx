@@ -1,3 +1,4 @@
+import BroadcasterAndBotLink from '@components/BroadcasterAndBotLink';
 import Sheet from '@components/ui/Sheet';
 import { useWindowSize } from '@hooks/useWindowSize.hooks';
 import { useTranslation } from '@services/i18n/useTranslation';
@@ -62,7 +63,7 @@ const Content: FC<{ onLinkClick?: () => void }> = ({ onLinkClick }) => {
   const iconClasses = 'w-5 h-5 dark:stroke-[1.5]';
 
   return (
-    <div className="h-full flex flex-col justify-between px-8 py-10 border-r dark:border-primary-foreground">
+    <div className="h-full max-w-60 flex flex-col justify-between px-8 py-10 border-r dark:border-primary-foreground">
       <div className="flex flex-col gap-4">
         <Link to="/features" className={linkClasses} onClick={onLinkClick}>
           <Package className={iconClasses} />
@@ -82,12 +83,13 @@ const Content: FC<{ onLinkClick?: () => void }> = ({ onLinkClick }) => {
         </Link>
       </div>
 
-      <div className="relative">
+      <div>
         <Link to="/onboarding" className={linkClasses} onClick={onLinkClick}>
           <LogOut className={cn('rotate-180', iconClasses)} />
           {t('nav.onboarding.logout')}
         </Link>
-        <p>broadcaster/bot link</p>
+
+        <BroadcasterAndBotLink />
       </div>
     </div>
   );
