@@ -47,7 +47,8 @@ export const protectedRoute = new Route({
         search: { redirect: location.href }
       });
 
-    if (!userHasRequiredRole) throw redirect({ to: '/unauthorized' });
+    if (!userHasRequiredRole)
+      throw redirect({ to: '/unauthorized', mask: { to: location.pathname } });
   }
 });
 
