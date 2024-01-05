@@ -13,6 +13,7 @@ interface IAuthStore {
     broadcaster: IFrontBroadcaster;
     bot: IFrontBot | null;
   }) => void;
+  reset: () => void;
 }
 
 export const useAuthStore = create<IAuthStore>()(
@@ -21,6 +22,7 @@ export const useAuthStore = create<IAuthStore>()(
     broadcaster: null,
     setBot: (bot) => set({ bot }),
     setBroadcaster: (broadcaster) => set({ broadcaster }),
-    setAuth: (data) => set((state) => ({ ...state, ...data }))
+    setAuth: (data) => set((state) => ({ ...state, ...data })),
+    reset: () => set({ bot: null, broadcaster: null })
   }))
 );
