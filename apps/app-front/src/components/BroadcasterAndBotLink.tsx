@@ -1,25 +1,35 @@
 import { useAuthStore } from '@services/state/auth/auth.stores';
-import { Skeleton } from './ui/shadcn/skeleton';
 import { FC } from 'react';
 import { BotStatus } from '@alfred/models';
-import { Button } from './ui/shadcn/button';
+import { cn } from '@utils/tailwind.utils';
+import { AlertTriangle, Link, Unlink } from 'lucide-react';
+import { Skeleton } from './ui/shadcn/skeleton';
 
 const BroadcasterAndBotLink = () => {
   const { broadcaster, bot } = useAuthStore();
+  const isLinked = !!broadcaster && !!bot && bot.status === 'active';
 
   return (
-    <div className="flex flex-col mt-4 cursor-default">
+    <div
+      className={cn('relative flex gap-4 justify-center', {
+        'gap-0': !broadcaster && !bot
+      })}
+    >
       {broadcaster ? (
-        <InfoDisplayer {...broadcaster!} linkType="twitch.tv" />
+        <Bubble {...broadcaster} linkType="twitch.tv" />
       ) : (
-        <SkeletonInfo />
+        <BubbleSkeleton />
       )}
-      <span>----</span>
-      {bot ? (
-        <InfoDisplayer {...bot} linkType="twitter.com" />
-      ) : (
-        <SkeletonInfo />
-      )}
+
+      <div className="z-10 absolute top-[calc(50%-0.75rem)] left-[calc(50%-0.75rem)] flex items-center justify-center w-6 h-6 rounded-full bg-primary-foreground dark:bg-foreground shadow-md">
+        {isLinked ? (
+          <Link className="w-4 h-4 stroke-foreground dark:stroke-secondary stroke-2" />
+        ) : (
+          <Unlink className="w-4 h-4 stroke-foreground dark:stroke-secondary stroke-2" />
+        )}
+      </div>
+
+      {bot ? <Bubble {...bot} linkType="twitter.com" /> : <BubbleSkeleton />}
     </div>
   );
 };
@@ -31,39 +41,42 @@ interface IInfoProps {
   linkType: 'twitch.tv' | 'twitter.com';
 }
 
-interface IInfoDisplayerProps extends IInfoProps {
+interface IBubbleProps extends IInfoProps {
   status?: BotStatus;
 }
 
-const InfoDisplayer: FC<IInfoDisplayerProps> = ({
-  name,
+const Bubble: FC<IBubbleProps> = ({
   username,
   profileImgUrl,
   linkType,
   status
 }) => {
-  const handleClick = () =>
-    window.open(`https://${linkType}/${username}`, '_blank');
-
   return (
-    <Button
-      variant="ghost"
-      onClick={handleClick}
-      className="flex justify-start gap-3 px-2 py-0"
-    >
-      <img className="h-6 w-6 rounded-full" src={profileImgUrl} alt={name} />
-      <p className="text-muted-foreground whitespace-nowrap text-ellipsis overflow-hidden">
-        {name}uuuuuuuuulatre long
-      </p>
-    </Button>
+    <div className="relative">
+      <span
+        className={cn('absolute -top-2 -left-2 -z-10 w-14 h-14 rounded-full', {
+          'bg-twitch/30': linkType === 'twitch.tv',
+          'bg-twitter/40': linkType === 'twitter.com'
+        })}
+      ></span>
+
+      {linkType === 'twitter.com' && status !== 'active' && (
+        <span className="absolute -top-2 -left-2 flex items-center justify-center w-14 h-14 rounded-full bg-yellow-400/50">
+          <AlertTriangle className="w-6 h-6 stroke-yellow-300" />
+        </span>
+      )}
+
+      <img
+        className={cn('h-10 w-10 rounded-full', {
+          'opacity-20': linkType === 'twitter.com' && status !== 'active'
+        })}
+        src={profileImgUrl}
+        alt={username}
+      />
+    </div>
   );
 };
 
-const SkeletonInfo = () => (
-  <div className="flex items-center gap-3 p-2">
-    <Skeleton className="h-6 w-6 rounded-full" />
-    <Skeleton className="h-4 flex-1" />
-  </div>
-);
+const BubbleSkeleton = () => <Skeleton className="w-14 h-14 rounded-full" />;
 
 export default BroadcasterAndBotLink;

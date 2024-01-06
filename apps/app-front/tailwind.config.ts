@@ -53,7 +53,8 @@ const config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
         },
-        twitch: 'hsl(var(--twitch))'
+        twitch: 'hsl(var(--twitch))',
+        twitter: 'hsl(var(--twitter))'
       },
       borderRadius: {
         lg: 'var(--radius)',

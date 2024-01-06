@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 #root {
   height: 100vh;
   max-height: 100vh;
@@ -40,6 +48,8 @@
     --radius: 0.5rem;
 
     --twitch: 264 100% 64%;
+
+    --twitter: 204 88% 53%;
   }
 
   .dark {
@@ -72,6 +82,8 @@
     --ring: 216 12.2% 83.9%;
 
     --twitch: 264 100% 64%;
+
+    --twitter: 204 88% 53%;
   }
 }
 
