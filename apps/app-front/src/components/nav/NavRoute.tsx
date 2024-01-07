@@ -1,5 +1,5 @@
 import { Outlet } from '@tanstack/react-router';
-import Menu from './Menu';
+import Menu from './menu/Menu';
 import Header from './Header';
 
 const NavRoute = () => (
