@@ -5,6 +5,7 @@ import { useTranslation } from '@services/i18n/useTranslation';
 import { useAuthStore } from '@services/state/auth/auth.stores';
 import { Bot, History, Package, Shield } from 'lucide-react';
 import { BroadcasterRole } from '@alfred/models';
+import { userHasRequiredRole } from '@utils/roles.utils';
 interface IActionPin {
   severity: 'info' | 'warning' | 'error';
 }
@@ -34,6 +35,13 @@ const MenuLinks: FC<IMenuLinkProps> = ({ onLinkClick }) => {
     pin,
     ...props
   }) => {
+    if (
+      requiredrole &&
+      broadcaster &&
+      !userHasRequiredRole(broadcaster.role, requiredrole)
+    )
+      return null;
+
     return (
       <Link
         {...props}
