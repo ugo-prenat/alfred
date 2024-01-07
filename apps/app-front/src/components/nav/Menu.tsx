@@ -1,4 +1,4 @@
-import BroadcasterAndBotLink from '@components/BroadcasterAndBotLink';
+import BroadcasterAndBotLink from '@components/BroadcasterAndBotLink/BroadcasterAndBotLink';
 import Sheet from '@components/ui/Sheet';
 import { useWindowSize } from '@hooks/useWindowSize.hooks';
 import { useTranslation } from '@services/i18n/useTranslation';

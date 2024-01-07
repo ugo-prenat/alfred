@@ -1,17 +1,17 @@
-import { useAuthStore } from '@services/state/auth/auth.stores';
 import { FC } from 'react';
-import { BotStatus } from '@alfred/models';
-import { cn } from '@utils/tailwind.utils';
 import { AlertTriangle, Link, Unlink } from 'lucide-react';
-import { Skeleton } from './ui/shadcn/skeleton';
+import { IDisplayerProps } from './BroadcasterAndBotLink';
+import { cn } from '@utils/tailwind.utils';
+import { useAuthStore } from '@services/state/auth/auth.stores';
+import { Skeleton } from '@components/ui/shadcn/skeleton';
 
-const BroadcasterAndBotLink = () => {
+export const CompactBroadcasterAndBotLink = () => {
   const { broadcaster, bot } = useAuthStore();
   const isLinked = !!broadcaster && !!bot && bot.status === 'active';
 
   return (
     <div
-      className={cn('relative flex gap-4 justify-center', {
+      className={cn('relative flex gap-4 w-fit', {
         'gap-0': !broadcaster && !bot
       })}
     >
@@ -34,18 +34,7 @@ const BroadcasterAndBotLink = () => {
   );
 };
 
-interface IInfoProps {
-  name: string;
-  username: string;
-  profileImgUrl: string;
-  linkType: 'twitch.tv' | 'twitter.com';
-}
-
-interface IBubbleProps extends IInfoProps {
-  status?: BotStatus;
-}
-
-const Bubble: FC<IBubbleProps> = ({
+const Bubble: FC<IDisplayerProps> = ({
   username,
   profileImgUrl,
   linkType,
@@ -79,4 +68,4 @@ const Bubble: FC<IBubbleProps> = ({
 
 const BubbleSkeleton = () => <Skeleton className="w-14 h-14 rounded-full" />;
 
-export default BroadcasterAndBotLink;
+export default CompactBroadcasterAndBotLink;
