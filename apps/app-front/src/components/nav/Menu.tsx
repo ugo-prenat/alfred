@@ -1,6 +1,7 @@
 import Sheet from '@components/ui/Sheet';
 import { useWindowSize } from '@hooks/useWindowSize.hooks';
 import { useTranslation } from '@services/i18n/useTranslation';
+import { useAuthStore } from '@services/state/auth/auth.stores';
 import { usePreferences } from '@services/state/preferences/preferences.stores';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@utils/tailwind.utils';
@@ -56,27 +57,52 @@ const MenuSheet = () => {
 
 const Content: FC<{ onLinkClick?: () => void }> = ({ onLinkClick }) => {
   const t = useTranslation();
+  const { bot } = useAuthStore();
+  const isBotLinked = !!bot && bot.status === 'active';
 
   const linkClasses =
-    'flex items-center gap-4 p-2 text-muted-foreground dark:font-light rounded-md whitespace-nowrap hover:text-foreground transition-all duration-100 ease-in-out';
-  const iconClasses = 'w-5 h-5 dark:stroke-[1.5]';
+    'flex items-center gap-3 py-2 px-6 text-muted-foreground rounded-md whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-100 ease-in-out';
+  const iconClasses = 'w-5 h-5';
 
   return (
-    <div className="h-full max-w-60 flex flex-col justify-between px-8 py-10 border-r dark:border-primary-foreground">
-      <div className="flex flex-col gap-4">
-        <Link to="/features" className={linkClasses} onClick={onLinkClick}>
+    <div className="h-full min-w-64 max-w-64 flex flex-col justify-between px-4 py-10 border-r dark:border-primary-foreground">
+      <div className="flex flex-col gap-1">
+        <Link
+          to="/features"
+          className={linkClasses}
+          onClick={onLinkClick}
+          activeProps={{ className: '!text-accent-foreground' }}
+        >
           <Package className={iconClasses} />
           {t('nav.features')}
         </Link>
-        <Link to="/bot" className={linkClasses} onClick={onLinkClick}>
+        <Link
+          to="/bot"
+          className={linkClasses}
+          onClick={onLinkClick}
+          activeProps={{ className: '!text-accent-foreground' }}
+        >
           <Bot className={iconClasses} />
           {t('nav.bot')}
+          {!isBotLinked && (
+            <span className="relative -right-6 w-2 h-2 rounded-full bg-warning"></span>
+          )}
         </Link>
-        <Link to="/history" className={linkClasses} onClick={onLinkClick}>
+        <Link
+          to="/history"
+          className={linkClasses}
+          onClick={onLinkClick}
+          activeProps={{ className: '!text-accent-foreground' }}
+        >
           <History className={iconClasses} />
           {t('nav.history')}
         </Link>
-        <Link to="/admin" className={linkClasses} onClick={onLinkClick}>
+        <Link
+          to="/admin"
+          className={linkClasses}
+          onClick={onLinkClick}
+          activeProps={{ className: '!text-accent-foreground' }}
+        >
           <Shield className={iconClasses} />
           {t('nav.admin')}
         </Link>

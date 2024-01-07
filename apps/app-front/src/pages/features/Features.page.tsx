@@ -46,7 +46,7 @@ const FeaturesPage = () => {
           variant="outline"
           onClick={() => setBot({ ...bot, status: 'pending' })}
         >
-          deactive bot
+          disable bot
         </Button>
       )}
     </Page>

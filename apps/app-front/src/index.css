@@ -17,6 +17,10 @@
 
 @layer base {
   :root {
+    --main: 212 100% 48%;
+    --twitch: 264 100% 64%;
+    --twitter: 204 88% 53%;
+
     --background: 0 0% 100%;
     --foreground: 224 71.4% 4.1%;
 
@@ -41,18 +45,21 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 20% 98%;
 
+    --warning: 37 91% 55%;
+    --warning-foreground: 37 91% 65%;
+
     --border: 220 13% 91%;
     --input: 220 13% 91%;
     --ring: 224 71.4% 4.1%;
 
     --radius: 0.5rem;
-
-    --twitch: 264 100% 64%;
-
-    --twitter: 204 88% 53%;
   }
 
   .dark {
+    --main: 212 100% 48%;
+    --twitch: 264 100% 64%;
+    --twitter: 204 88% 53%;
+
     --background: 224 71.4% 4.1%;
     --foreground: 210 20% 98%;
 
@@ -77,13 +84,12 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 20% 98%;
 
+    --warning: 37 91% 55%;
+    --warning-foreground: 37 91% 65%;
+
     --border: 215 27.9% 16.9%;
     --input: 215 27.9% 16.9%;
     --ring: 216 12.2% 83.9%;
-
-    --twitch: 264 100% 64%;
-
-    --twitter: 204 88% 53%;
   }
 }
 

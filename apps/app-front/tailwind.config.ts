@@ -20,6 +20,10 @@ const config = {
     },
     extend: {
       colors: {
+        main: 'hsl(var(--main))',
+        twitch: 'hsl(var(--twitch))',
+        twitter: 'hsl(var(--twitter))',
+
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -37,6 +41,10 @@ const config = {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))'
         },
+        warning: {
+          DEFAULT: 'hsl(var(--warning))',
+          foreground: 'hsl(var(--warning-foreground))'
+        },
         muted: {
           DEFAULT: 'hsl(var(--muted))',
           foreground: 'hsl(var(--muted-foreground))'
@@ -52,9 +60,7 @@ const config = {
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
-        },
-        twitch: 'hsl(var(--twitch))',
-        twitter: 'hsl(var(--twitter))'
+        }
       },
       borderRadius: {
         lg: 'var(--radius)',
