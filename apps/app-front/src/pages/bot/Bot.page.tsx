@@ -1,10 +1,13 @@
 import BroadcasterAndBotLink from '@components/BroadcasterAndBotLink/BroadcasterAndBotLink';
 import Page from '@components/Page';
+import { useTranslation } from '@services/i18n/useTranslation';
 
 const BotPage = () => {
+  const t = useTranslation();
   return (
-    <Page>
-      <h1>Bot</h1>
+    <Page title={t('bot.title')}>
+      <br />
+      <br />
       <BroadcasterAndBotLink compact />
     </Page>
   );

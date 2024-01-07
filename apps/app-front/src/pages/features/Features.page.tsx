@@ -1,5 +1,4 @@
 import Page from '@components/Page';
-import { Title } from '@components/ui/Typography';
 import { Button } from '@components/ui/shadcn/button';
 import { useTranslation } from '@services/i18n/useTranslation';
 import { useAuthStore } from '@services/state/auth/auth.stores';
@@ -21,8 +20,7 @@ const FeaturesPage = () => {
   };
 
   return (
-    <Page>
-      <Title>{t('features.title')}</Title>
+    <Page title={t('features.title')}>
       <Button
         variant="ghost"
         className="animate-in zoom-in duration-500"

@@ -19,5 +19,9 @@
 
   "onboarding.twitchLogin.twitchLoginBtn": "Connection",
 
-  "features.title": "Features"
+  "features.title": "Features",
+
+  "bot.title": "Bot management",
+
+  "history.title": "History"
 }
