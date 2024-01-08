@@ -17,6 +17,8 @@
   "nav.menu.action.close": "Close menu",
   "nav.logout": "Logout",
 
+  "loading.alfred.wakesUp": "Alfred wakes up...",
+
   "onboarding.twitchLogin.twitchLoginBtn": "Connection",
 
   "features.title": "Features",

@@ -17,6 +17,8 @@
   "nav.menu.action.close": "Fermer le menu",
   "nav.logout": "Déconnexion",
 
+  "loading.alfred.wakesUp": "Alfred se réveille...",
+
   "onboarding.twitchLogin.twitchLoginBtn": "Connexion",
 
   "features.title": "Fonctionnalités",

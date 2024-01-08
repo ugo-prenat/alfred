@@ -1,4 +1,4 @@
-import BroadcasterAndBotLink from '@components/BroadcasterAndBotLink/BroadcasterAndBotLink';
+import BroadcasterAndBotLink from '@components/broadcasterAndBotLink/BroadcasterAndBotLink';
 import Page from '@components/Page';
 import { useTranslation } from '@services/i18n/useTranslation';
 
