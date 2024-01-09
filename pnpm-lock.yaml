@@ -233,9 +233,6 @@ importers:
       '@alfred/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@alfred/models':
-        specifier: workspace:*
-        version: link:../models
       '@alfred/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig

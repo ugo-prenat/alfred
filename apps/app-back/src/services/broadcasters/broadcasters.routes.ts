@@ -10,7 +10,7 @@ import {
 } from './broadcasters.controllers';
 import { payloadValidator } from '@/utils/validator.utils';
 import { makeAccessTokens } from './broadcasters.utils';
-import { basicAuth } from '@/utils/auth.utils';
+import { basicAuth, checkAuthByBroadcasterId } from '@/utils/auth.utils';
 
 const broadcastersRoute = new Hono();
 
@@ -36,6 +36,11 @@ broadcastersRoute.post(
   loginBroadcaster
 );
 
-broadcastersRoute.get('/:broadcasterId/features', getBroadcasterFeatures);
+broadcastersRoute.get(
+  '/:broadcasterId/features',
+  basicAuth,
+  checkAuthByBroadcasterId('moderator'),
+  getBroadcasterFeatures
+);
 
 export default broadcastersRoute;

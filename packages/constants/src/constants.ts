@@ -1,5 +1,3 @@
-import { IFeatureConf } from '@alfred/models';
-
 // TWITCH
 export const AFFILIATE_TWITCH_BROADCASTER = 'affiliate';
 export const PARTNER_TWITCH_BROADCASTER = 'partner';
@@ -93,11 +91,21 @@ export const FEATURES_NAMES = [
   MONTHLY_RECAP_FEATURE
 ] as const;
 
+type FeatureType = (typeof FEATURES_TYPES)[number];
+type FeatureName = (typeof FEATURES_NAMES)[number];
+type FeatureStatus = 'active' | 'inactive' | 'coming-soon';
+
+interface IFeatureConf {
+  type: FeatureType;
+  name: FeatureName;
+  status: FeatureStatus;
+}
+
 export const FEATURES_CONF: IFeatureConf[] = [
   { type: 'eventSub', name: STREAMUP_FEATURE, status: 'active' },
   { type: 'eventSub', name: STREAMDOWN_FEATURE, status: 'active' },
-  { type: 'recurring', name: WEEKLY_RECAP_FEATURE, status: 'active' },
-  { type: 'recurring', name: MONTHLY_RECAP_FEATURE, status: 'active' }
+  { type: 'recurring', name: WEEKLY_RECAP_FEATURE, status: 'coming-soon' },
+  { type: 'recurring', name: MONTHLY_RECAP_FEATURE, status: 'coming-soon' }
 ];
 
 export const RECURRING_FEATURE_TYPE = 'recurring';

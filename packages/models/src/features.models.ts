@@ -19,18 +19,19 @@ export interface IFeature extends IRawFeature {
   id: string;
 }
 
-export interface IRawFeature {
-  botId: mongoose.Types.ObjectId;
-  type: FeatureType;
-  status: FeatureStatus;
-  text: string;
-  cron?: string;
-}
-
 export interface IFeatureConf {
   type: FeatureType;
   name: FeatureName;
   status: 'active' | 'inactive' | 'coming-soon';
+}
+
+export interface IRawFeature {
+  botId: mongoose.Types.ObjectId;
+  type: FeatureType;
+  name: FeatureName;
+  status: FeatureStatus;
+  text: string;
+  cron?: string;
 }
 
 const featureSchema = new Schema(
@@ -41,6 +42,7 @@ const featureSchema = new Schema(
       required: true
     },
     type: { type: String, required: true },
+    name: { type: String, required: true },
     status: { type: String, required: true },
     text: { type: String, required: true },
     cron: { type: String }

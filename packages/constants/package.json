@@ -11,7 +11,6 @@
   "devDependencies": {
     "@alfred/eslint-config": "workspace:*",
     "@alfred/tsconfig": "workspace:*",
-    "@alfred/models": "workspace:*",
     "@types/node": "^18.11.9",
     "tsup": "^8.0.1",
     "typescript": "^5.2.2"

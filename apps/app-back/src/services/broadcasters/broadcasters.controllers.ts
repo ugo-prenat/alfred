@@ -9,6 +9,7 @@ import {
   IBot,
   IBroadcaster,
   IDBBot,
+  IFeature,
   IFrontBot,
   IFrontBroadcaster,
   IRawBroadcaster,
@@ -41,7 +42,11 @@ import {
 import mongoose from 'mongoose';
 import { Context } from 'hono';
 import { verify } from 'hono/jwt';
-import { JWT_ALGORITHM } from '@alfred/constants';
+import { FEATURES_CONF, JWT_ALGORITHM } from '@alfred/constants';
+import {
+  makeAPIFeaturesToFeatures,
+  makeRawFeature
+} from '../features/features.utils';
 
 // /!\ CETTE FONCTION NE MARCHE PLUS /!\
 export const createBroadcaster = (c: PayloadContext<ILoginPayload>) => {
@@ -190,12 +195,20 @@ export const getBroadcasterFeatures = async (c: Context) => {
   const broadcasterId = c.req.param('broadcasterId');
 
   try {
-    const broadcasterBot = await handleGetBotBy({ broadcasterId }).then(
-      makeAPIBotToBot
-    );
-    return Feature.find({ botId: broadcasterBot.id })
-      .then((features) => c.json(features))
-      .catch((err) => c.json(logError(err), err.status));
+    const broadcasterBot = (await handleGetBotBy({ broadcasterId })).toObject();
+    const broadcasterFeatures: IFeature[] = await Feature.find({
+      botId: broadcasterBot._id
+    }).then(makeAPIFeaturesToFeatures);
+
+    const features = FEATURES_CONF.map((featureConf) => {
+      const maybeFeature = broadcasterFeatures.find(
+        (f) => f.name === featureConf.name
+      );
+
+      return maybeFeature || makeRawFeature(featureConf, broadcasterBot._id);
+    });
+
+    return c.json(features, 200);
   } catch (err) {
     if (err instanceof APIError) return c.json(logError(err), err.status);
     return c.json(logError(ensureError(err)), 500);

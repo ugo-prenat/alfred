@@ -57,6 +57,7 @@ export const userCanPerformAction = (
   requiredRole: BroadcasterRole
 ): boolean => {
   const userCanPerformAction = broadcasterId === jwt.sub;
+
   return !userHasRequiredRole(jwt.role, requiredRole) && !userCanPerformAction
     ? false
     : true;
