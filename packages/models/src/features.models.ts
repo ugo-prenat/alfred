@@ -1,11 +1,13 @@
 import { FEATURES_TYPES, FEATURES_STATUS } from '@alfred/constants';
 import mongoose, { Document, Schema } from 'mongoose';
 import { BOTS_COLLECTION } from './bots.models';
+import { FEATURES_NAMES } from '@alfred/constants';
 
 export const FEATURES_COLLECTION = 'features';
 
 export type FeatureType = (typeof FEATURES_TYPES)[number];
 export type FeatureStatus = (typeof FEATURES_STATUS)[number];
+export type FeatureName = (typeof FEATURES_NAMES)[number];
 
 interface IDBFeature extends IRawFeature {
   _id: mongoose.Types.ObjectId;
@@ -23,6 +25,12 @@ export interface IRawFeature {
   status: FeatureStatus;
   text: string;
   cron?: string;
+}
+
+export interface IFeatureConf {
+  type: FeatureType;
+  name: FeatureName;
+  status: 'active' | 'inactive' | 'coming-soon';
 }
 
 const featureSchema = new Schema(

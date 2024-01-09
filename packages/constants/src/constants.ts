@@ -1,3 +1,5 @@
+import { IFeatureConf } from '@alfred/models';
+
 // TWITCH
 export const AFFILIATE_TWITCH_BROADCASTER = 'affiliate';
 export const PARTNER_TWITCH_BROADCASTER = 'partner';
@@ -79,6 +81,25 @@ export const JWT_REFRESH_EXPIRATION_TIME = 60 * 60 * 24 * 30; // 30 days
 export const JWT_TOKEN_EXPIRED_ERROR = 'JwtTokenExpired';
 
 // FEATURES
+export const STREAMUP_FEATURE = 'stream-up';
+export const STREAMDOWN_FEATURE = 'stream-down';
+export const WEEKLY_RECAP_FEATURE = 'weekly-recap';
+export const MONTHLY_RECAP_FEATURE = 'monthly-recap';
+
+export const FEATURES_NAMES = [
+  STREAMUP_FEATURE,
+  STREAMDOWN_FEATURE,
+  WEEKLY_RECAP_FEATURE,
+  MONTHLY_RECAP_FEATURE
+] as const;
+
+export const FEATURES_CONF: IFeatureConf[] = [
+  { type: 'eventSub', name: STREAMUP_FEATURE, status: 'active' },
+  { type: 'eventSub', name: STREAMDOWN_FEATURE, status: 'active' },
+  { type: 'recurring', name: WEEKLY_RECAP_FEATURE, status: 'active' },
+  { type: 'recurring', name: MONTHLY_RECAP_FEATURE, status: 'active' }
+];
+
 export const RECURRING_FEATURE_TYPE = 'recurring';
 export const EVENTSUB_FEATURE_TYPE = 'eventSub';
 export const MANUAL_FEATURE_TYPE = 'manual';
