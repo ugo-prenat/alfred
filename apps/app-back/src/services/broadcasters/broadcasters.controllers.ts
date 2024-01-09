@@ -5,6 +5,7 @@ import {
   Bot,
   Broadcaster,
   BroadcasterRole,
+  Feature,
   IBot,
   IBroadcaster,
   IDBBot,
@@ -30,6 +31,7 @@ import {
 import { logError, logger } from '@/utils/logger.utils';
 import {
   handleGetBot,
+  handleGetBotBy,
   handleGetMaybeBot,
   makeAPIBotToBot,
   makeAPIBotToFrontBot,
@@ -175,9 +177,25 @@ export const authBroadcaster = async (c: Context) => {
       makeAPIBotToFrontBot
     );
 
-    return wait(2000).then(() => {
+    return wait(1000).then(() => {
       return c.json({ broadcaster, bot }, 200);
     });
+  } catch (err) {
+    if (err instanceof APIError) return c.json(logError(err), err.status);
+    return c.json(logError(ensureError(err)), 500);
+  }
+};
+
+export const getBroadcasterFeatures = async (c: Context) => {
+  const broadcasterId = c.req.param('broadcasterId');
+
+  try {
+    const broadcasterBot = await handleGetBotBy({ broadcasterId }).then(
+      makeAPIBotToBot
+    );
+    return Feature.find({ botId: broadcasterBot.id })
+      .then((features) => c.json(features))
+      .catch((err) => c.json(logError(err), err.status));
   } catch (err) {
     if (err instanceof APIError) return c.json(logError(err), err.status);
     return c.json(logError(ensureError(err)), 500);

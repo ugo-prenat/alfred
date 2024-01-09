@@ -1,4 +1,7 @@
+import { Feature } from '@alfred/models';
 import { Context } from 'hono';
 
 export const getFeatures = (c: Context) =>
-  c.json({ message: 'Hello features' });
+  Feature.find()
+    .then((features) => c.json(features))
+    .catch((err) => c.json({ error: err.message }, 500));

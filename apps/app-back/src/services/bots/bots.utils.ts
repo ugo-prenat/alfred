@@ -4,7 +4,8 @@ import {
   IBot,
   IBroadcaster,
   IDBBot,
-  IFrontBot
+  IFrontBot,
+  IRawBot
 } from '@alfred/models';
 import mongoose from 'mongoose';
 
@@ -47,3 +48,15 @@ export const handleGetBot = (botId: string): Promise<IAPIBot> =>
 
 export const handleGetMaybeBot = (botId: string): Promise<IAPIBot | null> =>
   Bot.findById(botId).then((bot) => (bot ? bot : null));
+
+export const handleGetBotBy = (
+  searchParams: Partial<IRawBot>
+): Promise<IAPIBot> =>
+  Bot.findOne(searchParams)
+    .then((bot) => {
+      if (!bot) throw new Error('bot not found');
+      return bot;
+    })
+    .catch((err) => {
+      throw new Error(err.message);
+    });

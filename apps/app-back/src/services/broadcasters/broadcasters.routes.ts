@@ -3,6 +3,7 @@ import { refreshTokenSchema, loginPayloadSchema } from './broadcasters.models';
 import {
   authBroadcaster,
   getBroadcaster,
+  getBroadcasterFeatures,
   getBroadcasters,
   loginBroadcaster,
   refreshToken
@@ -34,5 +35,7 @@ broadcastersRoute.post(
   payloadValidator(loginPayloadSchema),
   loginBroadcaster
 );
+
+broadcastersRoute.get('/:broadcasterId/features', getBroadcasterFeatures);
 
 export default broadcastersRoute;
