@@ -5,6 +5,7 @@ import twitchRoute from './services/twitch/twitch.routes';
 import { logError, logger } from './utils/logger.utils';
 import broadcastersRoute from './services/broadcasters/broadcasters.routes';
 import { APIError } from '@alfred/models';
+import { featuresRoute } from './services/features/features.routes';
 
 export const createServer = () => {
   const app = new Hono();
@@ -14,6 +15,7 @@ export const createServer = () => {
 
   app.route('/twitch', twitchRoute);
   app.route('/broadcasters', broadcastersRoute);
+  app.route('/features', featuresRoute);
 
   app.notFound((c) => {
     const { method, path } = c.req;

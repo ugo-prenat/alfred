@@ -77,3 +77,24 @@ export const JWT_ALGORITHM = 'HS256';
 export const JWT_EXPIRATION_TIME = 60 * 60 * 24; // 1 day
 export const JWT_REFRESH_EXPIRATION_TIME = 60 * 60 * 24 * 30; // 30 days
 export const JWT_TOKEN_EXPIRED_ERROR = 'JwtTokenExpired';
+
+// FEATURES
+export const RECURRING_FEATURE_TYPE = 'recurring';
+export const EVENTSUB_FEATURE_TYPE = 'eventSub';
+export const MANUAL_FEATURE_TYPE = 'manual';
+
+export const FEATURES_TYPES = [
+  RECURRING_FEATURE_TYPE,
+  EVENTSUB_FEATURE_TYPE,
+  MANUAL_FEATURE_TYPE
+] as const;
+
+export const ENABLED_FEATURE_STATUS = 'enabled';
+export const DISABLED_FEATURE_STATUS = 'disabled';
+export const UNAVAILABLE_FEATURE_STATUS = 'unavailable';
+
+export const FEATURES_STATUS = [
+  ENABLED_FEATURE_STATUS,
+  DISABLED_FEATURE_STATUS,
+  UNAVAILABLE_FEATURE_STATUS
+] as const;

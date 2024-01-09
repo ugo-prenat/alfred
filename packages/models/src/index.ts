@@ -5,3 +5,5 @@ export * from './twitter.models';
 export * from './errors/errors';
 
 export * from './common.models';
+
+export * from './features.models';
