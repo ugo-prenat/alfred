@@ -22,7 +22,8 @@ export interface IFeature extends IRawFeature {
 export interface IFeatureConf {
   type: FeatureType;
   name: FeatureName;
-  status: 'active' | 'inactive' | 'coming-soon';
+  availability: 'active' | 'inactive' | 'coming-soon';
+  defaultStatus: FeatureStatus;
 }
 
 export interface IRawFeature {

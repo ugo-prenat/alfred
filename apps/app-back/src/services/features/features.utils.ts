@@ -7,13 +7,13 @@ import {
 } from '@alfred/models';
 
 export const makeRawFeature = (
-  { type, name }: IFeatureConf,
+  { type, name, defaultStatus }: IFeatureConf,
   botId: Types.ObjectId
 ): IRawFeature => ({
   botId,
   type,
   name,
-  status: 'unavailable',
+  status: defaultStatus,
   text: `Alfred ${name} feature`
 });
 

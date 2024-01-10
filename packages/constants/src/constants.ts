@@ -93,19 +93,41 @@ export const FEATURES_NAMES = [
 
 type FeatureType = (typeof FEATURES_TYPES)[number];
 type FeatureName = (typeof FEATURES_NAMES)[number];
-type FeatureStatus = 'active' | 'inactive' | 'coming-soon';
+type FeatureStatus = (typeof FEATURES_STATUS)[number];
+type FeatureAvailability = 'active' | 'inactive' | 'coming-soon';
 
 interface IFeatureConf {
   type: FeatureType;
   name: FeatureName;
-  status: FeatureStatus;
+  availability: FeatureAvailability;
+  defaultStatus: FeatureStatus;
 }
 
 export const FEATURES_CONF: IFeatureConf[] = [
-  { type: 'eventSub', name: STREAMUP_FEATURE, status: 'active' },
-  { type: 'eventSub', name: STREAMDOWN_FEATURE, status: 'active' },
-  { type: 'recurring', name: WEEKLY_RECAP_FEATURE, status: 'coming-soon' },
-  { type: 'recurring', name: MONTHLY_RECAP_FEATURE, status: 'coming-soon' }
+  {
+    type: 'eventSub',
+    name: STREAMUP_FEATURE,
+    availability: 'active',
+    defaultStatus: 'enabled'
+  },
+  {
+    type: 'eventSub',
+    name: STREAMDOWN_FEATURE,
+    availability: 'active',
+    defaultStatus: 'disabled'
+  },
+  {
+    type: 'recurring',
+    name: WEEKLY_RECAP_FEATURE,
+    availability: 'coming-soon',
+    defaultStatus: 'enabled'
+  },
+  {
+    type: 'recurring',
+    name: MONTHLY_RECAP_FEATURE,
+    availability: 'coming-soon',
+    defaultStatus: 'enabled'
+  }
 ];
 
 export const RECURRING_FEATURE_TYPE = 'recurring';
