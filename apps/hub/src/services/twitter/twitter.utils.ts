@@ -1,5 +1,6 @@
 import {
   Bot,
+  FeatureName,
   IBot,
   ICreateTweetPayload,
   IRawTweet,
@@ -46,7 +47,8 @@ export const makeStreamOfflineTweetText = (
 
 export const createTweet = async (
   payload: ICreateTweetPayload,
-  broadcasterId: string
+  broadcasterId: string,
+  feature: FeatureName
 ) => {
   try {
     const { id: botId }: IBot = await Bot.findOne({
@@ -55,7 +57,13 @@ export const createTweet = async (
 
     const { id: tweetId, text } = (await postTweet(payload)).data;
 
-    const newTweet: IRawTweet = { tweetId, text, botId, broadcasterId };
+    const newTweet: IRawTweet = {
+      tweetId,
+      text,
+      botId,
+      broadcasterId,
+      feature
+    };
     return Tweet.create(newTweet);
   } catch (err) {
     throw err;

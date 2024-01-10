@@ -2,6 +2,7 @@ import mongoose, { Document, Schema } from 'mongoose';
 import { HTTPMethod } from './common.models';
 import { BROADCASTERS_COLLECTION } from './broadcasters.models';
 import { BOTS_COLLECTION } from './bots.models';
+import { FeatureName } from './features.models';
 
 export interface ITwitterFetcherParams {
   host: 'https://api.twitter.com' | 'https://upload.twitter.com';
@@ -63,6 +64,7 @@ export interface IRawTweet {
   text: string;
   botId: string;
   broadcasterId: string;
+  feature: FeatureName;
 }
 
 const tweetSchema = new Schema(
@@ -78,7 +80,8 @@ const tweetSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: BROADCASTERS_COLLECTION,
       required: true
-    }
+    },
+    feature: { type: String, required: true }
   },
   { versionKey: false, timestamps: true }
 );

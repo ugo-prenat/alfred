@@ -1,5 +1,6 @@
 import {
   APIError,
+  FeatureName,
   IAPITweet,
   ICreateTweetPayload,
   Tweet
@@ -12,8 +13,9 @@ import { IJwtPayload } from '@alfred/utils';
 export const handleCreateTweet = (c: Context) => {
   const payload: ICreateTweetPayload = { text: 'Alfred 👴' };
   const jwt: IJwtPayload = c.get('jwt');
+  const feature: FeatureName = 'stream-up';
 
-  return createTweet(payload, jwt.sub)
+  return createTweet(payload, jwt.sub, feature)
     .then((res) => c.json(res))
     .catch((err: APIError) => c.json(logError(err), err.status));
 };
