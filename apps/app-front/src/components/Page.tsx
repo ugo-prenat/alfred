@@ -9,7 +9,7 @@ interface IPageProps extends PropsWithChildren, HTMLAttributes<HTMLDivElement> {
 const Page: FC<IPageProps> = ({ title, children, className, ...props }) => {
   return (
     <div className={cn('w-full h-full p-10', className)} {...props}>
-      {title && <Title>{title}</Title>}
+      {title && <Title className="mb-6">{title}</Title>}
       {children}
     </div>
   );
