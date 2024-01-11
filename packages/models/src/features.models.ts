@@ -35,6 +35,8 @@ export interface IRawFeature {
   cron?: string;
 }
 
+export interface IFrontFeature extends Omit<IRawFeature, 'botId'> {}
+
 const featureSchema = new Schema(
   {
     botId: {

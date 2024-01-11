@@ -2,6 +2,7 @@ import Page from '@components/Page';
 import { useTranslation } from '@services/i18n/useTranslation';
 import { useBroadcasterFeatures } from './features.hooks';
 import { Skeleton } from '@components/ui/shadcn/skeleton';
+import FeaturesList from './FeaturesList';
 
 const FeaturesPage = () => {
   const t = useTranslation();
@@ -16,13 +17,7 @@ const FeaturesPage = () => {
     <Page title={t('features.title')}>
       {isPending && <Skeleton />}
       {isError && <div>error</div>}
-      {isSuccess && (
-        <div>
-          {features.map((feature) => (
-            <div>{feature.name}</div>
-          ))}
-        </div>
-      )}
+      {isSuccess && <FeaturesList features={features} />}
     </Page>
   );
 };

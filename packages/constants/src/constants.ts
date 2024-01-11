@@ -126,7 +126,7 @@ export const FEATURES_CONF: IFeatureConf[] = [
     type: 'recurring',
     name: MONTHLY_RECAP_FEATURE,
     availability: 'coming-soon',
-    defaultStatus: 'enabled'
+    defaultStatus: 'unavailable'
   }
 ];
 
