@@ -81,13 +81,17 @@ export const JWT_TOKEN_EXPIRED_ERROR = 'JwtTokenExpired';
 // FEATURES
 export const STREAMUP_FEATURE = 'stream-up';
 export const STREAMDOWN_FEATURE = 'stream-down';
-export const WEEKLY_RECAP_FEATURE = 'weekly-recap';
+export const SUBSCRIBERS_GOAL_END_FEATURE = 'subscribers-goal-end';
+export const FOLLOWERS_GOAL_END_FEATURE = 'followers-goal-end';
+export const WEEKLY_MOST_POPULAR_CLIP_FEATURE = 'weekly-most-popular-clip';
 export const MONTHLY_RECAP_FEATURE = 'monthly-recap';
 
 export const FEATURES_NAMES = [
   STREAMUP_FEATURE,
   STREAMDOWN_FEATURE,
-  WEEKLY_RECAP_FEATURE,
+  SUBSCRIBERS_GOAL_END_FEATURE,
+  FOLLOWERS_GOAL_END_FEATURE,
+  WEEKLY_MOST_POPULAR_CLIP_FEATURE,
   MONTHLY_RECAP_FEATURE
 ] as const;
 
@@ -117,15 +121,27 @@ export const FEATURES_CONF: IFeatureConf[] = [
     defaultStatus: 'disabled'
   },
   {
-    type: 'recurring',
-    name: WEEKLY_RECAP_FEATURE,
+    type: 'eventSub',
+    name: SUBSCRIBERS_GOAL_END_FEATURE,
+    availability: 'coming-soon',
+    defaultStatus: 'enabled'
+  },
+  {
+    type: 'eventSub',
+    name: FOLLOWERS_GOAL_END_FEATURE,
     availability: 'coming-soon',
     defaultStatus: 'enabled'
   },
   {
     type: 'recurring',
+    name: WEEKLY_MOST_POPULAR_CLIP_FEATURE,
+    availability: 'active',
+    defaultStatus: 'enabled'
+  },
+  {
+    type: 'recurring',
     name: MONTHLY_RECAP_FEATURE,
-    availability: 'coming-soon',
+    availability: 'active',
     defaultStatus: 'unavailable'
   }
 ];

@@ -17,11 +17,24 @@
   "nav.menu.action.close": "Close menu",
   "nav.logout": "Logout",
 
+  "enabled": "Enabled",
+  "disabled": "Disabled",
+  "unavailable": "Unavailable",
+  "active": "Active",
+  "inactive": "Inactive",
+  "coming-soon": "Coming soon",
+
   "loading.alfred.wakesUp": "Alfred wakes up...",
 
   "onboarding.twitchLogin.twitchLoginBtn": "Connection",
 
   "features.title": "Features",
+  "features.name.stream-up": "Stream up",
+  "features.name.stream-down": "Stream down",
+  "features.name.subscribers-goal-end": "Subscribers goal",
+  "features.name.followers-goal-end": "Followers goal",
+  "features.name.weekly-most-popular-clip": "Most popular clip of the week",
+  "features.name.monthly-recap": "Recap of the month",
 
   "bot.title": "Bot management",
 
