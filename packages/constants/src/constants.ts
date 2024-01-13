@@ -98,7 +98,7 @@ export const FEATURES_NAMES = [
 type FeatureType = (typeof FEATURES_TYPES)[number];
 type FeatureName = (typeof FEATURES_NAMES)[number];
 type FeatureStatus = (typeof FEATURES_STATUS)[number];
-type FeatureAvailability = 'active' | 'inactive' | 'coming-soon';
+type FeatureAvailability = (typeof FEATURES_AVAILABILITY)[number];
 
 interface IFeatureConf {
   type: FeatureType;
@@ -145,6 +145,16 @@ export const FEATURES_CONF: IFeatureConf[] = [
     defaultStatus: 'enabled'
   }
 ];
+
+export const ACTIVE_FEATURE_AVAILABILITY = 'active';
+export const INACTIVE_FEATURE_AVAILABILITY = 'inactive';
+export const COMING_SOON_FEATURE_AVAILABILITY = 'coming-soon';
+
+export const FEATURES_AVAILABILITY = [
+  ACTIVE_FEATURE_AVAILABILITY,
+  INACTIVE_FEATURE_AVAILABILITY,
+  COMING_SOON_FEATURE_AVAILABILITY
+] as const;
 
 export const RECURRING_FEATURE_TYPE = 'recurring';
 export const EVENTSUB_FEATURE_TYPE = 'eventSub';

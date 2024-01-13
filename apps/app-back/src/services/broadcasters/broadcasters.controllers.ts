@@ -198,7 +198,11 @@ export const getBroadcasterFeatures = async (c: Context) => {
       botId: broadcasterBot._id
     });
 
-    const promisedFeatures = FEATURES_CONF.map(async (featureConf) => {
+    const availableFeaturesConf = FEATURES_CONF.filter(
+      (f) => f.availability !== 'inactive'
+    );
+
+    const promisedFeatures = availableFeaturesConf.map(async (featureConf) => {
       const maybeFeature = broadcasterFeatures.find(
         (f) => f.get('name') === featureConf.name
       );

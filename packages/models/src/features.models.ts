@@ -1,4 +1,8 @@
-import { FEATURES_TYPES, FEATURES_STATUS } from '@alfred/constants';
+import {
+  FEATURES_TYPES,
+  FEATURES_STATUS,
+  FEATURES_AVAILABILITY
+} from '@alfred/constants';
 import mongoose, { Document, Schema } from 'mongoose';
 import { BOTS_COLLECTION } from './bots.models';
 import { FEATURES_NAMES } from '@alfred/constants';
@@ -8,6 +12,7 @@ export const FEATURES_COLLECTION = 'features';
 export type FeatureType = (typeof FEATURES_TYPES)[number];
 export type FeatureStatus = (typeof FEATURES_STATUS)[number];
 export type FeatureName = (typeof FEATURES_NAMES)[number];
+export type FeatureAvailability = (typeof FEATURES_AVAILABILITY)[number];
 
 interface IDBFeature extends IRawFeature {
   _id: mongoose.Types.ObjectId;
@@ -22,7 +27,7 @@ export interface IFeature extends IRawFeature {
 export interface IFeatureConf {
   type: FeatureType;
   name: FeatureName;
-  availability: 'active' | 'inactive' | 'coming-soon';
+  availability: FeatureAvailability;
   defaultStatus: FeatureStatus;
 }
 
@@ -33,6 +38,7 @@ export interface IRawFeature {
   status: FeatureStatus;
   text: string;
   cron?: string;
+  availability: FeatureAvailability;
 }
 
 export interface IFrontFeature extends Omit<IRawFeature, 'botId'> {}
@@ -48,7 +54,8 @@ const featureSchema = new Schema(
     name: { type: String, required: true },
     status: { type: String, required: true },
     text: { type: String, required: true },
-    cron: { type: String }
+    cron: { type: String },
+    availability: { type: String, required: true }
   },
   { versionKey: false, timestamps: true }
 );

@@ -8,14 +8,15 @@ import {
 } from '@alfred/models';
 
 export const makeRawFeature = (
-  { type, name, defaultStatus }: IFeatureConf,
+  { type, name, defaultStatus, availability }: IFeatureConf,
   botId: Types.ObjectId
 ): IRawFeature => ({
   botId,
   type,
   name,
   status: defaultStatus,
-  text: `Alfred ${name} feature`
+  text: `Alfred ${name} feature`,
+  availability
 });
 
 export const makeAPIFeatureToFeature = (feature: IAPIFeature): IFeature => {
@@ -30,6 +31,6 @@ export const makeAPIFeaturesToFeatures = (
 export const makeAPIFeatureToFrontFeature = (
   feature: IAPIFeature
 ): IFrontFeature => {
-  const { name, status, text, type, cron } = feature.toObject();
-  return { name, status, text, type, cron };
+  const { name, status, text, type, cron, availability } = feature.toObject();
+  return { name, status, text, type, cron, availability };
 };
