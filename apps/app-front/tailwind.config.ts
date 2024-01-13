@@ -95,11 +95,11 @@ const config = {
           '0%': {
             transform: 'scale(1)'
           },
-          '15%': {
+          '8%': {
             transform: 'scale(0.8)',
             boxShadow: '0 0 0 0 hsl(var(--success))'
           },
-          '60%': {
+          '30%': {
             transform: 'scale(1)',
             boxShadow: '0 0 0 7px hsl(var(--background))'
           },
