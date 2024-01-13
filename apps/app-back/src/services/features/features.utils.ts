@@ -3,6 +3,7 @@ import {
   IAPIFeature,
   IFeature,
   IFeatureConf,
+  IFrontFeature,
   IRawFeature
 } from '@alfred/models';
 
@@ -25,3 +26,10 @@ export const makeAPIFeatureToFeature = (feature: IAPIFeature): IFeature => {
 export const makeAPIFeaturesToFeatures = (
   features: IAPIFeature[]
 ): IFeature[] => features.map(makeAPIFeatureToFeature);
+
+export const makeAPIFeatureToFrontFeature = (
+  feature: IAPIFeature
+): IFrontFeature => {
+  const { name, status, text, type, cron } = feature.toObject();
+  return { name, status, text, type, cron };
+};

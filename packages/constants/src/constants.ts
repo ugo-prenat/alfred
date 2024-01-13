@@ -124,13 +124,13 @@ export const FEATURES_CONF: IFeatureConf[] = [
     type: 'eventSub',
     name: SUBSCRIBERS_GOAL_END_FEATURE,
     availability: 'coming-soon',
-    defaultStatus: 'enabled'
+    defaultStatus: 'unavailable'
   },
   {
     type: 'eventSub',
     name: FOLLOWERS_GOAL_END_FEATURE,
     availability: 'coming-soon',
-    defaultStatus: 'enabled'
+    defaultStatus: 'unavailable'
   },
   {
     type: 'recurring',
@@ -142,7 +142,7 @@ export const FEATURES_CONF: IFeatureConf[] = [
     type: 'recurring',
     name: MONTHLY_RECAP_FEATURE,
     availability: 'active',
-    defaultStatus: 'unavailable'
+    defaultStatus: 'enabled'
   }
 ];
 

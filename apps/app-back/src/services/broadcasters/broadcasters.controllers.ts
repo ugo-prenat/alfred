@@ -6,10 +6,10 @@ import {
   Broadcaster,
   BroadcasterRole,
   Feature,
+  IAPIFeature,
   IBot,
   IBroadcaster,
   IDBBot,
-  IFeature,
   IFrontBot,
   IFrontBroadcaster,
   IRawBroadcaster,
@@ -44,7 +44,7 @@ import { Context } from 'hono';
 import { verify } from 'hono/jwt';
 import { FEATURES_CONF, JWT_ALGORITHM } from '@alfred/constants';
 import {
-  makeAPIFeaturesToFeatures,
+  makeAPIFeatureToFrontFeature,
   makeRawFeature
 } from '../features/features.utils';
 
@@ -194,13 +194,13 @@ export const getBroadcasterFeatures = async (c: Context) => {
 
   try {
     const broadcasterBot = (await handleGetBotBy({ broadcasterId })).toObject();
-    const broadcasterFeatures: IFeature[] = await Feature.find({
+    const broadcasterFeatures: IAPIFeature[] = await Feature.find({
       botId: broadcasterBot._id
-    }).then(makeAPIFeaturesToFeatures);
+    });
 
     const promisedFeatures = FEATURES_CONF.map(async (featureConf) => {
       const maybeFeature = broadcasterFeatures.find(
-        (f) => f.name === featureConf.name
+        (f) => f.get('name') === featureConf.name
       );
 
       if (maybeFeature) return maybeFeature;
@@ -211,7 +211,7 @@ export const getBroadcasterFeatures = async (c: Context) => {
     });
 
     const features = await Promise.all(promisedFeatures);
-    return c.json(features, 200);
+    return c.json(features.map(makeAPIFeatureToFrontFeature), 200);
   } catch (err) {
     if (err instanceof APIError) return c.json(logError(err), err.status);
     return c.json(logError(ensureError(err)), 500);
