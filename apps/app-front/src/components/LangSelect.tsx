@@ -48,7 +48,7 @@ const CompactLangSelect: FC<ILangSelectProps> = ({ lang, langs, onChange }) => {
   const t = useTranslation();
   return (
     <DropdownMenu>
-      <Tooltip text={t('theme')} delay={700}>
+      <Tooltip text={t('language')} delay={700}>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="icon" className="border-none w-8 h-8">
             <span className="h-4 w-4 select-none">
