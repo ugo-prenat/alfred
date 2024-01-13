@@ -19,7 +19,7 @@
 
   "enabled": "Activé",
   "disabled": "Désactivé",
-  "unavailable": "Indisponible",
+  "unavailable": "Action requise",
   "active": "Actif",
   "inactive": "Inactif",
   "coming-soon": "Bientôt disponible",

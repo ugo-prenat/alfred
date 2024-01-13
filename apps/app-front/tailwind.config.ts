@@ -15,7 +15,9 @@ const config = {
     'bg-warning',
     'text-success',
     'text-destructive',
-    'text-warning'
+    'text-warning',
+    'text-twitter',
+    'bg-twitter'
   ],
   prefix: '',
   theme: {
