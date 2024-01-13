@@ -48,7 +48,7 @@ import {
   makeRawFeature
 } from '../features/features.utils';
 
-// /!\ CETTE FONCTION NE MARCHE PLUS /!\
+// /!\ CETTE FONCTION NE MARCHE PLUS ET N'EST PLUS UTILISÉE /!\
 export const createBroadcaster = (c: PayloadContext<ILoginPayload>) => {
   const { twitchToken } = c.req.valid('json');
 
@@ -200,14 +200,19 @@ export const getBroadcasterFeatures = async (c: Context) => {
       botId: broadcasterBot._id
     }).then(makeAPIFeaturesToFeatures);
 
-    const features = FEATURES_CONF.map((featureConf) => {
+    const promisedFeatures = FEATURES_CONF.map(async (featureConf) => {
       const maybeFeature = broadcasterFeatures.find(
         (f) => f.name === featureConf.name
       );
 
-      return maybeFeature || makeRawFeature(featureConf, broadcasterBot._id);
+      if (maybeFeature) return maybeFeature;
+
+      return await Feature.create(
+        makeRawFeature(featureConf, broadcasterBot._id)
+      );
     });
 
+    const features = await Promise.all(promisedFeatures);
     return c.json(features, 200);
   } catch (err) {
     if (err instanceof APIError) return c.json(logError(err), err.status);
