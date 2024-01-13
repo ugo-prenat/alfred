@@ -1,6 +1,6 @@
 import { FeatureStatus as Status } from '@alfred/models';
 import { useTranslation } from '@services/i18n/useTranslation';
-import { Octagon, Triangle } from 'lucide-react';
+import { Pause, Triangle } from 'lucide-react';
 import { FC } from 'react';
 
 interface IFeatureStatusProps {
@@ -27,10 +27,12 @@ const FeatureStatus: FC<IFeatureStatusProps> = ({ status }) => {
       <p className={`font-normal text-${statusColor}`}>{t(status)}</p>
 
       {isEnable && (
-        <span className={`block w-2 h-2 rounded-full bg-${statusColor}`}></span>
+        <span
+          className={`block w-2 h-2 ml-1 rounded-full bg-${statusColor} animate-throb`}
+        ></span>
       )}
       {isDisable && (
-        <Octagon className="w-3 h-3 fill-destructive stroke-destructive" />
+        <Pause className="w-3 h-3 fill-destructive stroke-destructive" />
       )}
       {isUnavailable && (
         <Triangle className="w-3 h-3 fill-warning stroke-warning" />

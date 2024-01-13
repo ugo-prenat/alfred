@@ -90,12 +90,29 @@ const config = {
         },
         breath: {
           '50%': { opacity: '0.5' }
+        },
+        throb: {
+          '0%': {
+            transform: 'scale(1)'
+          },
+          '15%': {
+            transform: 'scale(0.8)',
+            boxShadow: '0 0 0 0 hsl(var(--success))'
+          },
+          '60%': {
+            transform: 'scale(1)',
+            boxShadow: '0 0 0 7px hsl(var(--background))'
+          },
+          '100%': {
+            transform: 'scale(1)'
+          }
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        breath: 'breath 4s ease-in-out infinite'
+        breath: 'breath 4s ease-in-out infinite',
+        throb: 'throb 3s ease-in-out infinite'
       }
     }
   },
