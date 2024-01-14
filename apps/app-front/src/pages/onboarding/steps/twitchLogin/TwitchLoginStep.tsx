@@ -1,6 +1,5 @@
 import { FC, useEffect } from 'react';
 import { toast } from 'sonner';
-import { useMutation } from '@tanstack/react-query';
 import { Button } from '@components/ui/shadcn/button';
 import { useTranslation } from '@services/i18n/useTranslation';
 import Twitch from '@assets/icons/Twitch';
@@ -8,7 +7,7 @@ import { Description, Title } from '@components/ui/Typography';
 import { makeTwitchAuthUrl } from '@pages/onboarding/onboarding.utils';
 import { router } from '@services/router/index.routes';
 import { useAuthStore } from '@services/state/auth/auth.stores';
-import { loginBroadcaster } from '@pages/onboarding/onboarding.api';
+import { useLoginBoradcaster } from '@pages/onboarding/onboarding.hooks';
 
 interface ITwitchLoginStepProps {
   onNextStep: () => void;
@@ -19,16 +18,8 @@ const TwitchLoginStep: FC<ITwitchLoginStepProps> = ({ onNextStep }) => {
 
   const t = useTranslation();
   const { setAuth } = useAuthStore();
-  const {
-    data,
-    mutate: handleLoginBroadcaster,
-    isPending,
-    isError,
-    error
-  } = useMutation({
-    mutationKey: ['loginBroadcaster'],
-    mutationFn: loginBroadcaster
-  });
+  const { data, handleLoginBroadcaster, isPending, isError, error } =
+    useLoginBoradcaster();
 
   useEffect(() => {
     if (twitchToken && !data) handleLoginBroadcaster(twitchToken);
