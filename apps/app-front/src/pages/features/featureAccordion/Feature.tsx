@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { IFrontFeature } from '@alfred/models';
 import { AccordionItem } from '@components/ui/shadcn/accordion';
 import FeatureAccordionTrigger from './FeatureAccordionTrigger';
-import FeatureAccordionContent from './FeatureAccordionContent';
+import FeatureAccordionContent from './featureAccordionContent/FeatureAccordionContent';
 
 interface IFeatureProps {
   feature: IFrontFeature;

@@ -1,13 +1,12 @@
-import { IFrontFeature, FeatureStatus as Status } from '@alfred/models';
+import { FC } from 'react';
+import { IFrontFeature } from '@alfred/models';
 import { useTranslation } from '@services/i18n/useTranslation';
 import { Pause, Sparkles, Triangle } from 'lucide-react';
-import { FC } from 'react';
+import { FrontFeatureStatus } from '../features.models';
 
 interface IFeatureStatusProps {
   feature: IFrontFeature;
 }
-
-type FrontFeatureStatus = Status | 'coming-soon';
 
 // voir tailwind.config.js -> safelist
 const STATUS_COLORS: Record<FrontFeatureStatus, string> = {
