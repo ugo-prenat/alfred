@@ -25,7 +25,7 @@ const FeatureAccordionTrigger: FC<IFeatureAccordionTriggerProps> = ({
           })}
         >
           <FeatureIcon name={name} />
-          <p>{t(`features.name.${name}`)}</p>
+          <p>{t(`features.${name}.title`)}</p>
         </div>
         <FeatureStatus feature={feature} />
       </div>

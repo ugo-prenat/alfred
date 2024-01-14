@@ -29,12 +29,12 @@
   "onboarding.twitchLogin.twitchLoginBtn": "Connexion",
 
   "features.title": "Fonctionnalités",
-  "features.name.stream-up": "Lancement du stream",
-  "features.name.stream-down": "Fin du stream",
-  "features.name.subscribers-goal-end": "Objectif de subs",
-  "features.name.followers-goal-end": "Objectif de followers",
-  "features.name.weekly-most-popular-clip": "Clip le plus populaire de la semaine",
-  "features.name.monthly-recap": "Récap du mois",
+  "features.stream-up.title": "Lancement du stream",
+  "features.stream-down.title": "Fin du stream",
+  "features.subscribers-goal-end.title": "Objectif de subs",
+  "features.followers-goal-end.title": "Objectif de followers",
+  "features.weekly-most-popular-clip.title": "Clip le plus populaire de la semaine",
+  "features.monthly-recap.title": "Récap du mois",
 
   "bot.title": "Gestion du bot",
 

@@ -10,7 +10,7 @@ interface IEnabledFeatureContentProps {
 const EnabledFeatureContent: FC<IEnabledFeatureContentProps> = ({
   feature
 }) => {
-  const { text, name } = feature;
+  const { name } = feature;
   const { handleUpdateFeature } = useUpdateFeature();
 
   const handleDisable = () =>
