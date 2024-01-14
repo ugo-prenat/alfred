@@ -1,16 +1,16 @@
-import { IFrontFeature } from '@alfred/models';
-import { Button } from '@components/ui/shadcn/button';
-import { useUpdateFeature } from '@pages/features/features.hooks';
 import { FC } from 'react';
+import { FeatureName } from '@alfred/models';
+import { Button } from '@components/ui/shadcn/button';
+import { useFeature, useUpdateFeature } from '@pages/features/features.hooks';
 
 interface IDisabledFeatureContentProps {
-  feature: IFrontFeature;
+  featureName: FeatureName;
 }
 
 const DisabledFeatureContent: FC<IDisabledFeatureContentProps> = ({
-  feature
+  featureName
 }) => {
-  const { name } = feature;
+  const { name } = useFeature(featureName);
   const { handleUpdateFeature } = useUpdateFeature();
 
   const handleEnable = () =>

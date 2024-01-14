@@ -1,15 +1,16 @@
-import { IFrontFeature } from '@alfred/models';
-import { useTranslation } from '@services/i18n/useTranslation';
 import { FC } from 'react';
+import { FeatureName } from '@alfred/models';
+import { useFeature } from '@pages/features/features.hooks';
+import { useTranslation } from '@services/i18n/useTranslation';
 
 interface IComingSoonFeatureContentProps {
-  feature: IFrontFeature;
+  featureName: FeatureName;
 }
 
 const ComingSoonFeatureContent: FC<IComingSoonFeatureContentProps> = ({
-  feature
+  featureName
 }) => {
-  const { name } = feature;
+  const { name } = useFeature(featureName);
   const t = useTranslation();
 
   return (

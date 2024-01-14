@@ -1,19 +1,22 @@
 import { FC } from 'react';
 import { BarChart3, Clapperboard, Flag, Unplug, Users } from 'lucide-react';
-import { FeatureName, IFrontFeature } from '@alfred/models';
+import { FeatureName } from '@alfred/models';
 import { AccordionTrigger } from '@components/ui/shadcn/accordion';
 import FeatureStatus from './FeatureStatus';
 import { useTranslation } from '@services/i18n/useTranslation';
 import { cn } from '@utils/tailwind.utils';
+import { useFeature } from '../features.hooks';
 
 interface IFeatureAccordionTriggerProps {
-  feature: IFrontFeature;
+  featureName: FeatureName;
 }
 
 const FeatureAccordionTrigger: FC<IFeatureAccordionTriggerProps> = ({
-  feature
+  featureName
 }) => {
   const t = useTranslation();
+
+  const feature = useFeature(featureName);
   const { name, status } = feature;
 
   return (

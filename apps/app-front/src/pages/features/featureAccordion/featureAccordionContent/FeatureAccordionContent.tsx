@@ -1,33 +1,34 @@
 import { FC } from 'react';
-import { IFrontFeature } from '@alfred/models';
+import { FeatureName } from '@alfred/models';
 import { AccordionContent } from '@components/ui/shadcn/accordion';
 import UnavailableFeatureContent from './UnavailableFeatureContent';
 import ComingSoonFeatureContent from './ComingSoonFeatureContent';
 import { FrontFeatureStatus } from '@pages/features/features.models';
 import EnabledFeatureContent from './EnabledFeatureContent';
 import DisabledFeatureContent from './DisabledFeatureContent';
+import { useFeature } from '@pages/features/features.hooks';
 
 interface IFeatureAccordionContentProps {
-  feature: IFrontFeature;
+  featureName: FeatureName;
 }
 
 const FeatureAccordionContent: FC<IFeatureAccordionContentProps> = ({
-  feature
+  featureName
 }) => {
-  const { status, availability } = feature;
+  const { status, availability } = useFeature(featureName);
   const featureStatus: FrontFeatureStatus =
     availability === 'coming-soon' ? 'coming-soon' : status;
 
   const Content = () => {
     switch (featureStatus) {
       case 'enabled':
-        return <EnabledFeatureContent {...{ feature }} />;
+        return <EnabledFeatureContent {...{ featureName }} />;
       case 'unavailable':
-        return <UnavailableFeatureContent {...{ feature }} />;
+        return <UnavailableFeatureContent {...{ featureName }} />;
       case 'coming-soon':
-        return <ComingSoonFeatureContent {...{ feature }} />;
+        return <ComingSoonFeatureContent {...{ featureName }} />;
       case 'disabled':
-        return <DisabledFeatureContent {...{ feature }} />;
+        return <DisabledFeatureContent {...{ featureName }} />;
       default:
         return null;
     }

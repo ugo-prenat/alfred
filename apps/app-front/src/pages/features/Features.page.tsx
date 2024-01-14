@@ -17,7 +17,7 @@ const FeaturesPage = () => {
     <Page title={t('features.title')}>
       {isPending && <Skeleton />}
       {isError && <div>error</div>}
-      {isSuccess && <FeaturesList features={features} />}
+      {isSuccess && <FeaturesList />}
     </Page>
   );
 };
