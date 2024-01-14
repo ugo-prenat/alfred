@@ -1,8 +1,8 @@
 import { IFrontBot, IFrontBroadcaster } from '@alfred/models';
 import { useQuery } from '@tanstack/react-query';
 import { useTokens } from '@hooks/useTokens.hooks';
-import { fetcher } from '@services/api/fetcher/fetcher.utils';
 import { useAuthStore } from '@services/state/auth/auth.stores';
+import { fetcher } from '@services/api/fetcher/fetcher';
 
 interface ICheckAuthResponse {
   bot: IFrontBot;
@@ -17,7 +17,7 @@ export const useAuthenticate = () => {
     if (!accessToken || !refreshToken) return Promise.resolve(false);
 
     return fetcher
-      .get<ICheckAuthResponse>('/broadcasters/auth')
+      .GET<ICheckAuthResponse>('/broadcasters/auth')
       .then((data) => {
         setAuth(data);
         return true;
