@@ -1,7 +1,9 @@
 import {
   FEATURES_TYPES,
   FEATURES_STATUS,
-  FEATURES_AVAILABILITY
+  FEATURES_AVAILABILITY,
+  ENABLED_FEATURE_STATUS,
+  DISABLED_FEATURE_STATUS
 } from '@alfred/constants';
 import mongoose, { Document, Schema } from 'mongoose';
 import { BOTS_COLLECTION } from './bots.models';
@@ -42,6 +44,12 @@ export interface IRawFeature {
 }
 
 export interface IFrontFeature extends Omit<IRawFeature, 'botId'> {}
+
+export interface IFeatureEditableProps {
+  status?: typeof DISABLED_FEATURE_STATUS | typeof ENABLED_FEATURE_STATUS;
+  text?: string;
+  cron?: string;
+}
 
 const featureSchema = new Schema(
   {

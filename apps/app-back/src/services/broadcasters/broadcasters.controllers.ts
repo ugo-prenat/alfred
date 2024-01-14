@@ -230,14 +230,14 @@ export const updateBroadcasterFeature = async (
   >
 ) => {
   const { broadcasterId, featureName } = c.req.param();
-  const { status } = c.req.valid('json');
+  const updateBody = c.req.valid('json');
 
   try {
     const broadcasterBot = (await handleGetBotBy({ broadcasterId })).toObject();
 
     const updatedFeature = await Feature.findOneAndUpdate(
       { botId: broadcasterBot._id, name: featureName },
-      { status },
+      updateBody,
       { new: true }
     );
 

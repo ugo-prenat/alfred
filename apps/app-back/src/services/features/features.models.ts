@@ -5,8 +5,8 @@ import {
 import { z } from 'zod';
 
 export const updateFeaturePayloadSchema = z.object({
-  status: z.enum([ENABLED_FEATURE_STATUS, DISABLED_FEATURE_STATUS]),
-  text: z.string(),
+  status: z.enum([ENABLED_FEATURE_STATUS, DISABLED_FEATURE_STATUS]).optional(),
+  text: z.string().optional(),
   cron: z.string().optional()
 });
 export interface IUpdateFeaturePayload

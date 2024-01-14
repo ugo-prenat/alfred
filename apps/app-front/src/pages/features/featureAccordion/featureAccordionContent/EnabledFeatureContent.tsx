@@ -1,4 +1,6 @@
 import { IFrontFeature } from '@alfred/models';
+import { Button } from '@components/ui/shadcn/button';
+import { useUpdateFeature } from '@pages/features/features.hooks';
 import { FC } from 'react';
 
 interface IEnabledFeatureContentProps {
@@ -8,9 +10,20 @@ interface IEnabledFeatureContentProps {
 const EnabledFeatureContent: FC<IEnabledFeatureContentProps> = ({
   feature
 }) => {
-  const { text } = feature;
+  const { text, name } = feature;
+  const { handleUpdateFeature } = useUpdateFeature();
 
-  return <div className="flex justify-between p-6 pt-0">je suis enabled</div>;
+  const handleDisable = () =>
+    handleUpdateFeature({ name, update: { status: 'disabled' } });
+
+  return (
+    <div className="flex justify-between p-6 pt-0">
+      <p>je suis enabled</p>
+      <Button variant="destructive" onClick={handleDisable}>
+        disable
+      </Button>
+    </div>
+  );
 };
 
 export default EnabledFeatureContent;
