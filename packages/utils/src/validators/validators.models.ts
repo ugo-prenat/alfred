@@ -1,8 +1,8 @@
 import { Context, Env } from 'hono';
 
-export type PayloadContext<T> = Context<
+export type PayloadContext<T, Params extends string = '/'> = Context<
   Env,
-  string,
+  Params,
   { in: { json: T }; out: { json: T } }
 >;
 

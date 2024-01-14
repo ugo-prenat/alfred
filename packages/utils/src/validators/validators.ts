@@ -36,7 +36,7 @@ const validator =
           response: result
         });
         logger.error({ message: err.message, origin: err.origin }, err.message);
-        return c.json({ message: err.message, origin: err.origin }, err.status);
+        return c.json({ message: err.message }, err.status);
       }
       const data = result.data as z.infer<T>;
       return data;

@@ -47,6 +47,7 @@ import {
   makeAPIFeatureToFrontFeature,
   makeRawFeature
 } from '../features/features.utils';
+import { IUpdateFeaturePayload } from '../features/features.models';
 
 // /!\ CETTE FONCTION NE MARCHE PLUS ET N'EST PLUS UTILISÉE /!\
 export const createBroadcaster = (c: PayloadContext<ILoginPayload>) => {
@@ -216,6 +217,35 @@ export const getBroadcasterFeatures = async (c: Context) => {
 
     const features = await Promise.all(promisedFeatures);
     return c.json(features.map(makeAPIFeatureToFrontFeature), 200);
+  } catch (err) {
+    if (err instanceof APIError) return c.json(logError(err), err.status);
+    return c.json(logError(ensureError(err)), 500);
+  }
+};
+
+export const updateBroadcasterFeature = async (
+  c: PayloadContext<
+    IUpdateFeaturePayload,
+    '/:broadcasterId/features/:featureName'
+  >
+) => {
+  const { broadcasterId, featureName } = c.req.param();
+  const { status } = c.req.valid('json');
+
+  try {
+    const broadcasterBot = (await handleGetBotBy({ broadcasterId })).toObject();
+
+    const updatedFeature = await Feature.findOneAndUpdate(
+      { botId: broadcasterBot._id, name: featureName },
+      { status },
+      { new: true }
+    );
+
+    if (!updatedFeature)
+      throw new Error(
+        `feature not found: botId: ${broadcasterBot._id}, name: ${featureName}`
+      );
+    return c.json(makeAPIFeatureToFrontFeature(updatedFeature), 200);
   } catch (err) {
     if (err instanceof APIError) return c.json(logError(err), err.status);
     return c.json(logError(ensureError(err)), 500);

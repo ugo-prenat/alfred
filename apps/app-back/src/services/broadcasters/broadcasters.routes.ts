@@ -6,11 +6,13 @@ import {
   getBroadcasterFeatures,
   getBroadcasters,
   loginBroadcaster,
-  refreshToken
+  refreshToken,
+  updateBroadcasterFeature
 } from './broadcasters.controllers';
 import { payloadValidator } from '@/utils/validator.utils';
 import { makeAccessTokens } from './broadcasters.utils';
 import { basicAuth, checkAuthByBroadcasterId } from '@/utils/auth.utils';
+import { updateFeaturePayloadSchema } from '../features/features.models';
 
 const broadcastersRoute = new Hono();
 
@@ -41,6 +43,14 @@ broadcastersRoute.get(
   basicAuth,
   checkAuthByBroadcasterId('moderator'),
   getBroadcasterFeatures
+);
+
+broadcastersRoute.put(
+  '/:broadcasterId/features/:featureName',
+  basicAuth,
+  checkAuthByBroadcasterId('moderator'),
+  payloadValidator(updateFeaturePayloadSchema),
+  updateBroadcasterFeature
 );
 
 export default broadcastersRoute;
