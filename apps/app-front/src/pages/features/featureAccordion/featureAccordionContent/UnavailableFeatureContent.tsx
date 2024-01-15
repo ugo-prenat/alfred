@@ -4,15 +4,23 @@ import { useFeature } from '@pages/features/features.hooks';
 
 interface IUnavailableFeatureContentProps {
   featureName: FeatureName;
+  botIsNotLinked?: boolean;
 }
 
 const UnavailableFeatureContent: FC<IUnavailableFeatureContentProps> = ({
-  featureName
+  featureName,
+  botIsNotLinked = false
 }) => {
-  const { text } = useFeature(featureName);
+  const { availability } = useFeature(featureName);
 
   return (
-    <div className="flex justify-between p-6 pt-0">je suis indisponible</div>
+    <div className="flex flex-col p-6 pt-0">
+      <p>je suis indisponible</p>
+      <p>
+        cause :{' '}
+        {botIsNotLinked ? "le bot n'est pas configuré" : 'feature coming-soon'}
+      </p>
+    </div>
   );
 };
 

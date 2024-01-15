@@ -7,6 +7,7 @@ import { FrontFeatureStatus } from '@pages/features/features.models';
 import EnabledFeatureContent from './EnabledFeatureContent';
 import DisabledFeatureContent from './DisabledFeatureContent';
 import { useFeature } from '@pages/features/features.hooks';
+import { useAuthStore } from '@services/state/auth/auth.stores';
 
 interface IFeatureAccordionContentProps {
   featureName: FeatureName;
@@ -16,6 +17,8 @@ const FeatureAccordionContent: FC<IFeatureAccordionContentProps> = ({
   featureName
 }) => {
   const { status, availability } = useFeature(featureName);
+  const { broadcaster, bot } = useAuthStore();
+  const isBotLinked = !!broadcaster && !!bot && bot.status === 'active';
   const featureStatus: FrontFeatureStatus =
     availability === 'coming-soon' ? 'coming-soon' : status;
 
@@ -36,7 +39,11 @@ const FeatureAccordionContent: FC<IFeatureAccordionContentProps> = ({
 
   return (
     <AccordionContent className="p-6 pt-0">
-      <Content />
+      {isBotLinked ? (
+        <Content />
+      ) : (
+        <UnavailableFeatureContent featureName={featureName} botIsNotLinked />
+      )}
     </AccordionContent>
   );
 };
