@@ -3,7 +3,10 @@ import {
   FEATURES_STATUS,
   FEATURES_AVAILABILITY,
   ENABLED_FEATURE_STATUS,
-  DISABLED_FEATURE_STATUS
+  DISABLED_FEATURE_STATUS,
+  RECURRING_FEATURE_TYPE,
+  EVENTSUB_FEATURE_TYPE,
+  MANUAL_FEATURE_TYPE
 } from '@alfred/constants';
 import mongoose, { Document, Schema } from 'mongoose';
 import { BOTS_COLLECTION } from './bots.models';
@@ -16,15 +19,15 @@ export type FeatureStatus = (typeof FEATURES_STATUS)[number];
 export type FeatureName = (typeof FEATURES_NAMES)[number];
 export type FeatureAvailability = (typeof FEATURES_AVAILABILITY)[number];
 
-interface IDBFeature extends IRawFeature {
+type IDBFeature = IRawFeature & {
   _id: mongoose.Types.ObjectId;
-}
+};
 
-export interface IAPIFeature extends Document<unknown, {}, IDBFeature> {}
+export type IAPIFeature = Document<unknown, {}, IDBFeature> & {};
 
-export interface IFeature extends IRawFeature {
+export type IFeature = IRawFeature & {
   id: string;
-}
+};
 
 export interface IFeatureConf {
   type: FeatureType;
@@ -33,17 +36,29 @@ export interface IFeatureConf {
   defaultStatus: FeatureStatus;
 }
 
-export interface IRawFeature {
+export interface IRecurringFeature {
+  type: typeof RECURRING_FEATURE_TYPE;
+  cron: string;
+}
+
+export interface IEventSubFeature {
+  type: typeof EVENTSUB_FEATURE_TYPE;
+  featureActivatedOnTwitch: boolean;
+}
+
+export interface IManualFeature {
+  type: typeof MANUAL_FEATURE_TYPE;
+}
+
+export type IRawFeature = {
   botId: mongoose.Types.ObjectId;
-  type: FeatureType;
   name: FeatureName;
   status: FeatureStatus;
   text: string;
-  cron?: string;
   availability: FeatureAvailability;
-}
+} & (IRecurringFeature | IEventSubFeature | IManualFeature);
 
-export interface IFrontFeature extends Omit<IRawFeature, 'botId'> {}
+export type IFrontFeature = IRawFeature; // /!\ les discriminating unions de IRawFeatures sont sensibles
 
 export interface IFeatureEditableProps {
   status?: typeof DISABLED_FEATURE_STATUS | typeof ENABLED_FEATURE_STATUS;
@@ -63,6 +78,7 @@ const featureSchema = new Schema(
     status: { type: String, required: true },
     text: { type: String, required: true },
     cron: { type: String },
+    featureActivatedOnTwitch: { type: Boolean },
     availability: { type: String, required: true }
   },
   { versionKey: false, timestamps: true }
