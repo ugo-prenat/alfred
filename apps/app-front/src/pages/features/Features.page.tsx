@@ -6,12 +6,7 @@ import FeaturesList from './FeaturesList';
 
 const FeaturesPage = () => {
   const t = useTranslation();
-  const {
-    data: features,
-    isPending,
-    isError,
-    isSuccess
-  } = useBroadcasterFeatures();
+  const { isPending, isError, isSuccess } = useBroadcasterFeatures();
 
   return (
     <Page title={t('features.title')}>
