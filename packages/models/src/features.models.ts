@@ -21,6 +21,8 @@ export type FeatureAvailability = (typeof FEATURES_AVAILABILITY)[number];
 
 type IDBFeature = IRawFeature & {
   _id: mongoose.Types.ObjectId;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type IAPIFeature = Document<unknown, {}, IDBFeature> & {};
