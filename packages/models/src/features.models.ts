@@ -19,7 +19,7 @@ export type FeatureStatus = (typeof FEATURES_STATUS)[number];
 export type FeatureName = (typeof FEATURES_NAMES)[number];
 export type FeatureAvailability = (typeof FEATURES_AVAILABILITY)[number];
 
-type IDBFeature = IRawFeature & {
+export type IDBFeature = IRawFeature & {
   _id: mongoose.Types.ObjectId;
   createdAt: string;
   updatedAt: string;

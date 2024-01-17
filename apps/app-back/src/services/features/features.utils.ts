@@ -1,6 +1,7 @@
-import { Types } from 'mongoose';
 import {
   IAPIFeature,
+  IDBBot,
+  IDBFeature,
   IFeature,
   IFeatureConf,
   IFrontFeature,
@@ -9,14 +10,14 @@ import {
 
 export const makeRawFeature = (
   { type, name, defaultStatus, availability }: IFeatureConf,
-  botId: Types.ObjectId
+  broadcasterBot: IDBBot
 ): IRawFeature => {
-  const featureBase = {
-    botId,
+  const featureBase: Omit<IRawFeature, 'type'> = {
     name,
-    status: defaultStatus,
+    availability,
+    botId: broadcasterBot._id,
     text: `Alfred ${name} feature`,
-    availability
+    status: broadcasterBot.status !== 'active' ? 'unavailable' : defaultStatus
   };
 
   switch (type) {
@@ -42,5 +43,12 @@ export const makeAPIFeatureToFrontFeature = (
   feature: IAPIFeature
 ): IFrontFeature => {
   const { _id, createdAt, updatedAt, ...rest } = feature.toObject();
+  return rest;
+};
+
+export const makeDbFeatureToFrontFeature = (
+  feature: IDBFeature
+): IFrontFeature => {
+  const { _id, createdAt, updatedAt, ...rest } = feature;
   return rest;
 };

@@ -10,6 +10,7 @@ import {
   IBot,
   IBroadcaster,
   IDBBot,
+  IDBFeature,
   IFrontBot,
   IFrontBroadcaster,
   IRawBroadcaster,
@@ -45,6 +46,7 @@ import { verify } from 'hono/jwt';
 import { FEATURES_CONF, JWT_ALGORITHM } from '@alfred/constants';
 import {
   makeAPIFeatureToFrontFeature,
+  makeDbFeatureToFrontFeature,
   makeRawFeature
 } from '../features/features.utils';
 import { IUpdateFeaturePayload } from '../features/features.models';
@@ -204,19 +206,27 @@ export const getBroadcasterFeatures = async (c: Context) => {
     );
 
     const promisedFeatures = availableFeaturesConf.map(async (featureConf) => {
-      const maybeFeature = broadcasterFeatures.find(
-        (f) => f.get('name') === featureConf.name
-      );
+      const maybeFeature: IDBFeature | undefined = broadcasterFeatures
+        .find((f) => f.get('name') === featureConf.name)
+        ?.toObject();
 
-      if (maybeFeature) return maybeFeature;
+      if (maybeFeature)
+        return {
+          ...maybeFeature,
+          status:
+            broadcasterBot.status !== 'active'
+              ? 'unavailable'
+              : maybeFeature.status
+        };
 
-      return await Feature.create(
-        makeRawFeature(featureConf, broadcasterBot._id)
-      );
+      const newFeature: IDBFeature = (
+        await Feature.create(makeRawFeature(featureConf, broadcasterBot))
+      ).toObject();
+      return newFeature;
     });
 
-    const features = await Promise.all(promisedFeatures);
-    return c.json(features.map(makeAPIFeatureToFrontFeature), 200);
+    const features: IDBFeature[] = await Promise.all(promisedFeatures);
+    return c.json(features.map(makeDbFeatureToFrontFeature), 200);
   } catch (err) {
     if (err instanceof APIError) return c.json(logError(err), err.status);
     return c.json(logError(ensureError(err)), 500);
