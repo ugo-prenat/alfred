@@ -42,7 +42,8 @@ export const TWITCH_EVENTSUB_REVOCATION_MESSAGE_TYPE = 'revocation';
 
 export const TWITCH_ACCESS_TOKEN_SCOPES = [
   'user:read:email',
-  'channel:read:subscriptions'
+  'channel:read:subscriptions',
+  'channel:read:goals'
 ];
 
 // ROLES
@@ -123,14 +124,14 @@ export const FEATURES_CONF: IFeatureConf[] = [
   {
     type: 'eventSub',
     name: SUBSCRIBERS_GOAL_END_FEATURE,
-    availability: 'coming-soon',
-    defaultStatus: 'unavailable'
+    availability: 'active',
+    defaultStatus: 'enabled'
   },
   {
     type: 'eventSub',
     name: FOLLOWERS_GOAL_END_FEATURE,
-    availability: 'coming-soon',
-    defaultStatus: 'unavailable'
+    availability: 'active',
+    defaultStatus: 'enabled'
   },
   {
     type: 'recurring',
@@ -175,3 +176,10 @@ export const FEATURES_STATUS = [
   DISABLED_FEATURE_STATUS,
   UNAVAILABLE_FEATURE_STATUS
 ] as const;
+
+export const FEATURES_WHO_HAS_TO_BE_ACTIVATED_ON_TWITCH: {
+  [key in FeatureName]?: string;
+} = {
+  [SUBSCRIBERS_GOAL_END_FEATURE]: 'subscription',
+  [FOLLOWERS_GOAL_END_FEATURE]: 'follower'
+};

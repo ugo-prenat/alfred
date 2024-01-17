@@ -45,9 +45,9 @@ import { Context } from 'hono';
 import { verify } from 'hono/jwt';
 import { FEATURES_CONF, JWT_ALGORITHM } from '@alfred/constants';
 import {
+  handleGetBroacasterFeatures,
   makeAPIFeatureToFrontFeature,
-  makeDbFeatureToFrontFeature,
-  makeRawFeature
+  makeDbFeatureToFrontFeature
 } from '../features/features.utils';
 import { IUpdateFeaturePayload } from '../features/features.models';
 
@@ -205,27 +205,14 @@ export const getBroadcasterFeatures = async (c: Context) => {
       (f) => f.availability !== 'inactive'
     );
 
-    const promisedFeatures = availableFeaturesConf.map(async (featureConf) => {
-      const maybeFeature: IDBFeature | undefined = broadcasterFeatures
-        .find((f) => f.get('name') === featureConf.name)
-        ?.toObject();
-
-      if (maybeFeature)
-        return {
-          ...maybeFeature,
-          status:
-            broadcasterBot.status !== 'active'
-              ? 'unavailable'
-              : maybeFeature.status
-        };
-
-      const newFeature: IDBFeature = (
-        await Feature.create(makeRawFeature(featureConf, broadcasterBot))
-      ).toObject();
-      return newFeature;
-    });
-
+    const promisedFeatures = handleGetBroacasterFeatures(
+      availableFeaturesConf,
+      broadcasterFeatures,
+      broadcasterBot,
+      broadcasterId
+    );
     const features: IDBFeature[] = await Promise.all(promisedFeatures);
+
     return c.json(features.map(makeDbFeatureToFrontFeature), 200);
   } catch (err) {
     if (err instanceof APIError) return c.json(logError(err), err.status);

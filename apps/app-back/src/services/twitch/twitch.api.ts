@@ -1,4 +1,5 @@
 import {
+  IGetTwitchBroadcasterGoalsResponse,
   IGetTwitchBroadcastersResponse,
   IGetTwitchEventSubSubscriptionResponse,
   ITwitchFetcherParams
@@ -17,3 +18,9 @@ export const getEventSubSubscriptions = (
     `/eventsub/subscriptions`,
     fetcherParams
   );
+
+export const getBroadcasterGoals = (
+  broadcasterId: string,
+  fetcherParams: ITwitchFetcherParams
+): Promise<IGetTwitchBroadcasterGoalsResponse> =>
+  twitchFetcher.get(`/goals?broadcaster_id=${broadcasterId}`, fetcherParams);

@@ -168,3 +168,27 @@ export interface IGetTwitchClipsResponse {
   data: ITwitchClip[];
   pagination: { cursor: string };
 }
+
+export interface IGetTwitchBroadcasterGoalsResponse {
+  // https://dev.twitch.tv/docs/api/reference/#get-creator-goals
+  data: ITwitchBroadcasterGoal[];
+}
+
+export type TwitchBroadcasterGoalType =
+  | 'follower'
+  | 'subscription'
+  | 'subscription_count'
+  | 'new_subscription'
+  | 'new_subscription_count';
+
+export interface ITwitchBroadcasterGoal {
+  id: string;
+  broadcaster_id: string;
+  broadcaster_name: string;
+  broadcaster_login: string;
+  type: TwitchBroadcasterGoalType;
+  description: string;
+  current_amount: number;
+  target_amount: number;
+  created_at: string;
+}
