@@ -19,6 +19,7 @@ import {
   handleGetBroadcasterById,
   makeAPIBroadcasterToBroadcaster
 } from '../broadcasters/broadcasters.utils';
+import { IUpdateFeaturePayload } from './features.models';
 
 export const makeRawFeature = (
   { type, name, defaultStatus, availability }: IFeatureConf,
@@ -64,6 +65,27 @@ export const makeDbFeatureToFrontFeature = (
   const { _id, createdAt, updatedAt, ...rest } = feature;
   return rest;
 };
+
+export const handleGetFeature = (featureId: string): Promise<IAPIFeature> =>
+  Feature.findById(featureId).then((feature: IAPIFeature | null) => {
+    if (!feature) throw new Error(`Feature ${featureId} not found`);
+    return feature;
+  });
+
+export const handleGetFeatureBy = (
+  searchParams: Partial<IRawFeature>
+): Promise<IAPIFeature> =>
+  Feature.findById(searchParams)
+    .then((feature: IAPIFeature | null) => {
+      if (!feature)
+        throw new Error(
+          `Feature not found for params ${JSON.stringify(searchParams)}}`
+        );
+      return feature;
+    })
+    .catch((err) => {
+      throw new Error(err.message);
+    });
 
 export const handleGetBroacasterFeatures = (
   availableFeaturesConf: IFeatureConf[],
@@ -149,4 +171,18 @@ const checkIfFeatureHasToBeActivatedOnTwitch = (
     featureWhoHasToBeActivatedOnTwitch.includes(feature.name) &&
     feature.status === 'enabled'
   );
+};
+
+export const handleUpdateFeature = (
+  feature: IFeature,
+  updateBody: IUpdateFeaturePayload
+): Partial<IRawFeature> => {
+  switch (feature.type) {
+    case 'eventSub':
+      return {};
+    case 'recurring':
+      return { cron: updateBody.cron };
+    case 'manual':
+      return {};
+  }
 };

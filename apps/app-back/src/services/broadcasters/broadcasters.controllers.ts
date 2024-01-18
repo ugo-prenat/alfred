@@ -6,11 +6,13 @@ import {
   Broadcaster,
   BroadcasterRole,
   Feature,
+  FeatureName,
   IAPIFeature,
   IBot,
   IBroadcaster,
   IDBBot,
   IDBFeature,
+  IFeature,
   IFrontBot,
   IFrontBroadcaster,
   IRawBroadcaster,
@@ -46,6 +48,9 @@ import { verify } from 'hono/jwt';
 import { FEATURES_CONF, JWT_ALGORITHM } from '@alfred/constants';
 import {
   handleGetBroacasterFeatures,
+  handleGetFeatureBy,
+  handleUpdateFeature,
+  makeAPIFeatureToFeature,
   makeAPIFeatureToFrontFeature,
   makeDbFeatureToFrontFeature
 } from '../features/features.utils';
@@ -231,10 +236,14 @@ export const updateBroadcasterFeature = async (
 
   try {
     const broadcasterBot = (await handleGetBotBy({ broadcasterId })).toObject();
+    const featureToUpdate: IFeature = await handleGetFeatureBy({
+      botId: broadcasterBot._id,
+      name: featureName as FeatureName
+    }).then(makeAPIFeatureToFeature);
 
     const updatedFeature = await Feature.findOneAndUpdate(
       { botId: broadcasterBot._id, name: featureName },
-      updateBody,
+      handleUpdateFeature(featureToUpdate, updateBody),
       { new: true }
     );
 
