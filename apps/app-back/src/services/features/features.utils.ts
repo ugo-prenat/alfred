@@ -14,7 +14,10 @@ import {
 } from '@alfred/models';
 import { makeTwitchFetcherParams } from '../twitch/twitch.utils';
 import { getBroadcasterGoals } from '../twitch/twitch.api';
-import { FEATURES_WHO_HAS_TO_BE_ACTIVATED_ON_TWITCH } from '@alfred/constants';
+import {
+  FEATURES_NAMES,
+  FEATURES_WHO_HAS_TO_BE_ACTIVATED_ON_TWITCH
+} from '@alfred/constants';
 import {
   handleGetBroadcasterById,
   makeAPIBroadcasterToBroadcaster
@@ -75,7 +78,7 @@ export const handleGetFeature = (featureId: string): Promise<IAPIFeature> =>
 export const handleGetFeatureBy = (
   searchParams: Partial<IRawFeature>
 ): Promise<IAPIFeature> =>
-  Feature.findById(searchParams)
+  Feature.findOne(searchParams)
     .then((feature: IAPIFeature | null) => {
       if (!feature)
         throw new Error(
@@ -186,3 +189,6 @@ export const handleUpdateFeature = (
       return {};
   }
 };
+
+export const isFeatureNameValid = (featureName: string): boolean =>
+  FEATURES_NAMES.includes(featureName);

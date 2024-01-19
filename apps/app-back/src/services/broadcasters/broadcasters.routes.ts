@@ -13,6 +13,7 @@ import { payloadValidator } from '@/utils/validator.utils';
 import { makeAccessTokens } from './broadcasters.utils';
 import { basicAuth, checkAuthByBroadcasterId } from '@/utils/auth.utils';
 import { updateFeaturePayloadSchema } from '../features/features.models';
+import { checkIfFeatureCanBeUpdated } from './broadcasters.middlewares';
 
 const broadcastersRoute = new Hono();
 
@@ -22,7 +23,7 @@ broadcastersRoute.post(
   refreshToken
 );
 broadcastersRoute.get('/auth/gettoken', (c) =>
-  makeAccessTokens('6586fb58511d26755fc6e323', 'member')
+  makeAccessTokens('6586fb58511d26755fc6e323', 'admin')
     .then((tokens) => c.json(tokens))
     .catch((err) => c.json({ error: err.message }, 500))
 );
@@ -45,11 +46,14 @@ broadcastersRoute.get(
   getBroadcasterFeatures
 );
 
+export const UPDATE_BROADCASTER_FEATURE_PATH =
+  '/:broadcasterId/features/:featureName';
 broadcastersRoute.put(
-  '/:broadcasterId/features/:featureName',
+  UPDATE_BROADCASTER_FEATURE_PATH,
   basicAuth,
   checkAuthByBroadcasterId('moderator'),
   payloadValidator(updateFeaturePayloadSchema),
+  checkIfFeatureCanBeUpdated(),
   updateBroadcasterFeature
 );
 

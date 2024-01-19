@@ -55,6 +55,7 @@ import {
   makeDbFeatureToFrontFeature
 } from '../features/features.utils';
 import { IUpdateFeaturePayload } from '../features/features.models';
+import { UPDATE_BROADCASTER_FEATURE_PATH } from './broadcasters.routes';
 
 // /!\ CETTE FONCTION NE MARCHE PLUS ET N'EST PLUS UTILISÉE /!\
 export const createBroadcaster = (c: PayloadContext<ILoginPayload>) => {
@@ -228,7 +229,7 @@ export const getBroadcasterFeatures = async (c: Context) => {
 export const updateBroadcasterFeature = async (
   c: PayloadContext<
     IUpdateFeaturePayload,
-    '/:broadcasterId/features/:featureName'
+    typeof UPDATE_BROADCASTER_FEATURE_PATH
   >
 ) => {
   const { broadcasterId, featureName } = c.req.param();
@@ -236,6 +237,7 @@ export const updateBroadcasterFeature = async (
 
   try {
     const broadcasterBot = (await handleGetBotBy({ broadcasterId })).toObject();
+
     const featureToUpdate: IFeature = await handleGetFeatureBy({
       botId: broadcasterBot._id,
       name: featureName as FeatureName
