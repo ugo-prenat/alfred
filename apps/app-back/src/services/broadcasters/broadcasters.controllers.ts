@@ -12,10 +12,10 @@ import {
   IBroadcaster,
   IDBBot,
   IDBFeature,
-  IFeature,
   IFrontBot,
   IFrontBroadcaster,
   IRawBroadcaster,
+  IRawFeature,
   ITwitchFetcherParams
 } from '@alfred/models';
 import {
@@ -47,12 +47,12 @@ import { Context } from 'hono';
 import { verify } from 'hono/jwt';
 import { FEATURES_CONF, JWT_ALGORITHM } from '@alfred/constants';
 import {
+  handleEventSubSubscriptionAndUpdate,
   handleGetBroacasterFeatures,
   handleGetFeatureBy,
-  handleUpdateFeature,
-  makeAPIFeatureToFeature,
   makeAPIFeatureToFrontFeature,
-  makeDbFeatureToFrontFeature
+  makeDbFeatureToFrontFeature,
+  updateFeature
 } from '../features/features.utils';
 import { IUpdateFeaturePayload } from '../features/features.models';
 import { UPDATE_BROADCASTER_FEATURE_PATH } from './broadcasters.routes';
@@ -236,23 +236,29 @@ export const updateBroadcasterFeature = async (
   const updateBody = c.req.valid('json');
 
   try {
-    const broadcasterBot = (await handleGetBotBy({ broadcasterId })).toObject();
+    const broadcasterBot = await handleGetBotBy({ broadcasterId });
 
-    const featureToUpdate: IFeature = await handleGetFeatureBy({
-      botId: broadcasterBot._id,
+    const searchParams: Partial<IRawFeature> = {
+      botId: broadcasterBot.get('_id'),
       name: featureName as FeatureName
-    }).then(makeAPIFeatureToFeature);
+    };
 
-    const updatedFeature = await Feature.findOneAndUpdate(
-      { botId: broadcasterBot._id, name: featureName },
-      handleUpdateFeature(featureToUpdate, updateBody),
-      { new: true }
+    const featureToUpdate = await handleGetFeatureBy(searchParams);
+
+    if (featureToUpdate.get('type') === 'eventSub' && updateBody.status)
+      return handleEventSubSubscriptionAndUpdate(
+        c,
+        featureToUpdate,
+        updateBody.status === 'enabled' ? 'SUB' : 'UNSUB',
+        updateBody,
+        searchParams
+      );
+
+    const updatedFeature: IAPIFeature = await updateFeature(
+      searchParams,
+      updateBody
     );
 
-    if (!updatedFeature)
-      throw new Error(
-        `feature not found: botId: ${broadcasterBot._id}, name: ${featureName}`
-      );
     return c.json(makeAPIFeatureToFrontFeature(updatedFeature), 200);
   } catch (err) {
     if (err instanceof APIError) return c.json(logError(err), err.status);

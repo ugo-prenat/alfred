@@ -1,9 +1,10 @@
 import {
   APIError,
   ITwitchBroadcaster,
+  ITwitchEventSubSubscriptionCreation,
   ITwitchFetcherParams
 } from '@alfred/models';
-import { getBroadcaster } from './twitch.api';
+import { createEventSubSubscriptions, getBroadcaster } from './twitch.api';
 import { TWITCH_API_URL, isEmpty } from '@alfred/utils';
 
 export const makeTwitchFetcherParams = (
@@ -34,3 +35,28 @@ export const handleGetTwitchBroadcaster = (
       };
     })
     .catch((err: APIError) => Promise.reject(err));
+
+export const subscribeEventSub = async ({
+  type,
+  version,
+  condition
+}: Omit<ITwitchEventSubSubscriptionCreation, 'transport'>) => {
+  const payload = makeEventSubRequestBody({ type, version, condition });
+  const response = await createEventSubSubscriptions(payload);
+
+  if (isEmpty(response.data))
+    throw new Error('eventsub subscription failed, no data found in response');
+
+  return response.data[0];
+};
+
+export const makeEventSubRequestBody = (
+  props: Omit<ITwitchEventSubSubscriptionCreation, 'transport'>
+): ITwitchEventSubSubscriptionCreation => ({
+  ...props,
+  transport: {
+    method: 'webhook',
+    callback: `${process.env.HUB_URL}/twitch/eventsub`,
+    secret: process.env.TWITCH_WEBHOOK_SECRET
+  }
+});

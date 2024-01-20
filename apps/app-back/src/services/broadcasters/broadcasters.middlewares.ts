@@ -51,5 +51,8 @@ export const checkIfFeatureCanBeUpdated =
         400
       );
 
+    if (updateBody.subscriptionId)
+      return c.json({ message: `invalid update body` }, 400);
+
     return await next();
   };
