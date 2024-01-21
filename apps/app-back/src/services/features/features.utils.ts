@@ -37,10 +37,10 @@ export const makeRawFeature = (
   };
 
   switch (type) {
-    case 'eventSub':
-      return { ...featureBase, type, featureActivatedOnTwitch: false };
     case 'recurring':
       return { ...featureBase, type, cron: '0 0 * * *' };
+    case 'eventSub':
+      return { ...featureBase, type, featureActivatedOnTwitch: false };
     case 'manual':
       return { ...featureBase, type };
   }

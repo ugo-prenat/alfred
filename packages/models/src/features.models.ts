@@ -46,7 +46,6 @@ export interface IRecurringFeature {
 export interface IEventSubFeature {
   type: typeof EVENTSUB_FEATURE_TYPE;
   featureActivatedOnTwitch: boolean;
-  subscriptionId?: string;
 }
 
 export interface IManualFeature {
@@ -82,8 +81,7 @@ const featureSchema = new Schema(
     text: { type: String, required: true },
     cron: { type: String },
     featureActivatedOnTwitch: { type: Boolean },
-    availability: { type: String, required: true },
-    subscriptionId: { type: String }
+    availability: { type: String, required: true }
   },
   { versionKey: false, timestamps: true }
 );
