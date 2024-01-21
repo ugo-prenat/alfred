@@ -105,3 +105,31 @@ export const makeAccessTokens = async (
     throw new Error('error creating access tokens');
   }
 };
+
+export const updateBrodcaster = (
+  searchParams: Partial<IRawBroadcaster>,
+  update: Partial<IRawBroadcaster>
+): Promise<IAPIBroadcaster> =>
+  Broadcaster.findOneAndUpdate(searchParams, update, { new: true })
+    .then((broadcaster) => {
+      if (!broadcaster)
+        throw new Error(
+          `broadcaster not found for search params ${JSON.stringify(
+            searchParams
+          )}`
+        );
+      return broadcaster;
+    })
+    .catch((err) => {
+      throw new Error(err.message);
+    });
+
+export const updateBroadcasterTwitchToken = async (
+  searchParams: Partial<IRawBroadcaster>,
+  twitchToken: string
+) => {
+  // bcrypt token
+  const hashedToken = twitchToken;
+
+  return updateBrodcaster(searchParams, { twitchToken: hashedToken });
+};

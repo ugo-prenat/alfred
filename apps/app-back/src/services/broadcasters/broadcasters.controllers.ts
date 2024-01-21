@@ -2,46 +2,37 @@ import { IJwtPayload, PayloadContext, ensureError } from '@alfred/utils';
 import { IRefreshTokenPayload, ILoginPayload } from './broadcasters.models';
 import {
   APIError,
-  Bot,
   Broadcaster,
   BroadcasterRole,
   Feature,
   FeatureName,
   IAPIFeature,
-  IBot,
   IBroadcaster,
-  IDBBot,
   IDBFeature,
   IFrontBot,
-  IFrontBroadcaster,
-  IRawBroadcaster,
-  ITwitchFetcherParams
+  IFrontBroadcaster
 } from '@alfred/models';
 import {
   handleGetTwitchBroadcaster,
   makeTwitchFetcherParams
 } from '../twitch/twitch.utils';
 import {
-  handleDeleteBroadcaster,
   handleGetBroadcasterById,
   handleGetBroadcasterByTwitchId,
   makeAPIBroadcasterToBroadcaster,
   makeAPIBroadcasterToFrontBroadcaster,
   makeAPIBroadcastersToBroadcasters,
   makeAccessTokens,
-  makeRawBroadcaster
+  updateBroadcasterTwitchToken
 } from './broadcasters.utils';
-import { logError, logger } from '@/utils/logger.utils';
+import { logError } from '@/utils/logger.utils';
 import {
   handleGetBot,
   handleGetBotBy,
   handleGetMaybeBot,
-  makeAPIBotToBot,
   makeAPIBotToFrontBot,
-  makeDBBot,
   makeMaybeAPIBotToFrontBot
 } from '../bots/bots.utils';
-import mongoose from 'mongoose';
 import { Context } from 'hono';
 import { verify } from 'hono/jwt';
 import { FEATURES_CONF, JWT_ALGORITHM } from '@alfred/constants';
@@ -53,57 +44,6 @@ import {
 } from '../features/features.utils';
 import { IUpdateFeaturePayload } from '../features/features.models';
 import { UPDATE_BROADCASTER_FEATURE_PATH } from './broadcasters.routes';
-
-// /!\ CETTE FONCTION NE MARCHE PLUS ET N'EST PLUS UTILISÉE /!\
-export const createBroadcaster = (c: PayloadContext<ILoginPayload>) => {
-  const { twitchToken } = c.req.valid('json');
-
-  const fetcherParams: ITwitchFetcherParams =
-    makeTwitchFetcherParams(twitchToken);
-
-  return handleGetTwitchBroadcaster(fetcherParams)
-    .then((twitchBroadcaster) => {
-      const botId = new mongoose.Types.ObjectId();
-
-      const newBroadcaster: IRawBroadcaster = makeRawBroadcaster(
-        twitchBroadcaster,
-        twitchToken,
-        botId
-      );
-
-      return Broadcaster.create(newBroadcaster)
-        .then(makeAPIBroadcasterToBroadcaster)
-        .then((broadcaster: IBroadcaster) => {
-          const newBot: IDBBot = makeDBBot(broadcaster, botId);
-
-          return Bot.create(newBot)
-            .then(makeAPIBotToBot)
-            .then(async (bot: IBot) => {
-              logger.info(
-                `broadcaster '${broadcaster.name}' (${broadcaster.id}) and bot '${bot.name}' (${bot.id}) created`
-              );
-
-              const { accessToken, refreshToken } = await makeAccessTokens(
-                broadcaster.id,
-                broadcaster.role
-              );
-
-              return c.json({ accessToken, refreshToken }, 201);
-            })
-            .catch((err) => {
-              logger.error(
-                err,
-                `error creating bot ${botId}, deleting broadcaster ${broadcaster.id}`
-              );
-              return handleDeleteBroadcaster(broadcaster.id)
-                .then(() => c.json(logError(err), 500))
-                .catch((err) => c.json(logError(err), err.status));
-            })
-            .catch((err: APIError) => c.json(logError(err), err.status));
-        });
-    })
-    .catch((err: APIError) => c.json(logError(err), err.status));
-};
 
 export const getBroadcasters = (c: Context) => {
   const broadcasterId: string | undefined = c.req.query('broadcasterId');
@@ -170,6 +110,12 @@ export const loginBroadcaster = async (c: PayloadContext<ILoginPayload>) => {
       broadcaster.id,
       broadcaster.role
     );
+
+    await updateBroadcasterTwitchToken(
+      { twitchId: twitchBroadcaster.id },
+      twitchToken
+    );
+
     return c.json({ broadcaster, bot, accessToken, refreshToken }, 200);
   } catch (err) {
     if (err instanceof APIError) return c.json(logError(err), err.status);

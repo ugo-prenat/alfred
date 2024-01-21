@@ -52,7 +52,7 @@ export const checkIfFeatureCanBeUpdated =
       );
 
     if (updateBody.subscriptionId)
-      return c.json({ message: `invalid update body` }, 400);
+      return c.json({ message: `invalid update body`, code: 'BDMD-1' }, 400);
 
     return await next();
   };
