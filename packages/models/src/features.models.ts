@@ -45,6 +45,8 @@ export interface IRecurringFeature {
 
 export interface IEventSubFeature {
   type: typeof EVENTSUB_FEATURE_TYPE;
+  featureActivatedOnTwitch: boolean;
+  subscriptionId?: string;
 }
 
 export interface IManualFeature {
@@ -59,19 +61,7 @@ export type IRawFeature = {
   availability: FeatureAvailability;
 } & (IRecurringFeature | IEventSubFeature | IManualFeature);
 
-export type IFrontFeature = {
-  botId: mongoose.Types.ObjectId;
-  name: FeatureName;
-  status: FeatureStatus;
-  text: string;
-  availability: FeatureAvailability;
-} & (
-  | IRecurringFeature
-  | (IEventSubFeature & {
-      featureActivatedOnTwitch: boolean;
-    })
-  | IManualFeature
-);
+export type IFrontFeature = IRawFeature; // /!\ les discriminating unions de IRawFeatures sont sensibles
 
 export interface IFeatureEditableProps {
   status?: typeof DISABLED_FEATURE_STATUS | typeof ENABLED_FEATURE_STATUS;
@@ -91,7 +81,9 @@ const featureSchema = new Schema(
     status: { type: String, required: true },
     text: { type: String, required: true },
     cron: { type: String },
-    availability: { type: String, required: true }
+    featureActivatedOnTwitch: { type: Boolean },
+    availability: { type: String, required: true },
+    subscriptionId: { type: String }
   },
   { versionKey: false, timestamps: true }
 );

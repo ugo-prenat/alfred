@@ -37,10 +37,10 @@ export const makeRawFeature = (
   };
 
   switch (type) {
+    case 'eventSub':
+      return { ...featureBase, type, featureActivatedOnTwitch: false };
     case 'recurring':
       return { ...featureBase, type, cron: '0 0 * * *' };
-    case 'eventSub':
-      return { ...featureBase, type };
     case 'manual':
       return { ...featureBase, type };
   }
@@ -59,20 +59,14 @@ export const makeAPIFeatureToFrontFeature = (
   feature: IAPIFeature
 ): IFrontFeature => {
   const { _id, createdAt, updatedAt, ...rest } = feature.toObject();
-
-  return rest.type === 'eventSub'
-    ? { ...rest, featureActivatedOnTwitch: false }
-    : rest;
+  return rest;
 };
 
 export const makeDbFeatureToFrontFeature = (
   feature: IDBFeature
 ): IFrontFeature => {
   const { _id, createdAt, updatedAt, ...rest } = feature;
-  
-  return rest.type === 'eventSub'
-    ? { ...rest, featureActivatedOnTwitch: false }
-    : rest;
+  return rest;
 };
 
 export const handleGetFeature = (featureId: string): Promise<IAPIFeature> =>
