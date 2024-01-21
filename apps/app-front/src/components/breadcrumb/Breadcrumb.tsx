@@ -1,0 +1,36 @@
+import { Button } from '@components/ui/shadcn/button';
+import { router } from '@services/router/index.routes';
+import { useNavigate } from '@tanstack/react-router';
+
+const BreadCrumb = () => {
+  const navigate = useNavigate();
+
+  const { pathname } = router.parseLocation();
+  const paths = pathname.split('/').slice(1);
+
+  const handleClick = (index: number) => () => {
+    const to = `/${paths.slice(0, index + 1).join('/')}`;
+    navigate({ to });
+  };
+
+  return (
+    <div className="flex gap-4 mb-10 opacity-50">
+      {paths.map((path, index) => (
+        <div key={index} className="flex gap-4">
+          <Button
+            variant="link"
+            onClick={handleClick(index)}
+            className="h-auto font-normal p-0"
+          >
+            {path}
+          </Button>
+          {index < paths.length - 1 && (
+            <span className="cursor-default">/</span>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default BreadCrumb;
