@@ -12,14 +12,8 @@ import {
   ITwitchBroadcasterGoal,
   ITwitchFetcherParams
 } from '@alfred/models';
-import {
-  makeTwitchFetcherParams,
-  subscribeEventSub
-} from '../twitch/twitch.utils';
-import {
-  deleteEventSubSubscriptions,
-  getBroadcasterGoals
-} from '../twitch/twitch.api';
+import { makeTwitchFetcherParams } from '../twitch/twitch.utils';
+import { getBroadcasterGoals } from '../twitch/twitch.api';
 import {
   FEATURES_NAMES,
   FEATURES_WHO_HAS_TO_BE_ACTIVATED_ON_TWITCH
@@ -29,7 +23,6 @@ import {
   makeAPIBroadcasterToBroadcaster
 } from '../broadcasters/broadcasters.utils';
 import { IUpdateFeaturePayload } from './features.models';
-import { Context } from 'hono';
 
 export const makeRawFeature = (
   { type, name, defaultStatus, availability }: IFeatureConf,
@@ -186,84 +179,11 @@ const checkIfFeatureHasToBeActivatedOnTwitch = (
 export const isFeatureNameValid = (featureName: string): boolean =>
   FEATURES_NAMES.includes(featureName);
 
-export const handleEventSubSubscriptionAndUpdate = (
-  c: Context,
-  featureToUpdate: IAPIFeature,
-  action: 'SUB' | 'UNSUB',
-  updateBody: IUpdateFeaturePayload,
-  searchParams: Partial<IRawFeature>
-) => {
-  switch (action) {
-    case 'SUB':
-      return subscribeEventSubAndUpdate(
-        c,
-        featureToUpdate,
-        updateBody,
-        searchParams
-      );
-    case 'UNSUB':
-      return unsubscribeEventSubAndUpdate(
-        c,
-        featureToUpdate,
-        updateBody,
-        searchParams
-      );
-  }
-};
-
-const subscribeEventSubAndUpdate = async (
-  c: Context,
-  featureToUpdate: IAPIFeature,
-  updateBody: IUpdateFeaturePayload,
-  searchParams: Partial<IRawFeature>
-) => {
-  const { id } = await subscribeEventSub({
-    type: 'channel.goal.end',
-    version: '1',
-    condition: {
-      broadcaster_user_id: '131122741'
-    }
-  });
-
-  const updatedFeature: IAPIFeature = await updateFeature(searchParams, {
-    ...updateBody,
-    subscriptionId: id
-  });
-
-  return c.json(makeAPIFeatureToFrontFeature(updatedFeature), 200);
-};
-const unsubscribeEventSubAndUpdate = (
-  c: Context,
-  featureToUpdate: IAPIFeature,
-  updateBody: IUpdateFeaturePayload,
-  searchParams: Partial<IRawFeature>
-) => {
-  const updatingFeature = featureToUpdate.toObject();
-
-  const subscriptionId =
-    updatingFeature.type === 'eventSub'
-      ? updatingFeature.subscriptionId
-      : undefined;
-
-  if (!subscriptionId)
-    throw new Error(
-      `Cannot unscribe to eventsub for feature ${updatingFeature._id}, no subscription id found`
-    );
-
-  return deleteEventSubSubscriptions(subscriptionId).then(async () => {
-    const updatedFeature: IAPIFeature = await updateFeature(searchParams, {
-      ...updateBody,
-      subscriptionId: undefined
-    });
-    return c.json(makeAPIFeatureToFrontFeature(updatedFeature), 200);
-  });
-};
-
 export const updateFeature = (
   searchParams: Partial<IRawFeature>,
   updateBody: IUpdateFeaturePayload
 ): Promise<IAPIFeature> =>
-  Feature.findOneAndUpdate(searchParams, updateBody)
+  Feature.findOneAndUpdate(searchParams, updateBody, { new: true })
     .then((updatedFeature: IAPIFeature | null) => {
       if (!updatedFeature)
         throw new Error(

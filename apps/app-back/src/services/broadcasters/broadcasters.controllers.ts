@@ -15,7 +15,6 @@ import {
   IFrontBot,
   IFrontBroadcaster,
   IRawBroadcaster,
-  IRawFeature,
   ITwitchFetcherParams
 } from '@alfred/models';
 import {
@@ -47,9 +46,7 @@ import { Context } from 'hono';
 import { verify } from 'hono/jwt';
 import { FEATURES_CONF, JWT_ALGORITHM } from '@alfred/constants';
 import {
-  handleEventSubSubscriptionAndUpdate,
   handleGetBroacasterFeatures,
-  handleGetFeatureBy,
   makeAPIFeatureToFrontFeature,
   makeDbFeatureToFrontFeature,
   updateFeature
@@ -236,26 +233,10 @@ export const updateBroadcasterFeature = async (
   const updateBody = c.req.valid('json');
 
   try {
-    const broadcasterBot = await handleGetBotBy({ broadcasterId });
+    const broadcasterBot = (await handleGetBotBy({ broadcasterId })).toObject();
 
-    const searchParams: Partial<IRawFeature> = {
-      botId: broadcasterBot.get('_id'),
-      name: featureName as FeatureName
-    };
-
-    const featureToUpdate = await handleGetFeatureBy(searchParams);
-
-    if (featureToUpdate.get('type') === 'eventSub' && updateBody.status)
-      return handleEventSubSubscriptionAndUpdate(
-        c,
-        featureToUpdate,
-        updateBody.status === 'enabled' ? 'SUB' : 'UNSUB',
-        updateBody,
-        searchParams
-      );
-
-    const updatedFeature: IAPIFeature = await updateFeature(
-      searchParams,
+    const updatedFeature = await updateFeature(
+      { botId: broadcasterBot._id, name: featureName as FeatureName },
       updateBody
     );
 
