@@ -45,16 +45,11 @@ import {
 import { IUpdateFeaturePayload } from '../features/features.models';
 import { UPDATE_BROADCASTER_FEATURE_PATH } from './broadcasters.routes';
 
-export const getBroadcasters = (c: Context) => {
-  const broadcasterId: string | undefined = c.req.query('broadcasterId');
-
-  if (broadcasterId) return getBroadcaster(c);
-
-  return Broadcaster.find()
+export const getBroadcasters = (c: Context) =>
+  Broadcaster.find()
     .then(makeAPIBroadcastersToBroadcasters)
     .then((broadcasters: IBroadcaster[]) => c.json(broadcasters))
     .catch((err) => c.json(logError(err), err.status));
-};
 
 export const getBroadcaster = (c: Context) => {
   const { method, url } = c.req.raw;

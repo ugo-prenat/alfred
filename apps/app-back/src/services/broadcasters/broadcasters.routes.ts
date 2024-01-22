@@ -11,7 +11,11 @@ import {
 } from './broadcasters.controllers';
 import { payloadValidator } from '@/utils/validator.utils';
 import { makeAccessTokens } from './broadcasters.utils';
-import { basicAuth, checkAuthByBroadcasterId } from '@/utils/auth.utils';
+import {
+  basicAuth,
+  checkAuthByBroadcasterId,
+  restrictedRoute
+} from '@/utils/auth.utils';
 import { updateFeaturePayloadSchema } from '../features/features.models';
 import { checkIfFeatureCanBeUpdated } from './broadcasters.middlewares';
 
@@ -30,7 +34,12 @@ broadcastersRoute.get('/auth/gettoken', (c) =>
 
 broadcastersRoute.get('/auth', basicAuth, authBroadcaster);
 
-broadcastersRoute.get('/', getBroadcasters);
+broadcastersRoute.get(
+  '/',
+  basicAuth,
+  restrictedRoute('moderator'),
+  getBroadcasters
+);
 broadcastersRoute.get('/:broadcasterId', getBroadcaster);
 
 broadcastersRoute.post(
