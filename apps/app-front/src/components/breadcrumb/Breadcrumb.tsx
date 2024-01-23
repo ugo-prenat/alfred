@@ -14,21 +14,25 @@ const BreadCrumb = () => {
   };
 
   return (
-    <div className="flex gap-4 mb-10 opacity-50">
-      {paths.map((path, index) => (
-        <div key={index} className="flex gap-4">
-          <Button
-            variant="link"
-            onClick={handleClick(index)}
-            className="h-auto font-normal p-0"
-          >
-            {path}
-          </Button>
-          {index < paths.length - 1 && (
-            <span className="cursor-default">/</span>
-          )}
-        </div>
-      ))}
+    <div className="flex gap-4 mb-10">
+      {paths.map((path, index) => {
+        const isLast = index === paths.length - 1;
+        return (
+          <div key={index} className="flex gap-4">
+            <Button
+              variant="link"
+              onClick={handleClick(index)}
+              className="h-auto font-normal p-0 opacity-50 disabled:opacity-50 hover:opacity-100 transition-all"
+              disabled={isLast}
+            >
+              {path}
+            </Button>
+            {!isLast && (
+              <span className="cursor-default opacity-20 font-light">/</span>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };
