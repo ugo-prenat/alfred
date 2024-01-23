@@ -1,8 +1,9 @@
 import Page from '@components/Page';
-import BreadCrumb from '@components/breadcrumb/Breadcrumb';
 import { useBroadcasters } from '../admin.hooks';
+import { useTranslation } from '@services/i18n/useTranslation';
 
 const AdminBroadcastersPage = () => {
+  const t = useTranslation();
   const {
     data: broadcasters,
     isPending,
@@ -11,8 +12,7 @@ const AdminBroadcastersPage = () => {
   } = useBroadcasters();
 
   return (
-    <Page>
-      <BreadCrumb />
+    <Page title={t('admin.broadcasters.title')} showBreadcrumb>
       {isPending && <div>Loading...</div>}
       {isError && <div>Error</div>}
       {isSuccess && (

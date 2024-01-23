@@ -38,5 +38,7 @@
 
   "bot.title": "Gestion du bot",
 
-  "history.title": "Historique"
+  "history.title": "Historique",
+
+  "admin.broadcasters.title": "Broadcasters"
 }

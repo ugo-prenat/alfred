@@ -14,7 +14,7 @@ const BreadCrumb = () => {
   };
 
   return (
-    <div className="flex gap-4 mb-10">
+    <div className="flex gap-4 mb-6">
       {paths.map((path, index) => {
         const isLast = index === paths.length - 1;
         return (
