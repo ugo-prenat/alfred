@@ -1,6 +1,7 @@
 import Page from '@components/Page';
 import { useBroadcasters } from '../admin.hooks';
 import { useTranslation } from '@services/i18n/useTranslation';
+import BroadcastersList from './BroadcastersList';
 
 const AdminBroadcastersPage = () => {
   const t = useTranslation();
@@ -15,13 +16,7 @@ const AdminBroadcastersPage = () => {
     <Page title={t('admin.broadcasters.title')} showBreadcrumb>
       {isPending && <div>Loading...</div>}
       {isError && <div>Error</div>}
-      {isSuccess && (
-        <div>
-          {broadcasters?.map((broadcaster) => (
-            <div key={broadcaster.id}>{broadcaster.name}</div>
-          ))}
-        </div>
-      )}
+      {isSuccess && <BroadcastersList broadcasters={broadcasters} />}
     </Page>
   );
 };
