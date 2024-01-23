@@ -1,6 +1,6 @@
+import { FC } from 'react';
 import { IFrontBroadcaster } from '@alfred/models';
 import { AccordionItem } from '@components/ui/shadcn/accordion';
-import { FC } from 'react';
 import BroadcasterAccordionTrigger from './BroadcasterAccordionTrigger';
 import BroadcasterAccordionContent from './BroadcasterAccordionContent';
 

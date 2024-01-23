@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { IFrontBroadcaster } from '@alfred/models';
 import { AccordionTrigger } from '@components/ui/shadcn/accordion';
 import {
@@ -5,7 +6,6 @@ import {
   AvatarFallback,
   AvatarImage
 } from '@components/ui/shadcn/avatar';
-import { FC } from 'react';
 
 interface IBroadcasterAccordionTriggerProps {
   broadcaster: IFrontBroadcaster;
