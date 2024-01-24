@@ -8,6 +8,8 @@
   "language.fr": "Français",
   "language.en": "English",
 
+  "retry": "Réessayer",
+
   "nav.features": "Fonctionnalités",
   "nav.bot": "Gestion du bot",
   "nav.history": "Historique",
