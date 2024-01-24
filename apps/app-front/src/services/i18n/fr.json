@@ -31,6 +31,7 @@
   "onboarding.twitchLogin.twitchLoginBtn": "Connexion",
 
   "features.title": "Fonctionnalités",
+  "features.retrieve.error": "Les fonctionnalités n'ont pas pu être récupérées",
   "features.stream-up.title": "Lancement du stream",
   "features.stream-down.title": "Fin du stream",
   "features.subscribers-goal-end.title": "Objectif de subs",
@@ -42,5 +43,6 @@
 
   "history.title": "Historique",
 
-  "admin.broadcasters.title": "Broadcasters"
+  "admin.broadcasters.title": "Broadcasters",
+  "admin.broadcasters.retrieve.error": "Les broadcasters n'ont pas pu être récupérés"
 }

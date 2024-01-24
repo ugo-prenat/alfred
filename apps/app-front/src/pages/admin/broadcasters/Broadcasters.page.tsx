@@ -10,17 +10,19 @@ const AdminBroadcastersPage = () => {
     data: broadcasters,
     isPending,
     isError,
-    isSuccess
+    isSuccess,
+    refetch
   } = useBroadcasters();
-
-  const handleRetry = () => {
-    console.log('retry');
-  };
 
   return (
     <Page title={t('admin.broadcasters.title')} showBreadcrumb>
       {isPending && <div>Loading...</div>}
-      {isError && <ErrorAlertRetry text="ah merde" fn={handleRetry} />}
+      {isError && (
+        <ErrorAlertRetry
+          text={t('admin.broadcasters.retrieve.error')}
+          fn={refetch}
+        />
+      )}
       {isSuccess && <BroadcastersList broadcasters={broadcasters} />}
     </Page>
   );

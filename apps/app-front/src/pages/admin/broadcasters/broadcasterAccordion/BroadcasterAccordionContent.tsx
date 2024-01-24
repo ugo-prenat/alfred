@@ -14,7 +14,7 @@ const BroadcasterAccordionContent: FC<
       <p>todo:</p>
       <p>change role</p>
       <p>enable/disable twitch eventsub subscriptions</p>
-      <p>manage broadcaster features</p>
+      <p>manage broadcaster features (see status)</p>
       <p>bot data</p>
       <p>link to /admin/tweets page</p>
     </AccordionContent>
