@@ -46,7 +46,7 @@ const MenuLinks: FC<IMenuLinkProps> = ({ onLinkClick }) => {
       <Link
         {...props}
         className={cn(
-          'flex items-center gap-3 py-2 px-6 text-muted-foreground rounded-md whitespace-nowrap hover:bg-accent hover:text-accent-foreground transition-all duration-100 ease-in-out',
+          'flex items-center gap-3 py-2 px-6 text-muted-foreground rounded-md whitespace-nowrap hover:bg-accent/50 hover:text-accent-foreground transition-all duration-100 ease-in-out',
           props.className
         )}
         onClick={onLinkClick}

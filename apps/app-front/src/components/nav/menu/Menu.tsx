@@ -53,7 +53,7 @@ const MenuSheet = () => {
       open={isMenuOpen}
       onOpenChange={handleOpenChange()}
       content={<MenuContent onLinkClick={handleLinkClick} />}
-      className={cn('w-fit p-0 border-none border-r-0', {
+      className={cn('w-fit p-0 pt-6 border-none border-r-0', {
         '-translate-x-full !duration-300': action === 'close'
       })}
     />
