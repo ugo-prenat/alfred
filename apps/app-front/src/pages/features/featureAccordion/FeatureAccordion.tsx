@@ -4,11 +4,11 @@ import { AccordionItem } from '@components/ui/shadcn/accordion';
 import FeatureAccordionTrigger from './FeatureAccordionTrigger';
 import FeatureAccordionContent from './featureAccordionContent/FeatureAccordionContent';
 
-interface IFeatureProps {
+interface IFeatureAccordionProps {
   featureName: FeatureName;
 }
 
-const Feature: FC<IFeatureProps> = ({ featureName }) => {
+const FeatureAccordion: FC<IFeatureAccordionProps> = ({ featureName }) => {
   return (
     <AccordionItem value={featureName}>
       <FeatureAccordionTrigger featureName={featureName} />
@@ -17,4 +17,4 @@ const Feature: FC<IFeatureProps> = ({ featureName }) => {
   );
 };
 
-export default Feature;
+export default FeatureAccordion;
