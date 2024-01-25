@@ -123,13 +123,3 @@ export const updateBrodcaster = (
     .catch((err) => {
       throw new Error(err.message);
     });
-
-export const updateBroadcasterTwitchToken = async (
-  searchParams: Partial<IRawBroadcaster>,
-  twitchToken: string
-) => {
-  // bcrypt token
-  const hashedToken = twitchToken;
-
-  return updateBrodcaster(searchParams, { twitchToken: hashedToken });
-};

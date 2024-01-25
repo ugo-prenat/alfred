@@ -23,7 +23,7 @@ import {
   makeAPIBroadcasterToFrontBroadcaster,
   makeAPIBroadcastersToBroadcasters,
   makeAccessTokens,
-  updateBroadcasterTwitchToken
+  updateBrodcaster
 } from './broadcasters.utils';
 import { logError } from '@/utils/logger.utils';
 import {
@@ -106,10 +106,7 @@ export const loginBroadcaster = async (c: PayloadContext<ILoginPayload>) => {
       broadcaster.role
     );
 
-    await updateBroadcasterTwitchToken(
-      { twitchId: twitchBroadcaster.id },
-      twitchToken
-    );
+    await updateBrodcaster({ twitchId: twitchBroadcaster.id }, { twitchToken });
 
     return c.json({ broadcaster, bot, accessToken, refreshToken }, 200);
   } catch (err) {
