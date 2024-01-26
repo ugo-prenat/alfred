@@ -1,6 +1,5 @@
 import {
   APIError,
-  ChannelSubscribe,
   ITwitchClip,
   ITwitchEventsub,
   ITwitchStream,
@@ -31,13 +30,6 @@ export const createEventSubSubscription = (c: Context) => {
   return createEventSubSubscriptions(payload)
     .then((res) => c.json(res))
     .catch((err: APIError) => c.json(logError(err), err.status));
-};
-
-export const handleChannelSubscribe = async (c: Context) => {
-  const { event } = (await c.req.json()) as ITwitchEventsub<ChannelSubscribe>;
-  return c.json({
-    message: `${event.user_name} subscribed to ${event.broadcaster_user_name}`
-  });
 };
 
 export const handleStreamOnline = async (c: Context) => {

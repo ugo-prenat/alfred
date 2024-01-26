@@ -8,11 +8,7 @@ import {
 } from '@alfred/constants';
 import { verifySignature } from './twitch.utils';
 import { Context } from 'hono';
-import {
-  handleChannelSubscribe,
-  handleStreamOffline,
-  handleStreamOnline
-} from './twitch.eventsub';
+import { handleStreamOffline, handleStreamOnline } from './twitch.eventsub';
 
 const TWITCH_MESSAGE_TYPE = TWITCH_EVENTSUB_HEADER_MESSAGE_TYPE.toLowerCase();
 const TWITCH_SUBSCRIPTION_TYPE =
@@ -43,8 +39,6 @@ export const handleTwitchWebhook = async (c: Context) => {
   const subscriptionType = headers.get(TWITCH_SUBSCRIPTION_TYPE);
 
   switch (subscriptionType) {
-    case 'channel.subscribe':
-      return handleChannelSubscribe(c);
     case 'stream.online':
       return handleStreamOnline(c);
     case 'stream.offline':
