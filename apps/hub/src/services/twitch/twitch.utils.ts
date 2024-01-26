@@ -10,7 +10,8 @@ import {
   ITwitchClip,
   ITwitchEventSubSubscriptionCreation,
   ITwitchFetcherParams,
-  ITwitchStream
+  ITwitchStream,
+  EventSubType
 } from '@alfred/models';
 import { getClips, getStream } from './twitch.api';
 import { logError, logger } from '@/utils/logger.utils';
@@ -104,7 +105,7 @@ export const handleGetLastStream = (
       return maybeStream;
     })
     .catch((err) => {
-      logger.warn(err, "can't getting last stream");
+      logger.warn(err, 'cannot get last stream');
       return null;
     });
 
@@ -139,3 +140,8 @@ export const handleGetMostViewedStreamClip = async (
       return null;
     });
 };
+
+export const ensureEventSubIsEnabled = (
+  eventSubType: EventSubType,
+  broadcasterId: string
+): Promise<boolean> => Promise.resolve(true);

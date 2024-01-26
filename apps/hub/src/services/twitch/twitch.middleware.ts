@@ -40,9 +40,9 @@ export const handleTwitchWebhook = async (c: Context) => {
 
   switch (subscriptionType) {
     case 'stream.online':
-      return handleStreamOnline(c);
+      return handleStreamOnline(subscriptionType, c);
     case 'stream.offline':
-      return handleStreamOffline(c);
+      return handleStreamOffline(subscriptionType, c);
 
     case undefined:
       return c.json({ message: 'no subscription type given' }, 400);

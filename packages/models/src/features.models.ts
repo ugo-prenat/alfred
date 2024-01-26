@@ -6,7 +6,8 @@ import {
   DISABLED_FEATURE_STATUS,
   RECURRING_FEATURE_TYPE,
   EVENTSUB_FEATURE_TYPE,
-  MANUAL_FEATURE_TYPE
+  MANUAL_FEATURE_TYPE,
+  TWITCH_EVENTSUB_TYPES
 } from '@alfred/constants';
 import mongoose, { Document, Schema } from 'mongoose';
 import { BOTS_COLLECTION } from './bots.models';
@@ -18,6 +19,7 @@ export type FeatureType = (typeof FEATURES_TYPES)[number];
 export type FeatureStatus = (typeof FEATURES_STATUS)[number];
 export type FeatureName = (typeof FEATURES_NAMES)[number];
 export type FeatureAvailability = (typeof FEATURES_AVAILABILITY)[number];
+export type EventSubType = (typeof TWITCH_EVENTSUB_TYPES)[number];
 
 export type IDBFeature = IRawFeature & {
   _id: mongoose.Types.ObjectId;

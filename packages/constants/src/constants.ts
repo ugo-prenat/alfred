@@ -46,6 +46,18 @@ export const TWITCH_ACCESS_TOKEN_SCOPES = [
   'channel:read:goals'
 ];
 
+type EventSubType = (typeof TWITCH_EVENTSUB_TYPES)[number];
+
+export const CHANNEL_GOAL_END_EVENT_SUB_TYPE = 'channel.goal.end';
+export const STREAM_ONLINE_EVENT_SUB_TYPE = 'stream.online';
+export const STREAM_OFFLINE_EVENT_SUB_TYPE = 'stream.offline';
+
+export const TWITCH_EVENTSUB_TYPES = [
+  CHANNEL_GOAL_END_EVENT_SUB_TYPE,
+  STREAM_ONLINE_EVENT_SUB_TYPE,
+  STREAM_OFFLINE_EVENT_SUB_TYPE
+] as const;
+
 // ROLES
 export const MEMBER_ROLE = 'member';
 export const MODERATOR_ROLE = 'moderator';
@@ -182,4 +194,13 @@ export const FEATURES_WHO_HAS_TO_BE_ACTIVATED_ON_TWITCH: {
 } = {
   [SUBSCRIBERS_GOAL_END_FEATURE]: 'subscription',
   [FOLLOWERS_GOAL_END_FEATURE]: 'follower'
+};
+
+export const FEATURES_BY_EVENTSUB_TYPE: {
+  [key in FeatureName]?: EventSubType;
+} = {
+  [STREAMUP_FEATURE]: STREAM_ONLINE_EVENT_SUB_TYPE,
+  [STREAMDOWN_FEATURE]: STREAM_OFFLINE_EVENT_SUB_TYPE,
+  [SUBSCRIBERS_GOAL_END_FEATURE]: CHANNEL_GOAL_END_EVENT_SUB_TYPE,
+  [FOLLOWERS_GOAL_END_FEATURE]: CHANNEL_GOAL_END_EVENT_SUB_TYPE
 };
