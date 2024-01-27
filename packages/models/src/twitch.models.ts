@@ -103,6 +103,20 @@ export interface StreamOffline {
   broadcaster_user_name: string;
 }
 
+export interface IChannelGoalEnd {
+  id: string;
+  broadcaster_user_id: string;
+  broadcaster_user_login: string;
+  broadcaster_user_name: string;
+  type: string;
+  description: string;
+  is_achieved: boolean;
+  current_amount: number;
+  target_amount: number;
+  started_at: string;
+  ended_at: string;
+}
+
 export interface IGetBroadcasterSubscribersResponse {
   data: {
     broadcaster_id: string;

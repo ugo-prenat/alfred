@@ -15,6 +15,12 @@ import {
 } from '@alfred/models';
 import { getClips, getStream } from './twitch.api';
 import { logError, logger } from '@/utils/logger.utils';
+import { ensureError } from '@alfred/utils';
+import { getBroadcaster } from '../broadcasters/broadcasters.utils';
+import {
+  getFeature,
+  getFeatureNameByEventSubType
+} from '../features/features.utils';
 
 export const makeTwitchFetcherParams = (
   twitchAccessToken: string
@@ -141,7 +147,25 @@ export const handleGetMostViewedStreamClip = async (
     });
 };
 
-export const ensureEventSubIsEnabled = (
-  eventSubType: EventSubType,
-  broadcasterId: string
-): Promise<boolean> => Promise.resolve(true);
+export const ensureEventSubIsEnabled = async ({
+  type,
+  subType,
+  twitchId
+}: {
+  type: EventSubType;
+  subType?: string;
+  twitchId: string;
+}): Promise<boolean> => {
+  try {
+    const broadcaster = await getBroadcaster({ twitchId });
+    const botId = broadcaster.get('botId');
+
+    const featureName = getFeatureNameByEventSubType(type, subType);
+    const feature = await getFeature({ botId, name: featureName });
+
+    return feature.get('status') === 'enabled';
+  } catch (err) {
+    logError(ensureError(err));
+    return Promise.resolve(false);
+  }
+};

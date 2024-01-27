@@ -22,6 +22,7 @@ import {
 import { postTweet } from '../twitter/twitter.api';
 import { logError } from '@/utils/logger.utils';
 import { ensureError } from '@alfred/utils';
+import { IChannelGoalEnd } from '@alfred/models';
 
 export const createEventSubSubscription = (c: Context) => {
   const payload = makeEventSubRequestBody({
@@ -43,7 +44,16 @@ export const handleStreamOnline = async (
   const { broadcaster_user_id, broadcaster_user_name } = event;
 
   try {
-    await ensureEventSubIsEnabled(eventSubType, broadcaster_user_id);
+    const isEventSubEnabled = await ensureEventSubIsEnabled({
+      type: eventSubType,
+      twitchId: broadcaster_user_id
+    });
+
+    if (!isEventSubEnabled)
+      return c.json({
+        message: 'feature disabled by the broadcaster',
+        code: 'TWEV-1'
+      });
 
     const maybeStream: ITwitchStream | null = await handleGetLastStream(
       broadcaster_user_id,
@@ -66,7 +76,16 @@ export const handleStreamOffline = async (
   const { broadcaster_user_id, broadcaster_user_name } = event;
 
   try {
-    await ensureEventSubIsEnabled(eventSubType, broadcaster_user_id);
+    const isEventSubEnabled = await ensureEventSubIsEnabled({
+      type: eventSubType,
+      twitchId: broadcaster_user_id
+    });
+
+    if (!isEventSubEnabled)
+      return c.json({
+        message: 'feature disabled by the broadcaster',
+        code: 'TWEV-2'
+      });
 
     const maybeClip: ITwitchClip | null = await handleGetMostViewedStreamClip(
       broadcaster_user_id,
@@ -75,6 +94,33 @@ export const handleStreamOffline = async (
 
     const tweetText: string = makeStreamOfflineTweetText(event, maybeClip);
     return postTweet({ text: tweetText }).then((res) => c.json(res));
+  } catch (err) {
+    if (err instanceof APIError) return c.json(logError(err), err.status);
+    return c.json(logError(ensureError(err)), 500);
+  }
+};
+
+export const handleChannelGoalEnd = async (
+  eventSubType: EventSubType,
+  c: Context
+) => {
+  const { event } = (await c.req.json()) as ITwitchEventsub<IChannelGoalEnd>;
+  const { type, broadcaster_user_id } = event;
+
+  try {
+    const isEventSubEnabled = await ensureEventSubIsEnabled({
+      type: eventSubType,
+      subType: type,
+      twitchId: broadcaster_user_id
+    });
+
+    if (!isEventSubEnabled)
+      return c.json({
+        message: 'feature disabled by the broadcaster',
+        code: 'TWEV-3'
+      });
+
+    return c.json({ message: 'ok' });
   } catch (err) {
     if (err instanceof APIError) return c.json(logError(err), err.status);
     return c.json(logError(ensureError(err)), 500);
