@@ -108,6 +108,11 @@ export const FEATURES_NAMES = [
   MONTHLY_RECAP_FEATURE
 ] as const;
 
+export const SCHEDULED_FEATURES = [
+  WEEKLY_MOST_POPULAR_CLIP_FEATURE,
+  MONTHLY_RECAP_FEATURE
+] as const;
+
 type FeatureType = (typeof FEATURES_TYPES)[number];
 type FeatureName = (typeof FEATURES_NAMES)[number];
 type FeatureStatus = (typeof FEATURES_STATUS)[number];

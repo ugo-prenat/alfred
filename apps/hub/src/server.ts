@@ -1,10 +1,11 @@
 import { cors } from 'hono/cors';
 import { Hono } from 'hono';
 import { honoLogger } from '@alfred/utils';
-import twitterRoute from './services/twitter/twitter.routes';
-import twitchRoute from './services/twitch/twitch.routes';
 import { logError, logger } from './utils/logger.utils';
 import { APIError } from '@alfred/models';
+import twitterRoute from './services/twitter/twitter.routes';
+import twitchRoute from './services/twitch/twitch.routes';
+import schedulerRoute from './services/scheduler/scheduler.routes';
 
 export const createServer = () => {
   const app = new Hono();
@@ -12,8 +13,9 @@ export const createServer = () => {
   app.use('*', cors());
   app.use('*', honoLogger());
 
-  app.route('/twitter', twitterRoute);
   app.route('/twitch', twitchRoute);
+  app.route('/twitter', twitterRoute);
+  app.route('/scheduler', schedulerRoute);
 
   app.notFound((c) => {
     const { method, path } = c.req;

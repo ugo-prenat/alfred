@@ -1,4 +1,10 @@
-export type API = 'app-back' | 'hub' | 'scheduler' | 'twitch' | 'twitter';
+export type API =
+  | 'app-back'
+  | 'hub'
+  | 'scheduler'
+  | 'twitch'
+  | 'twitter'
+  | 'twitch-tracker';
 
 export interface IOrigin {
   api: API;
