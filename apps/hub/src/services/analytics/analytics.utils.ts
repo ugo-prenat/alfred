@@ -1,1 +1,3 @@
-export const makeMonthlyRecap = async (botId: string) => {};
+import { IAPIFeature } from '@alfred/models';
+
+export const makeMonthlyRecap = async (feature: IAPIFeature) => {};
