@@ -3,6 +3,7 @@ export * from './logs/logs';
 export * from './fetchers/fetcher';
 export * from './fetchers/twitchFetcher';
 export * from './fetchers/twitterFetcher';
+export * from './fetchers/twitchTrackerFetcher';
 export * from './fetchers/fetcher.utils';
 
 export * from './helpers/helpers.utils';

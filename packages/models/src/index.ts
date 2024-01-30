@@ -7,3 +7,5 @@ export * from './errors/errors';
 export * from './common.models';
 
 export * from './features.models';
+
+export * from './twitchTracker.models';

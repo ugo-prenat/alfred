@@ -4,7 +4,7 @@ import {
   isValidScheduledFeatureName
 } from './scheduler.utils';
 import { APIError, FeatureName } from '@alfred/models';
-import { logError } from '@/utils/logger.utils';
+import { logError, logger } from '@/utils/logger.utils';
 import { ensureError } from '@alfred/utils';
 import { makeMonthlyRecap } from '../analytics/analytics.utils';
 
@@ -19,16 +19,20 @@ export const triggerFeature = async (c: Context<Env, '/:featureName'>) => {
       featureName as FeatureName
     );
 
-    const promisesRecap = features.map(makeMonthlyRecap);
-    await Promise.all(promisesRecap);
+    const promisesRecaps = features.map(makeMonthlyRecap);
+    const recaps = await Promise.all(promisesRecaps);
 
-    return c.json({
-      message: `all enabled ${featureName} features was triggered`
-    });
+    const triggerFeatureSummary = {
+      message: `all enabled ${featureName} features was triggered`,
+      total: recaps.length,
+      aborted: recaps.filter((p) => p.aborted).length,
+      completed: recaps.filter((p) => p.completed).length
+    };
+
+    logger.info(triggerFeatureSummary);
+    return c.json(triggerFeatureSummary);
   } catch (err) {
     if (err instanceof APIError) return c.json(logError(err), err.status);
     return c.json(logError(ensureError(err)), 500);
   }
-
-  return c.json({ featureName });
 };

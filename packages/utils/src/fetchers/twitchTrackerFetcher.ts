@@ -4,7 +4,7 @@ import { fetcher } from './fetcher';
 const TWITCH_TRACKER_FETCHER_ORIGIN = 'twitch-tracker';
 const TWITCH_TRACKER_API_URL = 'https://twitchtracker.com/api';
 
-const makeTwitchFetcher =
+const makeTwitchTrackerFetcher =
   (method: HTTPMethod) =>
   <T>(url: string): Promise<T> =>
     fetcher[method]<T>(
@@ -12,6 +12,6 @@ const makeTwitchFetcher =
       TWITCH_TRACKER_FETCHER_ORIGIN
     );
 
-export const twitchFetcher = {
-  get: makeTwitchFetcher('GET')
+export const twitchTrackerFetcher = {
+  get: makeTwitchTrackerFetcher('GET')
 };
