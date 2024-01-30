@@ -16,7 +16,6 @@ export const makeMonthlyRecap = async (
     const broadcaster = await getBroadcaster({ botId: feature.get('botId') });
     const monthlyRecap = await getBroadcasterMonthlyRecap(
       broadcaster.get('username')
-      // 'ponce'
     );
 
     if (isEmpty(monthlyRecap)) {
@@ -26,9 +25,8 @@ export const makeMonthlyRecap = async (
       return { completed: false, aborted: true };
     }
 
-    console.log('------------------');
-    console.log(monthlyRecap);
-    console.log('------------------');
+    // save monthly recap in DB
+    // create tweet
 
     return { completed: true, aborted: false };
   } catch (err) {
