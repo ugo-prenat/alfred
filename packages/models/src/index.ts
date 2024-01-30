@@ -9,3 +9,5 @@ export * from './common.models';
 export * from './features.models';
 
 export * from './twitchTracker.models';
+
+export * from './analytics.models';
