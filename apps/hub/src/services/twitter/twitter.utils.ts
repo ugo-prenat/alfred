@@ -1,7 +1,6 @@
 import {
-  Bot,
   FeatureName,
-  IBot,
+  IAPITweet,
   ICreateTweetPayload,
   IRawTweet,
   ITwitchClip,
@@ -12,7 +11,6 @@ import {
   Tweet
 } from '@alfred/models';
 import { postTweet } from './twitter.api';
-import { makeAPIBotToBot } from '../bots/bots.utils';
 
 export const makeTwitterOAuthOptions = (): ITwitterOAuthOptions => ({
   api_key: process.env.TWITTER_API_KEY,
@@ -48,13 +46,10 @@ export const makeStreamOfflineTweetText = (
 export const createTweet = async (
   payload: ICreateTweetPayload,
   broadcasterId: string,
+  botId: string,
   feature: FeatureName
-) => {
+): Promise<IAPITweet> => {
   try {
-    const { id: botId }: IBot = await Bot.findOne({
-      broadcasterId
-    }).then(makeAPIBotToBot);
-
     const { id: tweetId, text } = (await postTweet(payload)).data;
 
     const newTweet: IRawTweet = {
