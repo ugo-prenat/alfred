@@ -6,11 +6,18 @@ import {
   IRawAnalytics,
   IRawChannelSummary
 } from '@alfred/models';
-import { getBroadcaster } from '../broadcasters/broadcasters.utils';
+import {
+  getBroadcaster,
+  makeAPIBroadcasterToBroadcaster
+} from '../broadcasters/broadcasters.utils';
 import { logError, logger } from '@/utils/logger.utils';
 import { ensureError, isEmpty } from '@alfred/utils';
 import { getBroadcasterMonthlyRecap } from './analytics.api';
 import { Types } from 'mongoose';
+import {
+  createTweet,
+  makeMonthlyRecapTweetText
+} from '../twitter/twitter.utils';
 
 interface IMakeMonthlyRecapReturnProps {
   aborted: boolean;
@@ -21,27 +28,31 @@ export const makeMonthlyRecap = async (
   feature: IAPIFeature
 ): Promise<IMakeMonthlyRecapReturnProps> => {
   try {
-    const broadcaster = await getBroadcaster({ botId: feature.get('botId') });
+    const broadcaster = await getBroadcaster({
+      botId: feature.get('botId')
+    }).then(makeAPIBroadcasterToBroadcaster);
     const monthlyRecap = await getBroadcasterMonthlyRecap(
-      // broadcaster.get('username')
-      'ponce'
+      broadcaster.username
     ).then(makeRawChannelSummaryToChannelSummary);
 
     if (isEmpty(monthlyRecap)) {
       logger.warn(
-        `empty monthly recap for broadcaster ${broadcaster.get('username')}`
+        `empty monthly recap for broadcaster ${broadcaster.username}`
       );
       return { completed: false, aborted: true };
     }
 
-    const analytic = await createAnalytics(
-      makeMonthlyRecapRawAnalytics(monthlyRecap, broadcaster.get('botId'))
+    await createAnalytics(
+      makeMonthlyRecapRawAnalytics(monthlyRecap, broadcaster.botId)
     );
 
-    console.log(analytic);
-    //
-    // create tweet
-    //
+    const tweetText: string = makeMonthlyRecapTweetText(monthlyRecap);
+    await createTweet(
+      { text: tweetText },
+      broadcaster.id,
+      broadcaster.botId.toString(),
+      'monthly-recap'
+    );
 
     return { completed: true, aborted: false };
   } catch (err) {

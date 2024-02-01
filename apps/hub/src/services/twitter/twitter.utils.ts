@@ -1,6 +1,7 @@
 import {
   FeatureName,
   IAPITweet,
+  IChannelSummary,
   ICreateTweetPayload,
   IRawTweet,
   ITwitchClip,
@@ -41,6 +42,21 @@ export const makeStreamOfflineTweetText = (
   if (!clip) return `${broadcaster_user_name} just went offline`;
 
   return `${broadcaster_user_name} just went offline\n\ncheck out the most popular clip of the stream:\n${clip.url}`;
+};
+
+export const makeMonthlyRecapTweetText = (
+  monthlyRecap: IChannelSummary
+): string => {
+  const {
+    avgViewers,
+    followers,
+    followersTotal,
+    hoursWatched,
+    maxViewers,
+    minutesStreamed
+  } = monthlyRecap;
+
+  return `It's time for the monthly recap!\n\nAvg Viewers: ${avgViewers}\nFollowers: ${followers}\nTotal Followers: ${followersTotal}\nHours Watched: ${hoursWatched}\nMax Viewers: ${maxViewers}\nMinutes Streamed: ${minutesStreamed}`;
 };
 
 export const createTweet = async (
